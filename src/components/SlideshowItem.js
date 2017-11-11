@@ -12,7 +12,7 @@ class SlideshowItem extends Component {
   updateSlideshow = () => {
     const self = this;
 
-    axios.get('http://localhost/slideshow/public/php/getFiles.php')
+    axios.get('http://code.randomlysa.com/slideshow/php/getFiles.php')
     .then((data) => {
       let newItems = Object.values(data.data);
       self.setState({
