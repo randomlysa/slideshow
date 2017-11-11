@@ -1,62 +1,39 @@
 import React, { Component } from 'react';
-import './App.css';
-import axios from 'axios';
+import './style.css';
+import $ from 'jquery';
+import SlideshowItem from './components/SlideshowItem';
 
 class App extends Component {
-
-  // Schedule updateSlideshow to run every x seconds.
-  updateSlideshowTimer = () => {
-    window.setInterval(this.updateSlideshow, 3000);
-  }
-
-  // Get list of files, update state.
-  updateSlideshow = () => {
-    const self = this;
-
-    axios.get('http://localhost/slideshow/public/php/getFiles.php')
-    .then((data) => {
-      let newItems = Object.values(data.data);
-      self.setState({
-        slideshowItems: newItems
-      });
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  } // updateSlideShow
-
   componentDidMount() {
-    this.updateSlideshowTimer();
+    const fadeDuration = 0;
+    const slideDisplayDuration = '3000';
 
-    this.setState({
-      slideshowItems: this.updateSlideshow()
-    });
+    // Hide all images except first on load.
+    const displayFirstImage = setTimeout(function() {
+      if ($('#slideshow > div > div:gt(0)')) {
+          $('#slideshow > div > div:gt(0)').hide();
+          clearInterval(displayFirstImage);
+      }
+    }, 50);
+
+    // Loop through the slideshow, fading items out and in.
+    setInterval(function() {
+      $('#slideshow > div > div:first')
+        .fadeOut(fadeDuration) // fadeOut isn't working properly, set to 0 for now.
+        .next()
+        .fadeIn(fadeDuration)
+        .end()
+        .appendTo('#slideshow > div');
+    },  slideDisplayDuration);
   } // componentDidMount
 
-  renderSlideshowItem(item) {
-    const itemUrl = `bb1/${item}`;
-
-    return (
-      <img src={itemUrl} key={itemUrl}  />
-    )
-  } // renderSlideShow
-
   render() {
-    if (this.state && this.state.slideshowItems) {
-      return (
-        <div>
-          {this.state.slideshowItems.map(function(item) {
-            return this.renderSlideshowItem(item)
-            }, this)
-          }
-        </div>
-      )
-    } else {
-      return (
-        <div>Loading</div>
-      )
-    }
-  }; // render
+    return (
+      <div id="slideshow">
+        <SlideshowItem />
+      </div>
+    )
+  };
 
 } // class App
 
