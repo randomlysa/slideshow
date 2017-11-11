@@ -33,8 +33,7 @@ class App extends Component {
         <SlideshowItem />
       </div>
     )
-  };
-
+  }; // render
 } // class App
 
 export default App;

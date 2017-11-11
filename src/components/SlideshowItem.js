@@ -25,13 +25,11 @@ class SlideshowItem extends Component {
   } // updateSlideShow
 
   componentDidMount() {
-
     this.updateSlideshowTimer();
-
     this.setState({
       slideshowItems: this.updateSlideshow()
     });
-  }
+  } // componentDidMount
 
   renderSlideshowItem(item) {
       const itemUrl = `bb1/${item}`;
@@ -41,7 +39,7 @@ class SlideshowItem extends Component {
           <img src={itemUrl} alt="Slideshow Item" />
         </div>
       )
-    } // renderSlideShow
+    } // renderSlideshowItem
 
   render() {
     if (this.state && this.state.slideshowItems) {
@@ -59,7 +57,6 @@ class SlideshowItem extends Component {
       )
     }
   }; // render
-
-}
+} // class SlideshowItem
 
 export default SlideshowItem;
