@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import _ from 'lodash';
 
 class SlideshowItem extends Component {
 
@@ -26,9 +27,15 @@ class SlideshowItem extends Component {
     })
     .done((data) => {
       let newItems = Object.values(data);
-      self.setState({
-        slideshowItems: newItems
-      });
+      // Compare new data to slideshowItems to see if state should be updated.
+      const updateState = _.isEqual(newItems, self.state.slideshowItems);
+
+      if (!updateState) {
+        self.setState({
+          slideshowItems: newItems
+        });
+      }
+
     })
     .fail((e) => {
       console.log(e);
