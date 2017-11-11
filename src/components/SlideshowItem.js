@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import $ from 'jquery';
 
 class SlideshowItem extends Component {
 
@@ -11,15 +11,26 @@ class SlideshowItem extends Component {
   // Get list of files, update state.
   updateSlideshow = () => {
     const self = this;
+    const url = window.location.href;
+    let server;
 
-    axios.get('http://code.randomlysa.com/slideshow/php/getFiles.php')
-    .then((data) => {
-      let newItems = Object.values(data.data);
+    if (url === "http://localhost:3000/") {
+      server = "http://localhost/slideshow/public" // use localhost with php
+    } else {
+      server = "http://code.randomlysa.com/slideshow"
+    }
+
+    $.ajax({
+      url: `${server}/php/getFiles.php`,
+      dataType: 'json'
+    })
+    .done((data) => {
+      let newItems = Object.values(data);
       self.setState({
         slideshowItems: newItems
       });
     })
-    .catch((e) => {
+    .fail((e) => {
       console.log(e);
     });
   } // updateSlideShow
