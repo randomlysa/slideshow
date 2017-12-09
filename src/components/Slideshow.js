@@ -9,7 +9,7 @@ class Slideshow extends Component {
     const slideDisplayDuration = '6000';
 
     // Hide all images except first on load.
-    const displayFirstImage = setTimeout(function() {
+    const displayFirstImage = setTimeout(() => {
       if ($('#slideshow > div:gt(0)')) {
           $('#slideshow > div:gt(0)').hide();
           clearInterval(displayFirstImage);
@@ -17,7 +17,7 @@ class Slideshow extends Component {
     }, 50);
 
     // Loop through the slideshow, fading items out and in.
-    setInterval(function() {
+    setInterval(() => {
       $('#slideshow > div:first')
         .fadeOut(fadeDuration)
         .next()
