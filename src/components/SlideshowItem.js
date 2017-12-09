@@ -62,12 +62,9 @@ class SlideshowItem extends Component {
   render() {
     if (this.state && this.state.slideshowItems) {
       return (
-        <div>
-          {this.state.slideshowItems.map(function(item) {
+          this.state.slideshowItems.map(function(item) {
             return this.renderSlideshowItem(item)
-            }, this)
-          }
-        </div>
+          }, this)
       )
     } else {
       return (

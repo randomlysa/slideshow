@@ -5,25 +5,25 @@ import SlideshowItem from './SlideshowItem';
 
 class Slideshow extends Component {
   componentDidMount() {
-    const fadeDuration = 0;
-    const slideDisplayDuration = '3000';
+    const fadeDuration = 2500;
+    const slideDisplayDuration = '6000';
 
     // Hide all images except first on load.
     const displayFirstImage = setTimeout(function() {
-      if ($('#slideshow > div > div:gt(0)')) {
-          $('#slideshow > div > div:gt(0)').hide();
+      if ($('#slideshow > div:gt(0)')) {
+          $('#slideshow > div:gt(0)').hide();
           clearInterval(displayFirstImage);
       }
     }, 50);
 
     // Loop through the slideshow, fading items out and in.
     setInterval(function() {
-      $('#slideshow > div > div:first')
-        .fadeOut(fadeDuration) // fadeOut isn't working properly, set to 0 for now.
+      $('#slideshow > div:first')
+        .fadeOut(fadeDuration)
         .next()
         .fadeIn(fadeDuration)
         .end()
-        .appendTo('#slideshow > div');
+        .appendTo('#slideshow');
     },  slideDisplayDuration);
   } // componentDidMount
 
