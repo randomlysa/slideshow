@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import '../style.css';
-import $ from 'jquery';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../actions'
+
 import SlideshowItem from './SlideshowItem';
 
+import '../style.css';
+import $ from 'jquery';
+
 class Slideshow extends Component {
+
   componentDidMount() {
+
     const fadeDuration = 2500;
-    const slideDisplayDuration = '6000';
+    let slideDisplayDuration = this.props.config.slideDuration * 1000;
 
     // Hide all images except first on load.
     const displayFirstImage = setTimeout(() => {
@@ -36,4 +43,15 @@ class Slideshow extends Component {
   }; // render
 } // class App
 
-export default Slideshow;
+function mapStateToProps(state) {
+  return state;
+}
+
+function mapDispatchToProps(dispatch) {
+  // Assign all actions (import * as actionCreators) to props.actions
+  return {
+      actions: bindActionCreators(actionCreators, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Slideshow);
