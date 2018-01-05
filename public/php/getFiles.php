@@ -9,7 +9,16 @@ if (isset($_GET["dir"])) {
 }
 
 // http://php.net/manual/en/function.scandir.php#107215
-$files = array_diff(scandir($whichDirToScan), array('..', '.'));
+$dirscan = array_diff(scandir($whichDirToScan), array('..', '.'));
+
+$files = array();
+
+foreach($dirscan as $file) {
+    if(preg_match('/.*\.jpg/i', $file)) {
+        $files[] = $file;
+    }
+};
+
 echo json_encode($files);
 
 ?>
