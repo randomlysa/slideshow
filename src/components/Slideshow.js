@@ -12,8 +12,8 @@ class Slideshow extends Component {
 
   componentDidMount() {
 
-    const fadeDuration = 2500;
-    let slideDisplayDuration = this.props.config.slideDuration * 1000;
+    let fadeDuration = this.props.config.fadeDuration || 2500;
+    let slideDisplayDuration = this.props.config.slideDuration * 1000 || 6000;
 
     // Hide all images except first on load.
     const displayFirstImage = setTimeout(() => {
