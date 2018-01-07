@@ -18,6 +18,9 @@ const store = createStore(
     persistedState
 );
 
+store.subscribe(() => {
+    saveState(store.getState());
+});
 
 ReactDOM.render(
     <Provider store={store}>
