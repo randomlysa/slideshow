@@ -9,18 +9,23 @@ class Admin extends Component {
     super(props);
 
     // Set a default of 6 for slideDuration.
-    this.state = { slideDuration: this.props.config.slideDuration || '6'};
+    this.state = {
+        slideDuration: this.props.config.slideDuration || 6,
+        transitionDuration: this.props.config.transitionDuration || 500
+      };
+
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   onInputChange(event) {
-    this.setState({ slideDuration: event.target.value })
+    this.setState({ [event.target.id]: event.target.value })
   }
 
   onFormSubmit(event) {
     event.preventDefault();
     this.props.updateSlideshowDuration(this.state.slideDuration);
+    this.props.updateTransitionDuration(this.state.transitionDuration);
   }
 
   render() {
@@ -30,10 +35,20 @@ class Admin extends Component {
           <form onSubmit={this.onFormSubmit} className="input-group">
             Slide duration (seconds):
               <input type="number"
-                placeholder="Number"
+                id="slideDuration"
+                placeholder="Number (seconds)"
                 onChange={this.onInputChange}
                 value={this.state.slideDuration}
               />
+              <br />
+              Transition duration (ms):
+              <input type="number"
+                id="transitionDuration"
+                placeholder="Number (milliseconds)"
+                onChange={this.onInputChange}
+                value={this.state.transitionDuration}
+              /> (1000ms = 1s)
+              <br />
             <input type="submit" name="Save" />
           </form>
       </div>

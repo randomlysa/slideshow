@@ -12,8 +12,12 @@ class Slideshow extends Component {
 
   componentDidMount() {
 
-    let fadeDuration = this.props.config.fadeDuration || 2500;
-    let slideDisplayDuration = this.props.config.slideDuration * 1000 || 6000;
+    let transitionDuration = this.props.config.transitionDuration || 2500;
+    // slideDisplayDuration needs to have transitionDuration added to it,
+    // otherwise if both values are equal, the slideshow will be constantly
+    // transitioning.
+    let slideDisplayDuration = this.props.config.slideDuration * 1000 +
+      parseInt(transitionDuration, 10) || 6000;
 
     // Hide all images except first on load.
     const displayFirstImage = setTimeout(() => {
@@ -26,9 +30,9 @@ class Slideshow extends Component {
     // Loop through the slideshow, fading items out and in.
     setInterval(() => {
       $('#slideshow > div:first')
-        .fadeOut(fadeDuration)
+        .fadeOut(parseInt(transitionDuration, 10))
         .next()
-        .fadeIn(fadeDuration)
+        .fadeIn(parseInt(transitionDuration, 10))
         .end()
         .appendTo('#slideshow');
     },  slideDisplayDuration);
