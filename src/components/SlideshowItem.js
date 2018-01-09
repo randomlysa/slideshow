@@ -28,9 +28,10 @@ class SlideshowItem extends Component {
     .done((data) => {
       let newItems = Object.values(data);
       // Compare new data to slideshowItems to see if state should be updated.
-      const updateState = _.isEqual(newItems, self.state.slideshowItems);
+      const newStateIsUnchanged = _.isEqual(newItems, self.state.slideshowItems);
 
-      if (!updateState) {
+      // State changed.
+      if (!newStateIsUnchanged) {
         self.setState({
           slideshowItems: newItems
         });
