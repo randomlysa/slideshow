@@ -32,9 +32,12 @@ class SlideshowItem extends Component {
 
       // State changed.
       if (!newStateIsUnchanged) {
+        $(".imageHolder").fadeOut();
         self.setState({
           slideshowItems: newItems
         });
+        // Hide all images except first. Works on initial load and state change.
+        $(".imageHolder:not(:first)").css('display', 'none');
       }
 
     })
@@ -52,15 +55,9 @@ class SlideshowItem extends Component {
 
   renderSlideshowItem(item, index) {
       const itemUrl = `bb1/${item}`;
-      let divStyle;
-
-      // Hide all divs except the first.
-      if (index > 0) {
-        divStyle = {'display': 'none'};
-      }
 
       return (
-        <div key={item} style={divStyle}>
+        <div key={item} className="imageHolder">
           <img src={itemUrl} alt="Slideshow Item" />
         </div>
       )
