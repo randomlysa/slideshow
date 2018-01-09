@@ -15,7 +15,7 @@ $files = array();
 
 foreach($dirscan as $file) {
     if(preg_match('/.*\.jpg/i', $file)) {
-        $files[] = $file;
+        $files[md5($file)] = $file;
     }
 };
 
