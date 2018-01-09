@@ -18,7 +18,7 @@ class SlideshowItem extends Component {
     if (url === "http://localhost:3000/") {
       server = "http://localhost/slideshow/public" // use localhost with php
     } else {
-      server = "http://code.randomlysa.com/slideshow"
+      server = url;
     }
 
     $.ajax({
