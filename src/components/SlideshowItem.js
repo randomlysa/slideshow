@@ -49,11 +49,17 @@ class SlideshowItem extends Component {
     });
   } // componentDidMount
 
-  renderSlideshowItem(item) {
+  renderSlideshowItem(item, index) {
       const itemUrl = `bb1/${item}`;
+      let divStyle;
+
+      // Hide all divs except the first.
+      if (index > 0) {
+        divStyle = {'display': 'none'};
+      }
 
       return (
-        <div key={item}>
+        <div key={item} style={divStyle}>
           <img src={itemUrl} alt="Slideshow Item" />
         </div>
       )
@@ -62,8 +68,8 @@ class SlideshowItem extends Component {
   render() {
     if (this.state && this.state.slideshowItems) {
       return (
-          this.state.slideshowItems.map((item) => {
-            return this.renderSlideshowItem(item)
+          this.state.slideshowItems.map((item, index) => {
+            return this.renderSlideshowItem(item, index)
           })
       )
     } else {

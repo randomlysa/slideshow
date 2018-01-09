@@ -19,14 +19,6 @@ class Slideshow extends Component {
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
 
-    // Hide all images except first on load.
-    const displayFirstImage = setTimeout(() => {
-      if ($('#slideshow > div:gt(0)')) {
-          $('#slideshow > div:gt(0)').hide();
-          clearInterval(displayFirstImage);
-      }
-    }, 50);
-
     // Loop through the slideshow, fading items out and in.
     setInterval(() => {
       $('#slideshow > div:first')
