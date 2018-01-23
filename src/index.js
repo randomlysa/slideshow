@@ -22,11 +22,28 @@ store.subscribe(() => {
     saveState(store.getState());
 });
 
+
+// Origin = http://something.com:port
+const { pathname } = window.location;
+let basename;
+
+// Get basepath from pathname.
+let getDefaults = pathname.split("/");
+
+// getDefaults[0] is always empty. [1] is the basename and [2] is the bulletin
+// path, but that isn't used here.
+if (getDefaults[1]) {
+    basename = getDefaults[1];
+} else {
+    basename = "/";
+}
+
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <Router basename={basename}>
             <div>
-                <Route exact path="/" component={Slideshow} />
+                {/* make path optional, try to load default if not specified */}
+                <Route path="/:name?" component={Slideshow} />
                 <Route exact path="/admin" component={Admin} />
             </div>
        </Router>
