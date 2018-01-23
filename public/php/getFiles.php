@@ -3,9 +3,15 @@
 header("Access-Control-Allow-Origin: *");
 
 if (isset($_GET["dir"])) {
-    $whichDirToScan = $_GET["dir"];
+    $whichDirToScan = "../slideshows/" . $_GET["dir"];
 } else {
-    $whichDirToScan = "../bb1";
+    $whichDirToScan = "../slideshows/bb1";
+}
+
+if (!file_exists($whichDirToScan)) {
+    echo $whichDirToScan;
+    echo "null";
+    exit;
 }
 
 // http://php.net/manual/en/function.scandir.php#107215

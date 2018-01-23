@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import _ from 'lodash';
 
+let server;
+
 class SlideshowItem extends Component {
 
   // Schedule updateSlideshow to run every x seconds.
@@ -12,21 +14,22 @@ class SlideshowItem extends Component {
   // Get list of files, update state.
   updateSlideshow = () => {
     const self = this;
-    const url = window.location.href;
-    let server;
+    const origin = window.location.origin;
 
-    if (url === "http://localhost:3000/") {
+    if (origin.includes("http://localhost:3000")) {
       server = "http://localhost/slideshow/public" // use localhost with php
     } else {
-      server = url;
+      // Set path for ajax requests.
+      server = `${origin}/${window.location.pathname.split("/")[1]}`;
     }
 
     $.ajax({
-      url: `${server}/php/getFiles.php`,
+      url: `${server}/php/getFiles.php?dir=${this.props.dir}`,
       dataType: 'json'
     })
     .done((data) => {
       let newItems = Object.values(data);
+
       // Compare new data to slideshowItems to see if state should be updated.
       const newStateIsUnchanged = _.isEqual(newItems, self.state.slideshowItems);
 
@@ -54,7 +57,7 @@ class SlideshowItem extends Component {
   } // componentDidMount
 
   renderSlideshowItem(item, index) {
-      const itemUrl = `bb1/${item}`;
+      const itemUrl = `${server}/slideshows/${this.props.dir}/${item}`;
 
       return (
         <div key={item} className="imageHolder">

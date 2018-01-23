@@ -11,7 +11,6 @@ import $ from 'jquery';
 class Slideshow extends Component {
 
   componentDidMount() {
-
     let transitionDuration = this.props.config.transitionDuration || 2500;
     // slideDisplayDuration needs to have transitionDuration added to it,
     // otherwise if both values are equal, the slideshow will be constantly
@@ -31,9 +30,12 @@ class Slideshow extends Component {
   } // componentDidMount
 
   render() {
+    // Get slideshowDir from url or default to bb1.
+    const slideShowDir = this.props.match.url.split("/")[1] || "bb1";
+
     return (
       <div id="slideshow">
-        <SlideshowItem />
+        <SlideshowItem dir={slideShowDir} />
       </div>
     )
   }; // render
