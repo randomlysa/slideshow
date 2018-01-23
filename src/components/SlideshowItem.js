@@ -20,7 +20,7 @@ class SlideshowItem extends Component {
       server = "http://localhost/slideshow/public" // use localhost with php
     } else {
       // Set path for ajax requests.
-      server = `${origin}/${window.location.pathname.split("/")[1]}`;
+      server = `${origin}/${this.props.basename}`;
     }
 
     $.ajax({

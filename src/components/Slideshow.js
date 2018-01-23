@@ -30,12 +30,15 @@ class Slideshow extends Component {
   } // componentDidMount
 
   render() {
-    // Get slideshowDir from url or default to bb1.
-    const slideShowDir = this.props.match.url.split("/")[1] || "bb1";
+    // Get slideshowDir from props or default to bb1.
+    const slideShowDir = this.props.defaultDir || "bb1";
 
     return (
       <div id="slideshow">
-        <SlideshowItem dir={slideShowDir} />
+        <SlideshowItem
+          basename={this.props.basename}
+          dir={slideShowDir}
+        />
       </div>
     )
   }; // render
