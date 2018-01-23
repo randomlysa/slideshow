@@ -56,6 +56,7 @@ ReactDOM.render(
         <Router basename={basename}>
             <div>
                 {/* make path optional, try to load default if not specified */}
+                {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}
                 <Route path="/:name?"
                     component={
                         () =>
