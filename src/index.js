@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
@@ -50,7 +54,8 @@ if (getDefaults[1] === "!" && getDefaults[2]) {
 ReactDOM.render(
     <Provider store={store}>
         <Router basename={basename}>
-            <div>
+            <Switch>
+                <Route exact path="/admin" component={Admin} />
                 {/* make path optional, try to load default if not specified */}
                 {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}
                 <Route path="/:name?"
@@ -62,8 +67,7 @@ ReactDOM.render(
                             />
                     }
                 />
-                <Route exact path="/admin" component={Admin} />
-            </div>
+            </Switch>
        </Router>
     </Provider>,
     document.getElementById('root')
