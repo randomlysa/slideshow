@@ -22,7 +22,7 @@ if($_FILES['photo']['name']) {
 		}
 
         // Move uploaded file to proper directory.
-		move_uploaded_file($_FILES['photo']['tmp_name'], '../slideshows/' . $_FILES['photo']['name']);
+		move_uploaded_file($_FILES['photo']['tmp_name'], '../slideshows/' . $_POST['folder'] . '/' . $_FILES['photo']['name']);
 		print "File uploaded.";
 
     // Other error.

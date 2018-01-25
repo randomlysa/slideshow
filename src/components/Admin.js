@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
-import $ from 'jquery';
+
+import UploadFiles from './UploadFiles';
 
 class Admin extends Component {
   constructor(props) {
@@ -21,38 +21,15 @@ class Admin extends Component {
   }
 
   onInputChange(event) {
-    this.setState({ [event.target.id]: event.target.value })
+    this.setState({
+      [event.target.id]: event.target.value
+    })
   }
 
   onFormSubmit(event) {
     event.preventDefault();
     this.props.updateSlideshowDuration(this.state.slideDuration);
     this.props.updateTransitionDuration(this.state.transitionDuration);
-  }
-
-  onDrop(acceptedFiles) {
-    acceptedFiles.forEach(file => {
-      // formData: https://stackoverflow.com/a/24939229/3996097
-      var formData = new FormData();
-      formData.append('photo', file);
-      // Todo: set folder to upload file to.
-      // formData.append('folder', '');
-
-      // http://localhost/slideshow/public/php/uploadFiles.php
-      $.ajax({
-        url: "http://localhost/slideshow/public/php/uploadFiles.php",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false
-      })
-      .done((data) => {
-        console.log(data);
-      })
-      .fail((e) => {
-        console.log(e);
-      });
-    });
   }
 
   render() {
@@ -81,16 +58,8 @@ class Admin extends Component {
 
           <hr style={{'marginBottom': '30px'}} />
 
-          <Dropzone
-            onDrop={this.onDrop.bind(this)}
-            style={{
-              'padding': '50px',
-              'border': 'dashed 1px #000',
-              'borderRadius': '40px'
-            }}
-          >
-            <p>Try dropping some files here, or click to select files to upload.</p>
-          </Dropzone>
+          <UploadFiles />
+
 
       </div>
 
