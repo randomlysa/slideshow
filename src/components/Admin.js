@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
 
 import UploadFiles from './UploadFiles';
+import AdminSlideshow from './AdminSlideshow';
 
 class Admin extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class Admin extends Component {
           <hr style={{'marginBottom': '30px'}} />
 
           <UploadFiles />
-
+          <AdminSlideshow />
 
       </div>
 
