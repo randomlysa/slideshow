@@ -91,8 +91,13 @@ class UploadFiles extends Component {
           onChange={this.setActiveFolder.bind(this)}
         >
           <option value="">Select a slideshow folder to edit</option>
-          <option value="bb1">bb1</option>
-          <option value="bb2">bb2</option>
+          {this.state.folders.map((folder) => {
+            return (
+              <option value={folder} key={folder}>
+                {folder}
+              </option>
+            )
+          })}
         </select>
 
         <hr />
