@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
+import $ from 'jquery';
 
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
@@ -14,7 +15,10 @@ class Admin extends Component {
     // Set a default of 6 for slideDuration.
     this.state = {
         slideDuration: this.props.config.slideDuration || 6,
-        transitionDuration: this.props.config.transitionDuration || 500
+        transitionDuration: this.props.config.transitionDuration || 500,
+        activeFolder: '',
+        folders: [],
+        uploadDisabled: true
       };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -32,6 +36,37 @@ class Admin extends Component {
     this.props.updateSlideshowDuration(this.state.slideDuration);
     this.props.updateTransitionDuration(this.state.transitionDuration);
   }
+
+  setActiveFolder(e) {
+    if (e.target.value) {
+      this.setState({
+        uploadDisabled: false,
+        activeFolder: e.target.value
+      });
+    } else {
+      this.setState({
+        uploadDisabled: true,
+        activeFolder: ''
+      });
+    }
+  }
+
+  componentWillMount() {
+    // Get list of folders (slideshows) so the user can select a slideshow,
+    // upload, sort, and delete slides (images) in the folder.
+    $.ajax({
+      url: "http://localhost/slideshow/public/php/getFolders.php",
+      type: 'GET',
+      dataType: 'json'
+    })
+    .done((data) => {
+      let folders = Object.values(data);
+      this.setState({ folders });
+    })
+    .fail((e) => {
+      console.log(e);
+    });
+}
 
   render() {
     return (
@@ -59,8 +94,30 @@ class Admin extends Component {
 
           <hr style={{'marginBottom': '30px'}} />
 
-          <UploadFiles />
-          <AdminSlideshow />
+          <select
+            name="selectActiveFolder"
+            style={{
+              'padding': '20px',
+              'fontSize': '200%',
+              'borderRadius': '40px'
+            }}
+            onChange={this.setActiveFolder.bind(this)}
+          >
+          <option value="">Select a slideshow folder to edit</option>
+          {this.state.folders.map((folder) => {
+            return (
+              <option value={folder} key={folder}>
+                {folder}
+              </option>
+            )
+          })}
+        </select>
+
+        <UploadFiles
+          activeFolder={this.state.activeFolder}
+          uploadStatus={this.state.uploadDisabled}
+        />
+        <AdminSlideshow />
 
       </div>
 

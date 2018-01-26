@@ -4,37 +4,13 @@ import Dropzone from 'react-dropzone';
 import $ from 'jquery';
 
 class UploadFiles extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      folders: [],
-      activeFolder: '',
-      disabled: true
-    }
-  }
-
-  setActiveFolder(e) {
-    if (e.target.value) {
-      this.setState({
-        disabled: false,
-        activeFolder: e.target.value
-      });
-    } else {
-      this.setState({
-        disabled: true,
-        activeFolder: ''
-      });
-    }
-  }
-
   onDrop(acceptedFiles) {
     acceptedFiles.forEach(file => {
       // formData: https://stackoverflow.com/a/24939229/3996097
       var formData = new FormData();
       formData.append('photo', file);
       // Set folder to upload file to.
-      formData.append('folder', this.state.activeFolder);
+      formData.append('folder', this.props.activeFolder);
 
       // http://localhost/slideshow/public/php/uploadFiles.php
       $.ajax({
@@ -53,25 +29,9 @@ class UploadFiles extends Component {
     });
   }
 
-  componentWillMount() {
-      $.ajax({
-        url: "http://localhost/slideshow/public/php/getFolders.php",
-        type: 'GET',
-        dataType: 'json'
-      })
-      .done((data) => {
-        let folders = Object.values(data);
-        this.setState({ folders });
-      })
-      .fail((e) => {
-        console.log(e);
-      });
-  }
-
-
   render() {
     let dropzoneMessage = '';
-    if (this.state.disabled) {
+    if (this.props.uploadStatus) {
       dropzoneMessage = `Uploading disabled.
         Please select a folder to upload to.`;
     } else {
@@ -80,30 +40,8 @@ class UploadFiles extends Component {
     }
 
     return (
-      <div>
-        <select
-          name="selectActiveFolder"
-          style={{
-            'padding': '20px',
-            'fontSize': '200%',
-            'borderRadius': '40px'
-          }}
-          onChange={this.setActiveFolder.bind(this)}
-        >
-          <option value="">Select a slideshow folder to edit</option>
-          {this.state.folders.map((folder) => {
-            return (
-              <option value={folder} key={folder}>
-                {folder}
-              </option>
-            )
-          })}
-        </select>
-
-        <hr />
-
-        <Dropzone
-        onDrop={this.onDrop.bind(this)} disabled={this.state.disabled}
+      <Dropzone
+        onDrop={this.onDrop.bind(this)} disabled={this.props.uploadStatus}
         style={{
             'padding': '50px',
             'border': 'dashed 1px #000',
@@ -112,8 +50,7 @@ class UploadFiles extends Component {
         >
         {}
         <p>{dropzoneMessage}</p>
-        </Dropzone>
-      </div>
+      </Dropzone>
     )
   }
 }
