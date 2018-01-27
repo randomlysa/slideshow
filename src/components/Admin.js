@@ -99,7 +99,9 @@ class Admin extends Component {
             style={{
               'padding': '20px',
               'fontSize': '200%',
-              'borderRadius': '40px'
+              'borderRadius': '40px',
+              'width': '100%',
+              'marginBottom': '40px'
             }}
             onChange={this.setActiveFolder.bind(this)}
           >
