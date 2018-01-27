@@ -117,7 +117,10 @@ class Admin extends Component {
           activeFolder={this.state.activeFolder}
           uploadStatus={this.state.uploadDisabled}
         />
-        <AdminSlideshow />
+        <AdminSlideshow
+          activeFolder={this.state.activeFolder}
+          basename={this.props.basename}
+        />
 
       </div>
 
