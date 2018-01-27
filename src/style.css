@@ -28,6 +28,7 @@ img {
 }
 
 .thumbnail {
+    position: relative;
     text-align: center;
 }
 
@@ -35,4 +36,26 @@ img {
     width: 300px;
     padding: 20px 0 20px 0;
     border-bottom: solid 2px #000;
+    cursor: pointer;
+}
+
+.thumbnail > p {
+    background-color: orangered;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(100%, -50%);
+    padding: 20px;
+    opacity: 0;
+    border-radius: 10px;
+}
+
+/* when hovering over the image, show the sibling <p> */
+.thumbnail > img:hover ~ p {
+    opacity: .7;
+    transition: all .5s;
+}
+
+.thumbnail > img:hover {
+    filter: grayscale(90%);
 }

@@ -68,6 +68,7 @@ class AdminSlideshow extends Component {
           alt="Slideshow Item"
           onClick={this.deleteFile.bind(this, item)}
         />
+        <p>Click image to delete file</p>
       </div>
     )
   } // renderSlideshowItem
