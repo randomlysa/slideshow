@@ -31,22 +31,24 @@ class AdminSlideshow extends Component {
   } // updateSlideShow
 
   deleteFile(item) {
-    let { activeFolder } = this.state;
-    $.ajax({
-      url: `${server}/php/deleteFile.php?`,
-      type: 'POST',
-      data: {
-        fileToDelete: item,
-        folder: activeFolder
-      }
-    }) // ajax
-    .done((data) => {
-      console.log('deleted', data)
-      this.updateSlideshow(activeFolder);
-    }) // ajax done
-    .fail((e) => {
-      console.log('fail', e);
-    }) // ajax fail
+    if(window.confirm("Delete file?")) {
+      let { activeFolder } = this.state;
+      $.ajax({
+        url: `${server}/php/deleteFile.php?`,
+        type: 'POST',
+        data: {
+          fileToDelete: item,
+          folder: activeFolder
+        }
+      }) // ajax
+      .done((data) => {
+        console.log('deleted', data)
+        this.updateSlideshow(activeFolder);
+      }) // ajax done
+      .fail((e) => {
+        console.log('fail', e);
+      }) // ajax fail
+    } // if window.confirm
   } // deleteFile
 
   componentWillReceiveProps(nextProps){
