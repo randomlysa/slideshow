@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 
 let server;
+const origin = window.location.origin;
+
+if (origin.includes("http://localhost:3000")) {
+  server = "http://localhost/slideshow/public" // use localhost with php
+} else {
+  // Set path for ajax requests.
+  server = `${origin}/${this.props.basename}`;
+}
 
 class AdminSlideshow extends Component {
 
   updateSlideshow = (activeFolder) => {
     const self = this;
-    const origin = window.location.origin;
-
-    if (origin.includes("http://localhost:3000")) {
-      server = "http://localhost/slideshow/public" // use localhost with php
-    } else {
-      // Set path for ajax requests.
-      server = `${origin}/${this.props.basename}`;
-    }
 
     $.ajax({
       url: `${server}/php/getFiles.php?dir=${activeFolder}`,
@@ -30,18 +30,42 @@ class AdminSlideshow extends Component {
     }) // ajax fail
   } // updateSlideShow
 
+  deleteFile(item) {
+    let { activeFolder } = this.state;
+    $.ajax({
+      url: `${server}/php/deleteFile.php?`,
+      type: 'POST',
+      data: {
+        fileToDelete: item,
+        folder: activeFolder
+      }
+    }) // ajax
+    .done((data) => {
+      console.log('deleted', data)
+      this.updateSlideshow(activeFolder);
+    }) // ajax done
+    .fail((e) => {
+      console.log('fail', e);
+    }) // ajax fail
+  } // deleteFile
+
   componentWillReceiveProps(nextProps){
     this.setState({
+      activeFolder: nextProps.activeFolder,
       slideshowItems: this.updateSlideshow(nextProps.activeFolder)
     });
-  }
+  } // componentWillReceiveProps
 
   renderSlideshowItem(item, index) {
     const itemUrl = `${server}/slideshows/${this.props.activeFolder}/${item}`;
 
     return (
       <div key={item} className="thumbnail">
-        <img src={itemUrl} alt="Slideshow Item" />
+        <img
+          src={itemUrl}
+          alt="Slideshow Item"
+          onClick={this.deleteFile.bind(this, item)}
+        />
       </div>
     )
   } // renderSlideshowItem
