@@ -25,6 +25,12 @@ class Admin extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
+  confirmLogout = () => {
+    if(window.confirm("Logout?")) {
+      this.props.logout();
+    }
+  }
+
   onInputChange(event) {
     this.setState({
       [event.target.id]: event.target.value
@@ -74,7 +80,7 @@ class Admin extends Component {
         <h1>Admin Page</h1>
         <button
           className="btn-logout"
-          onClick={this.props.logout}>
+          onClick={this.confirmLogout}>
           Logout
         </button>
           <form onSubmit={this.onFormSubmit} className="input-group">
