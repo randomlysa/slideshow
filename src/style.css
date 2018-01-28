@@ -2,16 +2,26 @@ body {
     background-color: #000;
     padding: 0;
     margin: 0;
-    /* overflow: hidden; */
+    font-size: 16pt;
+    font-family: 'Georgia';
 }
+
+input, select  {
+    font-family: inherit;
+    font-size: 150%;
+    padding: 5px;
+}
+
+/* slideshow  */
+
 #slideshow {
     text-align: center;
     margin: 0 auto;
     position: relative;
     max-width: 100%;
-    height: 90%;
-    padding: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    height: 99vh;
+    padding: 0px;
+    overflow: hidden;
 }
 
 #slideshow > div {
@@ -27,6 +37,8 @@ img {
     max-width: 100%;
 }
 
+
+/* admin section */
 .thumbnail {
     position: relative;
     text-align: center;
@@ -58,4 +70,12 @@ img {
 
 .thumbnail > img:hover {
     filter: grayscale(90%);
+}
+
+.selectActiveFolder {
+    padding: 20px;
+    font-size: 200%;
+    border: none;
+    width: 100%;
+    margin-bottom: 40px;
 }

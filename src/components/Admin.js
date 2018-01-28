@@ -96,13 +96,7 @@ class Admin extends Component {
 
           <select
             name="selectActiveFolder"
-            style={{
-              'padding': '20px',
-              'fontSize': '200%',
-              'borderRadius': '40px',
-              'width': '100%',
-              'marginBottom': '40px'
-            }}
+            className="selectActiveFolder"
             onChange={this.setActiveFolder.bind(this)}
           >
           <option value="">Select a slideshow folder to edit</option>

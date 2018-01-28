@@ -44,8 +44,7 @@ class UploadFiles extends Component {
         onDrop={this.onDrop.bind(this)} disabled={this.props.uploadStatus}
         style={{
             'padding': '50px',
-            'border': 'dashed 1px #000',
-            'borderRadius': '40px'
+            'border': 'dashed 10px #000',
         }}
         >
         {}
