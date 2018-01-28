@@ -79,3 +79,17 @@ img {
     width: 100%;
     margin-bottom: 40px;
 }
+
+.btn-logout {
+    font-family: inherit;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    color: #fff;
+    background-color: rgb(99, 7, 7);
+}

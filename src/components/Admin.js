@@ -72,8 +72,10 @@ class Admin extends Component {
     return (
       <div className="admin">
         <h1>Admin Page</h1>
-        <button onClick={this.props.logout}>
-          LogOut
+        <button
+          className="btn-logout"
+          onClick={this.props.logout}>
+          Logout
         </button>
           <form onSubmit={this.onFormSubmit} className="input-group">
             Slide duration (seconds):
