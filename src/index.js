@@ -11,8 +11,10 @@ import { createStore } from 'redux';
 import './index.css';
 import slideshowApp from './reducers';
 
+import requireAuth from './components/requireAuth'
 import Slideshow from './components/Slideshow';
 import Admin from './components/Admin';
+import Login from './components/Login'
 
 import { loadState, saveState } from './manageLocalStorage';
 
@@ -56,12 +58,15 @@ ReactDOM.render(
         <Router basename={basename}>
             <Switch>
                 <Route exact path="/admin"
-                    component={
+                    component={requireAuth(
                         () =>
                         <Admin
                             basename={basename}
                         />
-                    }
+                    )}
+                />
+                <Route exact path="/login"
+                    component={Login}
                 />
                 {/* make path optional, try to load default if not specified */}
                 {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}

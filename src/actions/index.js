@@ -1,5 +1,6 @@
 export const UPDATE_SLIDESHOW_DURATION = 'UPDATE_SLIDESHOW_DURATION';
 export const UPDATE_TRANSITION_DURATION = 'UPDATE_TRANSITION_DURATION';
+export const VERIFY_PASSWORD = 'VERIFY_PASSWORD';
 
 export function updateSlideshowDuration(duration) {
     return {
@@ -15,3 +16,16 @@ export function updateTransitionDuration(duration) {
     }
 }
 
+export function checkPassword(password) {
+    if (password === "steelseries") {
+        return {
+            type: VERIFY_PASSWORD,
+            payload: true
+        }
+    } else {
+        return {
+            type: VERIFY_PASSWORD,
+            payload: false
+        }
+    }
+}
