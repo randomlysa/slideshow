@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions'
+import { checkPassword, logout } from '../actions'
 import $ from 'jquery';
 
 import UploadFiles from './UploadFiles';
@@ -72,6 +72,9 @@ class Admin extends Component {
     return (
       <div className="admin">
         <h1>Admin Page</h1>
+        <button onClick={this.props.logout}>
+          LogOut
+        </button>
           <form onSubmit={this.onFormSubmit} className="input-group">
             Slide duration (seconds):
               <input type="number"
@@ -129,8 +132,8 @@ function mapStateToProps({ config }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  // Assign all actions (import * as actionCreators) to props.actions
-  return bindActionCreators(actionCreators, dispatch)
+  // Assign { actions } to props.actions
+  return bindActionCreators({checkPassword, logout}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

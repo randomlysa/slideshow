@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 
 // Import routes.
-import requireAuth from './requireAuth';
 import Slideshow from './Slideshow';
 import Admin from './Admin';
-import Login from './Login'
+import Login from './Login';
 
 // Set some defaults.
 let basename = "/bulletin";
@@ -42,12 +43,15 @@ class MyRoutes extends Component {
       <Router basename={basename}>
         <Switch>
           <Route exact path="/admin"
-            component={requireAuth(
-              () =>
-              <Admin
-                basename={basename}
-              />
-            )}
+            render={
+              () => (
+                this.props.isLoggedIn ? (
+                  <Admin basename={basename} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              )
+            }
           />
           <Route exact path="/login"
             component={Login}
@@ -69,4 +73,9 @@ class MyRoutes extends Component {
   } // render
 } // class
 
-export default MyRoutes;
+function mapStateToProps({ admin }) {
+  // Map isLoggedIn to this.props
+  return admin;
+}
+
+export default connect(mapStateToProps)(MyRoutes);

@@ -17,7 +17,7 @@ export function updateTransitionDuration(duration) {
 }
 
 export function checkPassword(password) {
-    if (password === "steelseries") {
+    if (password === "pass") {
         return {
             type: VERIFY_PASSWORD,
             payload: true
@@ -27,5 +27,12 @@ export function checkPassword(password) {
             type: VERIFY_PASSWORD,
             payload: false
         }
+    }
+}
+
+export function logout() {
+    return {
+        type: VERIFY_PASSWORD,
+        payload: false
     }
 }

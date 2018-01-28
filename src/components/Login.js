@@ -23,6 +23,12 @@ class Login extends React.Component {
     this.props.checkPassword(this.state.password)
   }
 
+  componentWillReceiveProps(nextprops) {
+    if (nextprops.isLoggedIn) {
+      this.props.history.push('/admin');
+    }
+  }
+
   render() {
     return (
       <div className="admin">
@@ -41,8 +47,8 @@ class Login extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return state;
+function mapStateToProps({ admin }) {
+  return admin;
 }
 
 function mapDispatchToProps(dispatch) {
