@@ -13,7 +13,8 @@ export default function(state = [], action) {
               return { isLoggedIn: false }
             }
         default:
-            return { isLoggedIn: false }
+            // Lets persisted state load.
+            return state
     }
 
 }
