@@ -61,7 +61,7 @@ class Admin extends Component {
     // Get list of folders (slideshows) so the user can select a slideshow,
     // upload, sort, and delete slides (images) in the folder.
     $.ajax({
-      url: "http://localhost/slideshow/public/php/getFolders.php",
+      url: `/${this.props.basename}/php/getFolders.php`,
       type: 'GET',
       dataType: 'json'
     })
