@@ -17,7 +17,7 @@ export function updateTransitionDuration(duration) {
 }
 
 export function checkPassword(password) {
-    if (password === "pass") {
+    if (password === "14400") {
         return {
             type: VERIFY_PASSWORD,
             payload: true

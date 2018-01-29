@@ -4,14 +4,16 @@ import $ from 'jquery';
 let server;
 const origin = window.location.origin;
 
-if (origin.includes("http://localhost:3000")) {
-  server = "http://localhost/slideshow/public" // use localhost with php
-} else {
-  // Set path for ajax requests.
-  server = `${origin}/${this.props.basename}`;
-}
-
 class AdminSlideshow extends Component {
+
+  componentWillMount() {
+    if (origin.includes("http://localhost:3000")) {
+      server = "http://localhost/slideshow/public" // use localhost with php
+    } else {
+      // Set path for ajax requests.
+      server = `${origin}/${this.props.basename}`;
+    }
+  }
 
   updateSlideshow = (activeFolder) => {
     const self = this;
