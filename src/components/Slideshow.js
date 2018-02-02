@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions'
 
+import Weather from './Weather';
 import SlideshowItem from './SlideshowItem';
 
 import '../style.css';
@@ -35,6 +36,7 @@ class Slideshow extends Component {
 
     return (
       <div id="slideshow">
+        <Weather />
         <SlideshowItem
           basename={this.props.basename}
           dir={slideShowDir}

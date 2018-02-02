@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxPromise  from 'redux-promise';
 
 import './index.css';
 import slideshowApp from './reducers';
@@ -11,9 +12,11 @@ import MyRoutes from './components/MyRoutes';
 import { loadState, saveState } from './manageLocalStorage';
 
 const persistedState = loadState();
+
 const store = createStore(
     slideshowApp,
-    persistedState
+    persistedState,
+    applyMiddleware(ReduxPromise),
 );
 
 store.subscribe(() => {
