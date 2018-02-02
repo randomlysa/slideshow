@@ -2,7 +2,7 @@ import {
     VERIFY_PASSWORD
 } from '../actions/index';
 
-export default function(state = [], action) {
+export default function(state = {}, action) {
 
     switch (action.type) {
         case VERIFY_PASSWORD:
