@@ -46,8 +46,8 @@ class Slideshow extends Component {
   }; // render
 } // class App
 
-function mapStateToProps(state) {
-  return state;
+function mapStateToProps({ config }) {
+  return { config };
 }
 
 function mapDispatchToProps(dispatch) {
