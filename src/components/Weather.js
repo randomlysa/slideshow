@@ -9,11 +9,15 @@ class Weather extends Component {
   }
 
   render() {
-    return (
-      <h1 className="weather">{this.props.weather.main.temp}&deg; F</h1>
-    )
-  }
-}
+    if (this.props.weather) {
+      return (
+        <h2 className="weather">{this.props.weather.main.temp}&deg; F</h2>
+      )
+    } else {
+      return "Loading";
+    }
+  } // Render
+} // class
 
 function mapStateToProps({ weather }) {
   return { weather } ;
