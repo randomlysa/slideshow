@@ -95,8 +95,10 @@ img {
 }
 
 .weather {
-    position: relative;
-    top: 0;
-    left: 0;
+    font-size: 200%;
+    position: absolute;
+    text-align: right;
+    bottom: 50px;
+    right: 50px;
     z-index: 50;
 }
