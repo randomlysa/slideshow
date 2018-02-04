@@ -27,16 +27,6 @@ class AdminSlideshow extends Component {
     } // if window.confirm
   } // deleteFile
 
-  componentWillReceiveProps(nextprops){
-    // If activeFolder has changed.
-    if (this.props.activeFolder !== nextprops.activeFolder) {
-      this.props.updateSlideshow(nextprops.activeFolder);
-    }
-
-    this.setState({
-      activeFolder: nextprops.activeFolder
-    });
-  } // componentWillReceiveProps
 
   renderSlideshowItem(item, index) {
     const itemUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${item.file}`;

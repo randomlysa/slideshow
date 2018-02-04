@@ -51,7 +51,13 @@ class Admin extends Component {
       this.setState({
         uploadDisabled: false,
         activeFolder: e.target.value
-      });
+      }, () => {
+        // Run after state has updated.
+        // TODO: Getting 404 in console, trying to load images for the
+        // wrong slideshow.
+        this.props.actions.updateSlideshow(this.state.activeFolder)
+      }
+    );
     } else {
       this.setState({
         uploadDisabled: true,
