@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-
+import { API_ROOT } from '../api-config';
 import $ from 'jquery';
 
 class UploadFiles extends Component {
@@ -14,7 +14,7 @@ class UploadFiles extends Component {
 
       // http://localhost/slideshow/public/php/uploadFiles.php
       $.ajax({
-        url: 'http://localhost/slideshow/public/php/uploadFiles.php',
+        url: `${API_ROOT}/php/uploadFiles.php`,
         type: 'POST',
         data: formData,
         processData: false,

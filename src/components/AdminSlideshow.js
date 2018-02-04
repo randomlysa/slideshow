@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import { API_ROOT } from '../api-config';
 
-let server;
-const origin = window.location.origin;
 
 class AdminSlideshow extends Component {
-
-  componentWillMount() {
-    if (origin.includes("http://localhost:3000")) {
-      server = "http://localhost/slideshow/public" // use localhost with php
-    } else {
-      // Set path for ajax requests.
-      server = `${origin}/${this.props.basename}`;
-    }
-  }
 
   updateSlideshow = (activeFolder) => {
     const self = this;
 
     $.ajax({
-      url: `${server}/php/getFiles.php?dir=${activeFolder}`,
+      url: `${API_ROOT}/php/getFiles.php?dir=${activeFolder}`,
       dataType: 'json'
     }) // ajax
     .done((data) => {
+      console.log(data);
       self.setState({
         slideshowItems: Object.values(data)
       });
@@ -36,7 +27,7 @@ class AdminSlideshow extends Component {
     if(window.confirm("Delete file?")) {
       let { activeFolder } = this.state;
       $.ajax({
-        url: `${server}/php/deleteFile.php?`,
+        url: `${API_ROOT}/php/deleteFile.php?`,
         type: 'POST',
         data: {
           fileToDelete: item,
@@ -61,10 +52,10 @@ class AdminSlideshow extends Component {
   } // componentWillReceiveProps
 
   renderSlideshowItem(item, index) {
-    const itemUrl = `${server}/slideshows/${this.props.activeFolder}/${item}`;
+    const itemUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${item.file}`;
 
     return (
-      <div key={item} className="thumbnail">
+      <div key={item.file} className="thumbnail">
         <img
           src={itemUrl}
           alt="Slideshow Item"

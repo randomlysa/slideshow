@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { checkPassword, logout } from '../actions/admin'
+
 import $ from 'jquery';
+import { API_ROOT } from '../api-config';
 
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
@@ -61,7 +63,7 @@ class Admin extends Component {
     // Get list of folders (slideshows) so the user can select a slideshow,
     // upload, sort, and delete slides (images) in the folder.
     $.ajax({
-      url: `/${this.props.basename}/php/getFolders.php`,
+      url: `${API_ROOT}/php/getFolders.php`,
       type: 'GET',
       dataType: 'json'
     })
