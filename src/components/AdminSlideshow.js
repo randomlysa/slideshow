@@ -8,7 +8,7 @@ class AdminSlideshow extends Component {
 
   deleteFile(item) {
     if(window.confirm("Delete file?")) {
-      let { activeFolder } = this.state;
+      let { activeFolder } = this.props;
       $.ajax({
         url: `${API_ROOT}/php/deleteFile.php`,
         type: 'POST',
