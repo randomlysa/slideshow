@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { checkPassword, logout } from '../actions/admin'
+import { checkPassword, logout } from '../actions/admin';
 
 import $ from 'jquery';
 import { API_ROOT } from '../api-config';
