@@ -33,6 +33,12 @@ class Slideshow extends Component {
     },  slideDisplayDuration);
   } // componentDidMount
 
+  componentWillReceiveProps() {
+    // Hide all images except first. Works on initial load and state change.
+    // TODO: confirm that it still works on state change.
+    $(".imageHolder:not(:first)").css('display', 'none');
+  }
+
   render() {
     // Get slideshowDir from props or default to bb1.
     const slideShowDir = this.props.defaultDir || "bb1";
