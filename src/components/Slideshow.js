@@ -13,7 +13,9 @@ import $ from 'jquery';
 class Slideshow extends Component {
 
   componentDidMount() {
-    this.props.actions.updateSlideshow();
+    // Get slideshowDir from props or default to bb1.
+    const slideShowDir = this.props.defaultDir || "bb1";
+    this.props.actions.updateSlideshow(slideShowDir);
 
     let transitionDuration = this.props.config.transitionDuration || 2500;
     // slideDisplayDuration needs to have transitionDuration added to it,
