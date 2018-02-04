@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { checkPassword, logout } from '../actions/admin';
+import { updateSlideshow } from '../actions/slideshow.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../api-config';
@@ -125,6 +126,7 @@ class Admin extends Component {
         <UploadFiles
           activeFolder={this.state.activeFolder}
           uploadStatus={this.state.uploadDisabled}
+          updateSlideshow={this.props.actions.updateSlideshow}
         />
         <AdminSlideshow
           activeFolder={this.state.activeFolder}
@@ -143,7 +145,9 @@ function mapStateToProps({ config }) {
 
 function mapDispatchToProps(dispatch) {
   // Assign { actions } to props.actions
-  return bindActionCreators({checkPassword, logout}, dispatch)
+  return {
+    actions: bindActionCreators({checkPassword, logout, updateSlideshow}, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

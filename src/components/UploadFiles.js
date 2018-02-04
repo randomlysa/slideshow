@@ -21,7 +21,8 @@ class UploadFiles extends Component {
         contentType: false
       })
       .done((data) => {
-        console.log(data);
+        // Update the slideshow to show new images.
+        this.props.updateSlideshow(this.props.activeFolder);
       })
       .fail((e) => {
         console.log(e);
