@@ -1,27 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import $ from 'jquery';
 import { API_ROOT } from '../api-config';
 
-
 class AdminSlideshow extends Component {
-
-  updateSlideshow = (activeFolder) => {
-    const self = this;
-
-    $.ajax({
-      url: `${API_ROOT}/php/getFiles.php?dir=${activeFolder}`,
-      dataType: 'json'
-    }) // ajax
-    .done((data) => {
-      console.log(data);
-      self.setState({
-        slideshowItems: Object.values(data)
-      });
-    }) // ajax done
-    .fail((e) => {
-      console.log(e);
-    }) // ajax fail
-  } // updateSlideShow
 
   deleteFile(item) {
     if(window.confirm("Delete file?")) {
@@ -36,7 +19,7 @@ class AdminSlideshow extends Component {
       }) // ajax
       .done((data) => {
         console.log('deleted', data)
-        this.updateSlideshow(activeFolder);
+        this.props.updateSlideshow(activeFolder);
       }) // ajax done
       .fail((e) => {
         console.log('fail', e);
@@ -44,10 +27,14 @@ class AdminSlideshow extends Component {
     } // if window.confirm
   } // deleteFile
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextprops){
+    // If activeFolder has changed.
+    if (this.props.activeFolder !== nextprops.activeFolder) {
+      this.props.updateSlideshow(nextprops.activeFolder);
+    }
+
     this.setState({
-      activeFolder: nextProps.activeFolder,
-      slideshowItems: this.updateSlideshow(nextProps.activeFolder)
+      activeFolder: nextprops.activeFolder
     });
   } // componentWillReceiveProps
 
@@ -67,9 +54,9 @@ class AdminSlideshow extends Component {
   } // renderSlideshowItem
 
   render() {
-    if (this.state && this.state.slideshowItems) {
+    if (this.props.activeFolder && this.props.slideshowItems) {
       return (
-          this.state.slideshowItems.map((item, index) => {
+          this.props.slideshowItems.map((item, index) => {
             return this.renderSlideshowItem(item, index)
           })
       )
@@ -81,4 +68,8 @@ class AdminSlideshow extends Component {
   }; // render
 }
 
-export default AdminSlideshow;
+function mapStateToProps({ slideshowItems }) {
+  return { slideshowItems };
+}
+
+export default connect(mapStateToProps)(AdminSlideshow);

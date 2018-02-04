@@ -131,6 +131,7 @@ class Admin extends Component {
         <AdminSlideshow
           activeFolder={this.state.activeFolder}
           basename={this.props.basename}
+          updateSlideshow={this.props.actions.updateSlideshow}
         />
 
       </div>
