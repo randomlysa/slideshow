@@ -1,75 +1,29 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import _ from 'lodash';
-
-let server;
 
 class SlideshowItem extends Component {
 
-  // Schedule updateSlideshow to run every x seconds.
-  updateSlideshowTimer = () => {
-    window.setInterval(this.updateSlideshow, 3000);
+  componentWillReceiveProps() {
+    // Hide all images except first. Works on initial load and state change.
+    // TODO: confirm that it still works on state change.
+    $(".imageHolder:not(:first)").css('display', 'none');
   }
 
-  // Get list of files, update state.
-  updateSlideshow = () => {
-    const self = this;
-    const origin = window.location.origin;
-
-    if (origin.includes("http://localhost:3000")) {
-      server = "http://localhost/slideshow/public" // use localhost with php
-    } else {
-      // Set path for ajax requests.
-      server = `${origin}/${this.props.basename}`;
-    }
-
-    $.ajax({
-      url: `${server}/php/getFiles.php?dir=${this.props.dir}`,
-      dataType: 'json'
-    })
-    .done((data) => {
-      let newItems = Object.values(data);
-
-      // Compare new data to slideshowItems to see if state should be updated.
-      const newStateIsUnchanged = _.isEqual(newItems, self.state.slideshowItems);
-
-      // State changed.
-      if (!newStateIsUnchanged) {
-        $(".imageHolder").fadeOut();
-        self.setState({
-          slideshowItems: newItems
-        });
-        // Hide all images except first. Works on initial load and state change.
-        $(".imageHolder:not(:first)").css('display', 'none');
-      }
-
-    })
-    .fail((e) => {
-      console.log(e);
-    });
-  } // updateSlideShow
-
-  componentDidMount() {
-    this.updateSlideshowTimer();
-    this.setState({
-      slideshowItems: this.updateSlideshow()
-    });
-  } // componentDidMount
-
   renderSlideshowItem(item, index) {
-      const itemUrl = `${server}/slideshows/${this.props.dir}/${item}`;
+      // pass in this.props.server ?
+      const itemUrl = `/slideshows/${this.props.dir}/${item.file}`;
 
       return (
-        <div key={item} className="imageHolder">
+        <div key={item.file} className="imageHolder">
           <img src={itemUrl} alt="Slideshow Item" />
         </div>
       )
     } // renderSlideshowItem
 
   render() {
-    if (this.state && this.state.slideshowItems) {
+    if (this.props.slideshowItems) {
       return (
-          this.state.slideshowItems.map((item, index) => {
+          this.props.slideshowItems.map((item, index) => {
             return this.renderSlideshowItem(item, index)
           })
       )

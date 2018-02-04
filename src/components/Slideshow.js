@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/admin'
+import * as adminActionCreators from '../actions/admin';
+import * as slideshowActionCreators from '../actions/slideshow';
 
 import Weather from './Weather';
 import SlideshowItem from './SlideshowItem';
@@ -12,6 +13,8 @@ import $ from 'jquery';
 class Slideshow extends Component {
 
   componentDidMount() {
+    this.props.actions.updateSlideshow();
+
     let transitionDuration = this.props.config.transitionDuration || 2500;
     // slideDisplayDuration needs to have transitionDuration added to it,
     // otherwise if both values are equal, the slideshow will be constantly
@@ -38,6 +41,7 @@ class Slideshow extends Component {
       <div id="slideshow">
         <Weather />
         <SlideshowItem
+          slideshowItems={this.props.slideshowItems}
           basename={this.props.basename}
           dir={slideShowDir}
         />
@@ -46,12 +50,16 @@ class Slideshow extends Component {
   }; // render
 } // class App
 
-function mapStateToProps({ config }) {
-  return { config };
+function mapStateToProps({ config, slideshowItems }) {
+  return { slideshowItems, config };
 }
 
 function mapDispatchToProps(dispatch) {
   // Assign all actions (import * as actionCreators) to props.actions
+  const actionCreators = {
+    ...adminActionCreators, ...slideshowActionCreators
+  };
+
   return {
       actions: bindActionCreators(actionCreators, dispatch)
   }
