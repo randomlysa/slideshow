@@ -74,7 +74,7 @@ class Admin extends Component {
     .fail((e) => {
       console.log(e);
     });
-}
+  }
 
   render() {
     return (
