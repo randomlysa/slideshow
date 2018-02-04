@@ -30,7 +30,7 @@ class Admin extends Component {
 
   confirmLogout = () => {
     if(window.confirm("Logout?")) {
-      this.props.logout();
+      this.props.actions.logout();
     }
   }
 
