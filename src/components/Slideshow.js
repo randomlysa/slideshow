@@ -18,6 +18,7 @@ class Slideshow extends Component {
     const slideshowDir = this.props.match.params.name || "bb1";
     this.props.actions.updateSlideshow(slideshowDir);
 
+    // Set some defaults.
     let transitionDuration = this.props.config.transitionDuration || 500;
     // slideDisplayDuration needs to have transitionDuration added to it,
     // otherwise if both values are equal, the slideshow will be constantly
