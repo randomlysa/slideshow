@@ -26,6 +26,9 @@ class Slideshow extends Component {
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
 
+    // Hide all items except first.
+    $(".imageHolder:not(:first)").css('display', 'none');
+
     // Loop through the slideshow, fading items out and in and running update.
     setInterval(() => {
       $('#slideshow > div:first')
@@ -38,10 +41,12 @@ class Slideshow extends Component {
     },  slideDisplayDuration);
   } // componentDidMount
 
-  componentWillReceiveProps() {
-    // Hide all images except first. Works on initial load and state change.
-    // TODO: confirm that it still works on state change.
-    $(".imageHolder:not(:first)").css('display', 'none');
+  componentDidUpdate(nextprops) {
+    // Number of items in slideshow changed. Hide all except first.
+    // This seems to update seamlessly, at least in initial testing.
+    if (this.props.slideshowItems.length !== nextprops.slideshowItems.length) {
+      $(".imageHolder:not(:first)").css('display', 'none');
+    }
   }
 
   render() {
