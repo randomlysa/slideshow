@@ -26,7 +26,7 @@ class Slideshow extends Component {
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
 
-    // Loop through the slideshow, fading items out and in.
+    // Loop through the slideshow, fading items out and in and running update.
     setInterval(() => {
       $('#slideshow > div:first')
         .fadeOut(parseInt(transitionDuration, 10))
@@ -34,6 +34,7 @@ class Slideshow extends Component {
         .fadeIn(parseInt(transitionDuration, 10))
         .end()
         .appendTo('#slideshow');
+        this.props.actions.updateSlideshow(slideshowDir);
     },  slideDisplayDuration);
   } // componentDidMount
 
