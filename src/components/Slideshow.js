@@ -15,8 +15,8 @@ class Slideshow extends Component {
 
   componentDidMount() {
     // Get slideshowDir from props or default to bb1.
-    const slideShowDir = this.props.match.params.name || "bb1";
-    this.props.actions.updateSlideshow(slideShowDir);
+    const slideshowDir = this.props.match.params.name || "bb1";
+    this.props.actions.updateSlideshow(slideshowDir);
 
     let transitionDuration = this.props.config.transitionDuration || 500;
     // slideDisplayDuration needs to have transitionDuration added to it,
