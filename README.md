@@ -21,3 +21,13 @@ You can delete or add files to `lunchmenu` and the slideshow will update somewha
 * Only works with jpg files.
 * Requires php.
 
+## Set a different basename
+
+To set a new basename (ie, not `/bulletin/`), change `bulletin` in the follow places, keeping slashes the same.
+
+* in package.json:
+	* `"homepage": "/bulletin/",`
+* in api-config.js:
+  * `let baseToSlideshow = 'bulletin';`
+* in .htaccess
+	* `"RewriteRule ^ /bulletin/index.html [L]"`
