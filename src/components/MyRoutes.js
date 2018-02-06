@@ -11,42 +11,21 @@ import {
 import Slideshow from './Slideshow';
 import Admin from './Admin';
 import Login from './Login';
+import NotFound from './NotFound';
 
-// Set some defaults.
-let basename = "/bulletin";
-let bulletin = "bb1";
-
-// Get pathname, which might be used to get basename and the bulletin to load.
-const { pathname } = window.location;
-let getDefaults = pathname.split("/");
-
-// Basename of ! is NOT currently supported, but leaving this code here if I
-// make it work in the future. Everything else should work just fine.
-
-// Basename is ! and a bulletin name was typed in, so set bulletin name but
-// leave basename as the default '/'.
-if (getDefaults[1] === "!" && getDefaults[2]) {
-  bulletin = getDefaults[2];
-// Set basename and or bulletin name.
-} else {
-  if (getDefaults[1]) {
-    basename = getDefaults[1];
-  }
-  if (getDefaults[2]) {
-    bulletin = getDefaults[2];
-  }
-}
+// Import basename.
+import { SLIDESHOW_ROOT } from '../api-config';
 
 class MyRoutes extends Component {
   render() {
     return (
-      <Router basename={basename}>
+      <Router basename={SLIDESHOW_ROOT}>
         <Switch>
           <Route exact path="/admin"
             render={
               () => (
                 this.props.isLoggedIn ? (
-                  <Admin basename={basename} />
+                  <Admin basename={SLIDESHOW_ROOT} />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -62,11 +41,11 @@ class MyRoutes extends Component {
             component={
               () =>
                 <Slideshow
-                  basename={basename}
-                  defaultDir={bulletin}
+                  basename={SLIDESHOW_ROOT}
                 />
             }
           />
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
     )

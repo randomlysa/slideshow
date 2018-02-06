@@ -102,3 +102,10 @@ img {
     right: 50px;
     z-index: 50;
 }
+
+.notFound {
+    background-color: #fff;
+    height: 100vh;
+    text-align: center;
+    padding-top: 60px;
+}

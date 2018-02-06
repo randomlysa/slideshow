@@ -1,19 +1,25 @@
 // https://daveceddia.com/multiple-environments-with-react/
-let baseToPHP, baseToSlideshow;
+
+// set basename here, it will be overridden if needed
+// (example: for local webpack server)
+
+// NO SLASHES!
+let baseToSlideshow = 'bulletin';
+
+let baseToPHP;
 const origin = window.origin;
 
 // localhost:3000 - running webpack dev server
 if (origin.includes('localhost:3000')) {
-  baseToPHP = "http://localhost/slideshow/public";
-  baseToSlideshow = "";
+  baseToPHP = 'http://localhost/slideshow/public';
+  baseToSlideshow = '';
 // localhost - running a local build
 } else if (origin.includes('localhost')) {
-  baseToPHP = "http://localhost/bulletin";
-  baseToSlideshow = "/bulletin";
+  baseToPHP = `http://localhost/${baseToSlideshow}`;
+
 // else - running on some other server {
 } else {
-  baseToPHP = `${origin}/bulletin`;
-  baseToSlideshow = "/bulletin";
+  baseToPHP = `${origin}/${baseToSlideshow}`;
 }
 
 export const API_ROOT = baseToPHP;

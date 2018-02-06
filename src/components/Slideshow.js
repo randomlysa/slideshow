@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActionCreators from '../actions/admin';
 import * as slideshowActionCreators from '../actions/slideshow';
+import {withRouter} from 'react-router';
 
 import Weather from './Weather';
 import SlideshowItem from './SlideshowItem';
@@ -14,10 +15,10 @@ class Slideshow extends Component {
 
   componentDidMount() {
     // Get slideshowDir from props or default to bb1.
-    const slideShowDir = this.props.defaultDir || "bb1";
+    const slideShowDir = this.props.match.params.name || "bb1";
     this.props.actions.updateSlideshow(slideShowDir);
 
-    let transitionDuration = this.props.config.transitionDuration || 2500;
+    let transitionDuration = this.props.config.transitionDuration || 500;
     // slideDisplayDuration needs to have transitionDuration added to it,
     // otherwise if both values are equal, the slideshow will be constantly
     // transitioning.
@@ -42,8 +43,8 @@ class Slideshow extends Component {
   }
 
   render() {
-    // Get slideshowDir from props or default to bb1.
-    const slideShowDir = this.props.defaultDir || "bb1";
+    // Get slideshowDir from route params or default to bb1.
+    const slideShowDir = this.props.match.params.name || "bb1";
 
     return (
       <div id="slideshow">
@@ -73,4 +74,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Slideshow);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Slideshow));
