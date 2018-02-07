@@ -59,7 +59,7 @@ class Slideshow extends Component {
         <Weather />
         <SlideshowItem
           slideshowItems={this.props.slideshowItems}
-          basename={this.props.basename}
+          slideshowRoot={this.props.slideshowRoot}
           dir={slideShowDir}
         />
       </div>

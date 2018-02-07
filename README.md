@@ -28,6 +28,6 @@ To set a new basename (ie, not `/bulletin/`), change `bulletin` in the follow pl
 * in package.json:
 	* `"homepage": "/bulletin/",`
 * in api-config.js:
-  * `let baseToSlideshow = 'bulletin';`
+  * `let slideshowRoot = 'bulletin';`
 * in .htaccess
 	* `"RewriteRule ^ /bulletin/index.html [L]"`

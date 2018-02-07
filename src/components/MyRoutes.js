@@ -14,18 +14,18 @@ import Login from './Login';
 import NotFound from './NotFound';
 
 // Import basename.
-import { SLIDESHOW_ROOT } from '../api-config';
+import { BASENAME, SLIDESHOW_ROOT } from '../api-config';
 
 class MyRoutes extends Component {
   render() {
     return (
-      <Router basename={SLIDESHOW_ROOT}>
+      <Router basename={BASENAME}>
         <Switch>
           <Route exact path="/admin"
             render={
               () => (
                 this.props.isLoggedIn ? (
-                  <Admin basename={SLIDESHOW_ROOT} />
+                  <Admin />
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -41,7 +41,7 @@ class MyRoutes extends Component {
             component={
               () =>
                 <Slideshow
-                  basename={SLIDESHOW_ROOT}
+                  slideshowRoot={SLIDESHOW_ROOT}
                 />
             }
           />
