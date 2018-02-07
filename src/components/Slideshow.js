@@ -14,6 +14,7 @@ import $ from 'jquery';
 class Slideshow extends Component {
 
   componentDidMount() {
+    // https://stackoverflow.com/a/45469647/3996097
     // Get slideshowDir from props or default to bb1.
     const slideshowDir = this.props.match.params.name || "bb1";
     this.props.actions.updateSlideshow(slideshowDir);
