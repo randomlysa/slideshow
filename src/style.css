@@ -39,6 +39,19 @@ img {
 
 
 /* admin section */
+/* make upload area stick to stop of window */
+.dropzone {
+    background-color: #fff;
+    z-index: 100;
+    padding: 40px;
+    border: dashed 10px #000;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+}
+
 .thumbnail {
     position: relative;
     text-align: center;

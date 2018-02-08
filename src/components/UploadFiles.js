@@ -4,6 +4,18 @@ import { API_ROOT } from '../api-config';
 import $ from 'jquery';
 
 class UploadFiles extends Component {
+  componentDidMount() {
+    // https://stackoverflow.com/a/2907906/3996097
+    // Cache selectors outside callback for performance.
+    var $window = $(window);
+    var $sticky = $('.dropzone');
+    var elTop = $sticky.offset().top;
+
+    $window.scroll(function() {
+      $sticky.toggleClass('sticky', $window.scrollTop() > elTop);
+    });
+  }
+
   onDrop(acceptedFiles) {
     acceptedFiles.forEach(file => {
       // formData: https://stackoverflow.com/a/24939229/3996097
@@ -42,12 +54,9 @@ class UploadFiles extends Component {
 
     return (
       <Dropzone
+        className="dropzone"
         onDrop={this.onDrop.bind(this)} disabled={this.props.uploadStatus}
-        style={{
-            'padding': '50px',
-            'border': 'dashed 10px #000',
-        }}
-        >
+      >
         {}
         <p>{dropzoneMessage}</p>
       </Dropzone>
