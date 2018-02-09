@@ -39,6 +39,15 @@ img {
 
 
 /* admin section */
+.adminFlexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.adminFlexbox > div {
+    flex: 1;
+}
+
 /* make upload area stick to stop of window */
 .dropzone {
     background-color: #fff;
@@ -50,6 +59,7 @@ img {
 .sticky {
     position: fixed;
     top: 0;
+    width: 30%;
 }
 
 .thumbnail {

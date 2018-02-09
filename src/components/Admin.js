@@ -130,16 +130,20 @@ class Admin extends Component {
         </select>
 
         {this.state.activeFolder &&
-          <div>
-            <UploadFiles
-              activeFolder={this.state.activeFolder}
-              uploadStatus={this.state.uploadDisabled}
-              updateSlideshow={this.props.actions.updateSlideshow}
-            />
-            <AdminSlideshow
-              activeFolder={this.state.activeFolder}
-              updateSlideshow={this.props.actions.updateSlideshow}
-            />
+          <div className="adminFlexbox">
+            <div className="adminFlexbox--Slideshow">
+              <AdminSlideshow
+                activeFolder={this.state.activeFolder}
+                updateSlideshow={this.props.actions.updateSlideshow}
+              />
+            </div>
+            <div className="adminFlexbox--Dropzone">
+              <UploadFiles
+                activeFolder={this.state.activeFolder}
+                uploadStatus={this.state.uploadDisabled}
+                updateSlideshow={this.props.actions.updateSlideshow}
+              />
+            </div>
           </div>
         }
 
