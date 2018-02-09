@@ -28,7 +28,7 @@ class Admin extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  confirmLogout = () => {
+  confirmLogout() {
     if(window.confirm("Logout?")) {
       this.props.actions.logout();
     }
