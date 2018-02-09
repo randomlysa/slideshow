@@ -10,11 +10,13 @@ export default function(state = {}, action) {
               return { isLoggedIn: true }
             }
             else {
-              return { isLoggedIn: false }
+              return {
+                  isLoggedIn: false,
+                  passwordEntered: action.passwordEntered
+                }
             }
         default:
-            // Lets persisted state load.
-            return state
+            return {...state, passwordEntered: false }
     }
 
 }

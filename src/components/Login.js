@@ -7,7 +7,10 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { password: '' };
+    this.state = {
+      password: '',
+      errorMessage: ''
+    };
 
     this.inputChange = this.inputChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -20,7 +23,14 @@ class Login extends React.Component {
   submitForm(event) {
     event.preventDefault();
 
-    this.props.checkPassword(this.state.password)
+    if (this.state.password === '') {
+      this.setState({ errorMessage: 'Please enter a password.' });
+    } else {
+      this.props.checkPassword(this.state.password);
+      if(!this.props.isLoggedIn) {
+        this.setState({errorMessage: 'Password incorrect.'});
+      }
+    }
   }
 
   componentWillReceiveProps(nextprops) {
@@ -32,7 +42,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="admin">
-        Login
+        <h1>Login</h1>
         <form onSubmit={this.submitForm}>
           <input
             type="password"
@@ -42,6 +52,8 @@ class Login extends React.Component {
           <input
               type="submit" />
         </form>
+        {this.state.errorMessage}
+
       </div>
     )
   }

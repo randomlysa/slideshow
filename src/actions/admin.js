@@ -25,7 +25,8 @@ export function checkPassword(password) {
     } else {
         return {
             type: VERIFY_PASSWORD,
-            payload: false
+            payload: false,
+            passwordEntered: Boolean((password))
         }
     }
 }
