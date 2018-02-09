@@ -37,7 +37,7 @@ class Admin extends Component {
   onInputChange(event) {
     this.setState({
       [event.target.id]: event.target.value
-    })
+    });
   }
 
   onFormSubmit(event) {
@@ -55,7 +55,7 @@ class Admin extends Component {
         // Run after state has updated.
         // TODO: Getting 404 in console, trying to load images for the
         // wrong slideshow.
-        this.props.actions.updateSlideshow(this.state.activeFolder)
+        this.props.actions.updateSlideshow(this.state.activeFolder);
       }
     );
     } else {

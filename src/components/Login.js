@@ -17,7 +17,7 @@ class Login extends React.Component {
   }
 
   inputChange(e) {
-    this.setState({ password: e.target.value })
+    this.setState({ password: e.target.value });
   }
 
   submitForm(event) {

@@ -22,7 +22,7 @@ function manageRequestVolume(url, cityId) {
         return;
     }
     if (listOfCities.indexOf(cityId) === -1) {
-        listOfCities = [...listOfCities, cityId]
+        listOfCities = [...listOfCities, cityId];
         numberOfRequests++;
         return ajax.get(url);
     }
@@ -35,7 +35,7 @@ export function fetchWeatherFromOpenWeather(cityId = '5043779') {
     return {
         type: FETCH_WEATHER_FROM_OPENWEATHER,
         payload: request
-    }
+    };
 }
 
 export function fetchWeatherUpdate(cityId) {
@@ -45,5 +45,5 @@ export function fetchWeatherUpdate(cityId) {
     return {
         type: FETCH_WEATHER_UPDATE,
         payload: request
-    }
+    };
 }

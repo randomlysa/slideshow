@@ -6,14 +6,14 @@ export function updateSlideshowDuration(duration) {
     return {
         type: UPDATE_SLIDESHOW_DURATION,
         payload: duration
-    }
+    };
 }
 
 export function updateTransitionDuration(duration) {
     return {
         type: UPDATE_TRANSITION_DURATION,
         payload: duration
-    }
+    };
 }
 
 export function checkPassword(password) {
@@ -21,13 +21,13 @@ export function checkPassword(password) {
         return {
             type: VERIFY_PASSWORD,
             payload: true
-        }
+        };
     } else {
         return {
             type: VERIFY_PASSWORD,
             payload: false,
             passwordEntered: Boolean((password))
-        }
+        };
     }
 }
 
@@ -35,5 +35,5 @@ export function logout() {
     return {
         type: VERIFY_PASSWORD,
         payload: false
-    }
+    };
 }

@@ -11,5 +11,5 @@ export function updateSlideshow(whichSlideshow) {
         url: `${API_ROOT}/php/getFiles.php?dir=${whichSlideshow}`,
         dataType: 'json'
         })
-    } // return
+    }; // return
 } // updateSlideShow

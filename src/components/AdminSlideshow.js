@@ -18,12 +18,12 @@ class AdminSlideshow extends Component {
         }
       }) // ajax
       .done((data) => {
-        console.log('deleted', data)
+        console.log('deleted', data);
         this.props.updateSlideshow(activeFolder);
       }) // ajax done
       .fail((e) => {
         console.log('fail', e);
-      }) // ajax fail
+      }); // ajax fail
     } // if window.confirm
   } // deleteFile
 
