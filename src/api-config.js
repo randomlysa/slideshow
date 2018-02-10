@@ -10,13 +10,13 @@ let PHPRoot, slideshowRoot;
 const origin = window.origin;
 
 // localhost:3000 - running webpack dev server
-if (origin.includes('localhost:3000')) {
+if (origin && origin.includes('localhost:3000')) {
   PHPRoot = 'http://localhost/slideshow/public';
   basename = '';
   slideshowRoot = 'http://localhost:3000/';
 
 // localhost - running a local build
-} else if (origin.includes('localhost')) {
+} else if (origin && origin.includes('localhost')) {
   PHPRoot = `http://localhost/${basename}`;
   slideshowRoot = `/${basename}`;
 
