@@ -11,14 +11,14 @@ import { API_ROOT } from '../api-config';
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
 
-class Admin extends Component {
+export class Admin extends Component {
   constructor(props) {
     super(props);
 
     // Set a default of 6 for slideDuration.
     this.state = {
-        slideDuration: this.props.config.slideDuration || 6,
-        transitionDuration: this.props.config.transitionDuration || 500,
+        slideDuration: props.config ? props.config.slideDuration : 6,
+        transitionDuration: props.config ? props.config.transitionDuration : 500,
         activeFolder: '',
         folders: [],
         uploadDisabled: true

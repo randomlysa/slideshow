@@ -1,0 +1,511 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Admin page correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Admin />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <h1>
+          Admin Page
+        </h1>,
+        <button
+          className="btn-logout"
+          onClick={[Function]}
+        >
+          Logout
+        </button>,
+        <form
+          className="input-group"
+          onSubmit={[Function]}
+        >
+          Slide duration (seconds):
+          <input
+            id="slideDuration"
+            onChange={[Function]}
+            placeholder="Number (seconds)"
+            type="number"
+            value={6}
+          />
+          <br />
+          Transition duration (ms):
+          <input
+            id="transitionDuration"
+            onChange={[Function]}
+            placeholder="Number (milliseconds)"
+            type="number"
+            value={500}
+          />
+           (1000ms = 1s)
+          <br />
+          <input
+            name="Save"
+            type="submit"
+          />
+        </form>,
+        <hr
+          style={
+            Object {
+              "marginBottom": "30px",
+            }
+          }
+        />,
+        <select
+          className="selectActiveFolder"
+          name="selectActiveFolder"
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select a slideshow folder to edit
+          </option>
+        </select>,
+        "",
+      ],
+      "className": "admin",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Admin Page",
+        },
+        "ref": null,
+        "rendered": "Admin Page",
+        "type": "h1",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Logout",
+          "className": "btn-logout",
+          "onClick": [Function],
+        },
+        "ref": null,
+        "rendered": "Logout",
+        "type": "button",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            "Slide duration (seconds):",
+            <input
+              id="slideDuration"
+              onChange={[Function]}
+              placeholder="Number (seconds)"
+              type="number"
+              value={6}
+            />,
+            <br />,
+            "Transition duration (ms):",
+            <input
+              id="transitionDuration"
+              onChange={[Function]}
+              placeholder="Number (milliseconds)"
+              type="number"
+              value={500}
+            />,
+            " (1000ms = 1s)",
+            <br />,
+            <input
+              name="Save"
+              type="submit"
+            />,
+          ],
+          "className": "input-group",
+          "onSubmit": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          "Slide duration (seconds):",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "id": "slideDuration",
+              "onChange": [Function],
+              "placeholder": "Number (seconds)",
+              "type": "number",
+              "value": 6,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "input",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {},
+            "ref": null,
+            "rendered": null,
+            "type": "br",
+          },
+          "Transition duration (ms):",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "id": "transitionDuration",
+              "onChange": [Function],
+              "placeholder": "Number (milliseconds)",
+              "type": "number",
+              "value": 500,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "input",
+          },
+          " (1000ms = 1s)",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {},
+            "ref": null,
+            "rendered": null,
+            "type": "br",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "name": "Save",
+              "type": "submit",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "input",
+          },
+        ],
+        "type": "form",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "style": Object {
+            "marginBottom": "30px",
+          },
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "hr",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <option
+              value=""
+            >
+              Select a slideshow folder to edit
+            </option>,
+            Array [],
+          ],
+          "className": "selectActiveFolder",
+          "name": "selectActiveFolder",
+          "onChange": [Function],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Select a slideshow folder to edit",
+              "value": "",
+            },
+            "ref": null,
+            "rendered": "Select a slideshow folder to edit",
+            "type": "option",
+          },
+        ],
+        "type": "select",
+      },
+      "",
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <h1>
+            Admin Page
+          </h1>,
+          <button
+            className="btn-logout"
+            onClick={[Function]}
+          >
+            Logout
+          </button>,
+          <form
+            className="input-group"
+            onSubmit={[Function]}
+          >
+            Slide duration (seconds):
+            <input
+              id="slideDuration"
+              onChange={[Function]}
+              placeholder="Number (seconds)"
+              type="number"
+              value={6}
+            />
+            <br />
+            Transition duration (ms):
+            <input
+              id="transitionDuration"
+              onChange={[Function]}
+              placeholder="Number (milliseconds)"
+              type="number"
+              value={500}
+            />
+             (1000ms = 1s)
+            <br />
+            <input
+              name="Save"
+              type="submit"
+            />
+          </form>,
+          <hr
+            style={
+              Object {
+                "marginBottom": "30px",
+              }
+            }
+          />,
+          <select
+            className="selectActiveFolder"
+            name="selectActiveFolder"
+            onChange={[Function]}
+          >
+            <option
+              value=""
+            >
+              Select a slideshow folder to edit
+            </option>
+          </select>,
+          "",
+        ],
+        "className": "admin",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Admin Page",
+          },
+          "ref": null,
+          "rendered": "Admin Page",
+          "type": "h1",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Logout",
+            "className": "btn-logout",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": "Logout",
+          "type": "button",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              "Slide duration (seconds):",
+              <input
+                id="slideDuration"
+                onChange={[Function]}
+                placeholder="Number (seconds)"
+                type="number"
+                value={6}
+              />,
+              <br />,
+              "Transition duration (ms):",
+              <input
+                id="transitionDuration"
+                onChange={[Function]}
+                placeholder="Number (milliseconds)"
+                type="number"
+                value={500}
+              />,
+              " (1000ms = 1s)",
+              <br />,
+              <input
+                name="Save"
+                type="submit"
+              />,
+            ],
+            "className": "input-group",
+            "onSubmit": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            "Slide duration (seconds):",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "id": "slideDuration",
+                "onChange": [Function],
+                "placeholder": "Number (seconds)",
+                "type": "number",
+                "value": 6,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "input",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {},
+              "ref": null,
+              "rendered": null,
+              "type": "br",
+            },
+            "Transition duration (ms):",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "id": "transitionDuration",
+                "onChange": [Function],
+                "placeholder": "Number (milliseconds)",
+                "type": "number",
+                "value": 500,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "input",
+            },
+            " (1000ms = 1s)",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {},
+              "ref": null,
+              "rendered": null,
+              "type": "br",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "name": "Save",
+                "type": "submit",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "input",
+            },
+          ],
+          "type": "form",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "style": Object {
+              "marginBottom": "30px",
+            },
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "hr",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <option
+                value=""
+              >
+                Select a slideshow folder to edit
+              </option>,
+              Array [],
+            ],
+            "className": "selectActiveFolder",
+            "name": "selectActiveFolder",
+            "onChange": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Select a slideshow folder to edit",
+                "value": "",
+              },
+              "ref": null,
+              "rendered": "Select a slideshow folder to edit",
+              "type": "option",
+            },
+          ],
+          "type": "select",
+        },
+        "",
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
