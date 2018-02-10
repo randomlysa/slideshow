@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { checkPassword, logout } from '../actions/admin';
-import { updateSlideshow } from '../actions/slideshow.js';
+import * as adminActions from '../actions/admin';
+import * as slideshowActions  from '../actions/slideshow.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../api-config';
@@ -42,8 +42,8 @@ class Admin extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    this.props.updateSlideshowDuration(this.state.slideDuration);
-    this.props.updateTransitionDuration(this.state.transitionDuration);
+    this.props.actions.updateSlideshowDuration(this.state.slideDuration);
+    this.props.actions.updateTransitionDuration(this.state.transitionDuration);
   }
 
   setActiveFolder(e) {
@@ -159,8 +159,9 @@ function mapStateToProps({ config }) {
 
 function mapDispatchToProps(dispatch) {
   // Assign { actions } to props.actions
+  const actions = {...adminActions, ...slideshowActions};
   return {
-    actions: bindActionCreators({checkPassword, logout, updateSlideshow}, dispatch)
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 
