@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { API_ROOT } from '../api-config';
+import { API_ROOT } from '../config/api-config';
 import $ from 'jquery';
 
 class UploadFiles extends Component {

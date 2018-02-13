@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import $ from 'jquery';
-import { API_ROOT } from '../api-config';
+import { API_ROOT } from '../config/api-config';
 
 class AdminSlideshow extends Component {
 

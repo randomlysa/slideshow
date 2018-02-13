@@ -14,7 +14,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 
 // Import basename.
-import { BASENAME, SLIDESHOW_ROOT } from '../api-config';
+import { BASENAME, SLIDESHOW_ROOT } from '../config/api-config';
 
 class MyRoutes extends Component {
   render() {

@@ -6,7 +6,7 @@ import * as adminActions from '../actions/admin';
 import * as slideshowActions  from '../actions/slideshow.js';
 
 import $ from 'jquery';
-import { API_ROOT } from '../api-config';
+import { API_ROOT } from '../config/api-config';
 
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';

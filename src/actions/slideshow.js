@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { API_ROOT } from '../api-config';
+import { API_ROOT } from '../config/api-config';
 
 export const GET_SLIDESHOW_SLIDES = 'GET_SLIDESHOW_SLIDES';
 
