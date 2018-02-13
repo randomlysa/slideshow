@@ -12,6 +12,13 @@ import '../style.css';
 import $ from 'jquery';
 
 class Slideshow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      displayWeather: false
+    }
+  }
 
   componentDidMount() {
     // https://stackoverflow.com/a/45469647/3996097
@@ -42,6 +49,11 @@ class Slideshow extends Component {
     },  slideDisplayDuration);
   } // componentDidMount
 
+  componentWillReceiveProps() {
+    let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
+    this.setState({ displayWeather })
+  }
+
   componentDidUpdate(nextprops) {
     // Number of items in slideshow changed. Hide all except first.
     // This seems to update seamlessly, at least in initial testing.
@@ -56,7 +68,9 @@ class Slideshow extends Component {
 
     return (
       <div id="slideshow">
-        <Weather />
+        {this.state.displayWeather &&
+         <Weather />
+        }
         <SlideshowItem
           slideshowItems={this.props.slideshowItems}
           slideshowRoot={this.props.slideshowRoot}
