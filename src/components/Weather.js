@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchWeatherFromOpenWeather } from '../actions/weather';
+import { fetchWeatherFromLocalStorage, fetchWeatherFromOpenWeather } from '../actions/weather';
 
 class Weather extends Component {
   componentWillMount() {
-        this.props.fetchWeatherFromOpenWeather();
+    // fetchWeatherFromOpenWeather if fetchWeatherFromLocalStorage is empty.
+    this.props.actions.fetchWeatherFromLocalStorage();
+    if (this.props.weather.length === 0) {
+      this.props.actions.fetchWeatherFromOpenWeather();
+    }
   }
 
   render() {
-    if (this.props.weather) {
+    if (this.props.weather && this.props.weather.length > 0) {
       return (
         <h2 className="weather">{this.props.weather[0].main.temp}&deg; C</h2>
       )
@@ -25,7 +29,13 @@ function mapStateToProps({ weather }) {
 
 function mapDispatchToProps(dispatch) {
   // Assign all actions (import * as actionCreators) to props.actions
-  return bindActionCreators( {fetchWeatherFromOpenWeather }, dispatch);
+  return {
+    actions:
+    bindActionCreators( {
+      fetchWeatherFromLocalStorage,
+      fetchWeatherFromOpenWeather
+    }, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Weather);
