@@ -45,7 +45,8 @@ export function fetchWeatherFromOpenWeather(cityId = '5043779') {
 }
 
 export function fetchWeatherFromLocalStorage() {
-    const request = loadState() || [];
+    const getState = loadState();
+    const request = getState.weather || [];
 
     return {
         type: FETCH_WEATHER_FROM_LOCALSTORAGE,
