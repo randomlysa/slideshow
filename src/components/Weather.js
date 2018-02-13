@@ -11,7 +11,7 @@ class Weather extends Component {
   render() {
     if (this.props.weather) {
       return (
-        <h2 className="weather">{this.props.weather.main.temp}&deg; C</h2>
+        <h2 className="weather">{this.props.weather[0].main.temp}&deg; C</h2>
       )
     } else {
       return "Loading";
