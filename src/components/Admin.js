@@ -15,10 +15,9 @@ export class Admin extends Component {
   constructor(props) {
     super(props);
 
-    // Set a default of 6 for slideDuration.
     this.state = {
-        slideDuration: props.config ? props.config.slideDuration : 6,
-        transitionDuration: props.config ? props.config.transitionDuration : 500,
+        slideDuration: props.config.slideDuration || 6,
+        transitionDuration: props.config.transitionDuration || 500,
         activeFolder: '',
         folders: [],
         uploadDisabled: true
