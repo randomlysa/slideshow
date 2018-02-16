@@ -1,6 +1,23 @@
+import $ from 'jquery';
+import { API_ROOT } from '../config/api-config';
+
+export const GET_CONFIG_FROM_DATABASE = 'GET_CONFIG_FROM_DATABASE';
 export const UPDATE_SLIDESHOW_DURATION = 'UPDATE_SLIDESHOW_DURATION';
 export const UPDATE_TRANSITION_DURATION = 'UPDATE_TRANSITION_DURATION';
 export const VERIFY_PASSWORD = 'VERIFY_PASSWORD';
+
+export function getConfigFromDatabase(name) {
+    return {
+      type: GET_CONFIG_FROM_DATABASE,
+      payload: $.ajax({
+        url: `${API_ROOT}/php/sqliteGetByName.php`,
+        type: 'post',
+        dataType: 'json',
+        data: {name}
+      })
+    }; // return
+} // getConfigFromDatabase
+
 
 export function updateSlideshowDuration(duration) {
     return {
