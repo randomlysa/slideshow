@@ -48,9 +48,15 @@ export class Admin extends Component {
     this.props.actions.updateSlideshowDuration(this.state.slideDuration);
     this.props.actions.updateTransitionDuration(this.state.transitionDuration);
 
-    // Insert info about slideshow into database.
+    let url;
+    // Insert/update info about slideshow into database.
+    if (this.state.existsInDatabase) {
+      url = `${API_ROOT}/php/sqliteUpdate.php`;
+    } else {
+      url = `${API_ROOT}/php/sqliteInsert.php`;
+    }
     $.ajax({
-      url: `${API_ROOT}/php/sqliteInsert.php`,
+      url,
       type: 'POST',
       data: {
         name: this.state.activeFolder,
