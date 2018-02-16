@@ -22,7 +22,8 @@ export class Admin extends Component {
         slideToShowWeatherOn: '',
         cityToShowWeatherFor: '',
         folders: [],
-        uploadDisabled: true
+        uploadDisabled: true,
+        existsInDatabase: ''
       };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -78,6 +79,28 @@ export class Admin extends Component {
         // TODO: Getting 404 in console, trying to load images for the
         // wrong slideshow.
         this.props.actions.updateSlideshow(this.state.activeFolder);
+
+        // See if activeFolder exists in database.
+        $.ajax({
+          url: `${API_ROOT}/php/sqliteGetByName.php`,
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            name: this.state.activeFolder
+          }
+        })
+          .done((response) => {
+            // Response is null if not found in database.
+            if (response) {
+              this.setState({'existsInDatabase': true})
+            } else {
+              this.setState({'existsInDatabase': false})
+            }
+          }) // .done
+          .fail((e) => {
+            console.log(e);
+          }); // .fail
+
       } // setState callback
     ); // setState
     } else {
