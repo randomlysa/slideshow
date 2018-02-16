@@ -78,8 +78,8 @@ export class Admin extends Component {
         // TODO: Getting 404 in console, trying to load images for the
         // wrong slideshow.
         this.props.actions.updateSlideshow(this.state.activeFolder);
-      }
-    );
+      } // setState callback
+    ); // setState
     } else {
       this.setState({
         uploadDisabled: true,
