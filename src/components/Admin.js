@@ -19,6 +19,8 @@ export class Admin extends Component {
         slideDuration: props.config.slideDuration || 6,
         transitionDuration: props.config.transitionDuration || 500,
         activeFolder: '',
+        slideToShowWeatherOn: '',
+        cityToShowWeatherFor: '',
         folders: [],
         uploadDisabled: true
       };
@@ -44,6 +46,26 @@ export class Admin extends Component {
     event.preventDefault();
     this.props.actions.updateSlideshowDuration(this.state.slideDuration);
     this.props.actions.updateTransitionDuration(this.state.transitionDuration);
+
+    // Insert info about slideshow into database.
+    $.ajax({
+      url: `${API_ROOT}/php/sqliteInsert.php`,
+      type: 'POST',
+      data: {
+        name: this.state.activeFolder,
+        slideDuration: this.state.slideDuration,
+        transitionDuration: this.state.transitionDuration,
+        city: this.state.city,
+        slideToShowWeatherOn: this.state.slideToShowWeatherOn,
+        cityToShowWeatherFor: this.state.cityToShowWeatherFor
+      }
+    })
+    .done((reponse) => {
+      console.log(reponse);
+    })
+    .fail((e) => {
+      console.log(e);
+    }) // ajax
   }
 
   setActiveFolder(e) {
