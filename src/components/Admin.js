@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActions from '../actions/admin';
 import * as slideshowActions  from '../actions/slideshow.js';
+import * as slideshowConfigActions  from '../actions/slideshowConfig.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
@@ -191,7 +192,7 @@ function mapStateToProps({ config }) {
 
 function mapDispatchToProps(dispatch) {
   // Assign { actions } to props.actions
-  const actions = {...adminActions, ...slideshowActions};
+  const actions = {...adminActions, ...slideshowActions, ...slideshowConfigActions};
   return {
     actions: bindActionCreators(actions, dispatch)
   }

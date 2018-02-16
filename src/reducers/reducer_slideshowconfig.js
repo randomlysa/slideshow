@@ -3,7 +3,7 @@ import {
     UPDATE_SLIDESHOW_DURATION,
     UPDATE_TRANSITION_DURATION
 
-} from '../actions/admin';
+} from '../actions/slideshowConfig';
 
 export default function(state = {}, action) {
     switch (action.type) {
