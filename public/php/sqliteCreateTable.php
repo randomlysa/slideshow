@@ -7,8 +7,7 @@
 
 		/* Create a prepared statement */
 		$stmt = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
-      (id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
+      (name TEXT PRIMARY KEY,
       slideDuration INT,
       transitionDuration INT,
       slideToShowWeatherOn TEXT,
