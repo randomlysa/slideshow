@@ -25,6 +25,7 @@ export class Admin extends Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.confirmLogout = this.confirmLogout.bind(this);
   }
 
   confirmLogout() {
