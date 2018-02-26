@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActionCreators from '../actions/admin';
 import * as slideshowActionCreators from '../actions/slideshow';
+import * as csvActionCreators from '../actions/csv';
 import {withRouter} from 'react-router';
+import _ from 'lodash';
 
 import Weather from './Weather';
 import SlideshowItem from './SlideshowItem';
@@ -33,6 +35,17 @@ class Slideshow extends Component {
     // transitioning.
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
+
+    // Check for csv file. (Assuming only one file for now.)
+    const csvFile = _.find(this.props.slideshowItems, function(obj) {
+      const fileType = obj.file.split('.').pop();
+      return fileType === 'csv';
+    });
+    if (csvFile) {
+      // Todo: Don't assume 'bb1.'
+      this.props.actions.getCSVData(csvFile, 'bb1');
+    }
+
 
     // Hide all items except first.
     $(".imageHolder:not(:first)").css('display', 'none');
@@ -88,7 +101,7 @@ function mapStateToProps({ config, slideshowItems }) {
 function mapDispatchToProps(dispatch) {
   // Assign all actions (import * as actionCreators) to props.actions
   const actionCreators = {
-    ...adminActionCreators, ...slideshowActionCreators
+    ...adminActionCreators, ...slideshowActionCreators, ...csvActionCreators
   };
 
   return {

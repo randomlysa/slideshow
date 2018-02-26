@@ -37,6 +37,11 @@ img {
     max-width: 100%;
 }
 
+.csvHolder {
+    padding: 10px;
+    background-color: #fff;
+}
+
 
 /* admin section */
 .adminFlexbox {

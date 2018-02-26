@@ -18,9 +18,14 @@ if (!file_exists($whichDirToScan)) {
 $dirscan = array_diff(scandir($whichDirToScan), array('..', '.'));
 
 $files = array();
+$fileTypes = array('jpg', 'csv');
 
 foreach($dirscan as $file) {
-    if(preg_match('/.*\.jpg/i', $file)) {
+    // https://stackoverflow.com/a/1203361/3996097
+    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    // Will return an int if the extension of the file is in the $fileTypes array.
+    $findFile = array_search($extension, $fileTypes);
+    if(is_int($findFile)) {
         // Make a new array for each item so an array of objects is returned
         // instead of an object.
         $newArray = array();
