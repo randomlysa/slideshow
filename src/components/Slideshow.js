@@ -90,7 +90,13 @@ class Slideshow extends Component {
   componentDidUpdate(nextprops) {
     // Number of items in slideshow changed. Hide all except first.
     // This seems to update seamlessly, at least in initial testing.
-    if (this.props.slideshowItems.length !== nextprops.slideshowItems.length) {
+
+    // Todo: If slides have a long show duration, and an item is removed and a
+    // different item is added before this check runs, will the new item be
+    // hidden?
+    if (this.props.slideshowItems.files.length
+        !== nextprops.slideshowItems.files.length)
+    {
       $(".slideshowItem:not(:first)").css('display', 'none');
     }
   }
