@@ -5,7 +5,7 @@ const SlideshowItem = (props) => {
   return (
     props.slideshowItems.files.map((item, index) => {
       // https://stackoverflow.com/a/1203361/3996097
-      const fileType = item.file.split('.').pop();
+      const fileType = item.file.split('.').pop().toLowerCase();
       if (fileType === 'jpg') {
         const itemUrl = `${props.slideshowRoot}/slideshows/${props.dir}/${item.file}`;
         return (
