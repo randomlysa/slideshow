@@ -36,16 +36,6 @@ class Slideshow extends Component {
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
 
-    // Check for csv file. (Assuming only one file for now.)
-    const csvFile = _.find(this.props.slideshowItems, function(obj) {
-      const fileType = obj.file.split('.').pop();
-      return fileType === 'csv';
-    });
-    if (csvFile) {
-      // Todo: Don't assume 'bb1.'
-      this.props.actions.getCSVData(csvFile, 'bb1');
-    }
-
 
     // Hide all items except first.
     $(".imageHolder:not(:first)").css('display', 'none');
@@ -65,6 +55,18 @@ class Slideshow extends Component {
   componentWillReceiveProps() {
     // let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
     // this.setState({ displayWeather });
+
+    // Check for csv file. (Assuming only one file for now.)
+    const csvFile = _.find(this.props.slideshowItems.files, function(obj) {
+      if (obj) {
+        const fileType = obj.file.split('.').pop();
+        return fileType === 'csv';
+      }
+    });
+    if (csvFile && !this.props.slideshowItems.csv) {
+      // Todo: Don't assume 'bb1.'
+      this.props.actions.getCSVData(csvFile, 'bb1');
+    }
   }
 
   componentDidUpdate(nextprops) {
@@ -75,22 +77,28 @@ class Slideshow extends Component {
     }
   }
 
-  render() {
-    // Get slideshowDir from route params or default to bb1.
-    const slideShowDir = this.props.match.params.name || "bb1";
 
-    return (
-      <div id="slideshow">
-        {this.state.displayWeather &&
-         <Weather />
-        }
-        <SlideshowItem
-          slideshowItems={this.props.slideshowItems}
-          slideshowRoot={this.props.slideshowRoot}
-          dir={slideShowDir}
-        />
-      </div>
-    )
+  render() {
+
+    if (this.props.slideshowItems.files && this.props.slideshowItems.files.length > 0) {
+      // Get slideshowDir from route params or default to bb1.
+      const slideShowDir = this.props.match.params.name || "bb1";
+
+      return (
+        <div id="slideshow">
+          {this.state.displayWeather &&
+          <Weather />
+          }
+          <SlideshowItem
+            slideshowItems={this.props.slideshowItems}
+            slideshowRoot={this.props.slideshowRoot}
+            dir={slideShowDir}
+          />
+        </div>
+      )
+    } else {
+      return 'Loading';
+    }
   }; // render
 } // class App
 
