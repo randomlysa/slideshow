@@ -41,15 +41,33 @@ class Slideshow extends Component {
     $(".slideshowItem:not(:first)").css('display', 'none');
 
     // Loop through the slideshow, fading items out and in and running update.
-    setInterval(() => {
+    // https://stackoverflow.com/a/30725868/3996097
+    function loop() {
+      let newSlideDisplayDuration = slideDisplayDuration;
+
+      // Set a longer show duration for csv data.
+      if ($('#slideshow > div').length > 1) {
+        const nextItemClassname = $('#slideshow > div')[1].className;
+
+        if (nextItemClassname.includes('csvHolder')) {
+          newSlideDisplayDuration = 10000;
+        }
+      }
+
       $('#slideshow > div:first')
         .fadeOut(parseInt(transitionDuration, 10))
         .next()
         .fadeIn(parseInt(transitionDuration, 10))
         .end()
         .appendTo('#slideshow');
-        this.props.actions.updateSlideshow(slideshowDir);
-    },  slideDisplayDuration);
+      this.props.actions.updateSlideshow(slideshowDir);
+
+      window.setTimeout(boundLoop, newSlideDisplayDuration);
+    };
+
+    var boundLoop = loop.bind(this);
+    boundLoop();
+
   } // componentDidMount
 
   componentWillReceiveProps() {
