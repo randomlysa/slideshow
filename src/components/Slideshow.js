@@ -38,7 +38,7 @@ class Slideshow extends Component {
 
 
     // Hide all items except first.
-    $(".imageHolder:not(:first)").css('display', 'none');
+    $(".slideshowItem:not(:first)").css('display', 'none');
 
     // Loop through the slideshow, fading items out and in and running update.
     setInterval(() => {
@@ -73,7 +73,7 @@ class Slideshow extends Component {
     // Number of items in slideshow changed. Hide all except first.
     // This seems to update seamlessly, at least in initial testing.
     if (this.props.slideshowItems.length !== nextprops.slideshowItems.length) {
-      $(".imageHolder:not(:first)").css('display', 'none');
+      $(".slideshowItem:not(:first)").css('display', 'none');
     }
   }
 

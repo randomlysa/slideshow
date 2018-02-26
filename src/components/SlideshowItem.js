@@ -9,7 +9,7 @@ const SlideshowItem = (props) => {
       if (fileType === 'jpg') {
         const itemUrl = `${props.slideshowRoot}/slideshows/${props.dir}/${item.file}`;
         return (
-          <div key={item.file} className="imageHolder">
+          <div key={item.file} className="slideshowItem imageHolder">
             <img src={itemUrl} alt="Slideshow Item" />
           </div>
         )
@@ -47,7 +47,7 @@ const SlideshowItem = (props) => {
           // console.log(item);
         })
         return (
-          <div key={item.file} className="csvHolder">
+          <div key={item.file} className="slideshowItem csvHolder">
             {csvItems}
           </div>
         )
