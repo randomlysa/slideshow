@@ -15,45 +15,55 @@ const SlideshowItem = (props) => {
         )
       } // jpg
       if (fileType === 'csv' && props.slideshowItems.csv) {
-
         // Keep track of last occurence of 'time' since some rows have no time.
-        let currentTime = '';
-        const csvItems = props.slideshowItems.csv.map((item) => {
+        let rowTime;
+
+        const csvItems = props.slideshowItems.csv.map((item, index) => {
           // ["Time", "School Short Name", "GroupName", "FullCategoryName", "Room"]
           const key = item.join('_');
 
-          // If item[0] isn't set, get time from currentTime varaible.
-          if (item[0] === "") {
-            item[0] = currentTime;
-          // Otherwise, time is set, so set currentTime to be item[0].
-          } else {
-            currentTime = item[0];
+          // Always return the  header row because other rows will be hidden
+          // later based on time.
+          if (index === 0) {
+            return (
+              <div key={key}>
+                <span>{item[0]}</span>
+                <span>{item[1]}</span>
+                <span>{item[2]}</span>
+                <span>{item[3]}</span>
+                <span>{item[4]}</span>
+              </div>
+            );
           }
 
-          // Time example: 9:35:00 AM
-          const eventTime = moment(currentTime, "hh:mm:ss a");
-          const testTime = moment("11:00:00 AM", "hh:mm:ss a");
-          console.log(eventTime.isBefore(testTime));
+          // If item[0] isn't set, get time from rowTime varaible.
+          if (item[0] === "") { item[0] = rowTime; }
+          // Otherwise, time is set, so set rowTime to be item[0].
+          else { rowTime = item[0]; }
 
-          return (
-            <div key={key}>
-              <span>{item[0]}</span>
-              <span>{item[1]}</span>
-              <span>{item[2]}</span>
-              <span>{item[3]}</span>
-              <span>{item[4]}</span>
-            </div>
-          );
-          // console.log(item);
-        })
+          // Time example: 9:35:00 AM
+          const eventTime = moment(rowTime, "hh:mm:ss a");
+          const testTime = moment("10:05:00 AM", "hh:mm:ss a");
+          if (eventTime.isSameOrAfter(testTime)) {
+            return (
+              <div key={key}>
+                <span>{item[0]}</span>
+                <span>{item[1]}</span>
+                <span>{item[2]}</span>
+                <span>{item[3]}</span>
+                <span>{item[4]}</span>
+              </div>
+            ) // return
+          } // if
+        }) // csvItems map
         return (
           <div key={item.file} className="slideshowItem csvHolder">
             {csvItems}
           </div>
-        )
-      } // csv
-    })
-  );
+        ) // Final return.
+      } // if csv
+    }) // props.slideshowItems.files.map
+  ); // return
 } // const SlideshowItem
 
 export default SlideshowItem;
