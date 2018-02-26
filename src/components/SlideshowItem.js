@@ -26,12 +26,12 @@ const SlideshowItem = (props) => {
           // later based on time.
           if (index === 0) {
             return (
-              <div key={key}>
-                <span>{item[0]}</span>
-                <span>{item[1]}</span>
-                <span>{item[2]}</span>
-                <span>{item[3]}</span>
-                <span>{item[4]}</span>
+              <div key={key} className="rTableHeading">
+                <div className="rTableCell">{item[0]}</div>
+                <div className="rTableCell">{item[1]}</div>
+                <div className="rTableCell">{item[2]}</div>
+                <div className="rTableCell">{item[3]}</div>
+                <div className="rTableCell">{item[4]}</div>
               </div>
             );
           }
@@ -46,18 +46,18 @@ const SlideshowItem = (props) => {
           const testTime = moment("10:05:00 AM", "hh:mm:ss a");
           if (eventTime.isSameOrAfter(testTime)) {
             return (
-              <div key={key}>
-                <span>{item[0]}</span>
-                <span>{item[1]}</span>
-                <span>{item[2]}</span>
-                <span>{item[3]}</span>
-                <span>{item[4]}</span>
+              <div key={key} className="rTableRow">
+                <div className="rTableCell">{item[0]}</div>
+                <div className="rTableCell">{item[1]}</div>
+                <div className="rTableCell">{item[2]}</div>
+                <div className="rTableCell">{item[3]}</div>
+                <div className="rTableCell">{item[4]}</div>
               </div>
             ) // return
           } // if
         }) // csvItems map
         return (
-          <div key={item.file} className="slideshowItem csvHolder">
+          <div key={item.file} className="slideshowItem csvHolder rTable">
             {csvItems}
           </div>
         ) // Final return.

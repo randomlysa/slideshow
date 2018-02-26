@@ -141,3 +141,16 @@ img {
     text-align: center;
     padding-top: 60px;
 }
+
+/* csv table */
+/* https://html-cleaner.com/features/replace-html-table-tags-with-divs/ */
+.rTable { display: table; }
+.rTableRow { display: table-row; }
+.rTableHeading { display: table-header-group; }
+.rTableBody { display: table-row-group; }
+.rTableFoot { display: table-footer-group; }
+.rTableCell, .rTableHead {
+    display: table-cell;
+    border-bottom: solid 1px #000;
+    padding-bottom: 10px;
+}
