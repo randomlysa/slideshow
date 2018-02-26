@@ -63,8 +63,8 @@ class Slideshow extends Component {
   } // componentDidMount
 
   componentWillReceiveProps() {
-    let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
-    this.setState({ displayWeather })
+    // let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
+    // this.setState({ displayWeather });
   }
 
   componentDidUpdate(nextprops) {
