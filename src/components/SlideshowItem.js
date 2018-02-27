@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import _ from 'lodash';
 
 const SlideshowItem = (props) => {
   return (
@@ -21,12 +22,18 @@ const SlideshowItem = (props) => {
       } // jpg
 
       if (fileType === 'csv' && props.slideshowItems.csv[0]) {
+
+        // Match file name to csv data in props.
+        const match = _.findIndex(props.slideshowItems.csv, function(o) {
+          return o.file === item.file;
+        });
+
+        if (match === -1) return;
+
         // Keep track of last occurence of 'time' since some rows have no time.
         let rowTime;
 
-        // Todo: determine which 'file' is being shown and show the csv data
-        // for that file.
-        const csvItems = props.slideshowItems.csv[0].data.map((item, index) => {
+        const csvItems = props.slideshowItems.csv[match].data.map((item, index) => {
 
           // ["Time", "School Short Name", "GroupName", "FullCategoryName", "Room"]
           const key = item.join('_');
