@@ -10,6 +10,7 @@ const SlideshowItem = (props) => {
 
       // https://stackoverflow.com/a/1203361/3996097
       const fileType = item.file.split('.').pop().toLowerCase();
+
       if (fileType === 'jpg') {
         const itemUrl = `${props.slideshowRoot}/slideshows/${props.dir}/${item.file}`;
         return (
@@ -18,11 +19,15 @@ const SlideshowItem = (props) => {
           </div>
         )
       } // jpg
-      if (fileType === 'csv' && props.slideshowItems.csv) {
+
+      if (fileType === 'csv' && props.slideshowItems.csv[0]) {
         // Keep track of last occurence of 'time' since some rows have no time.
         let rowTime;
 
-        const csvItems = props.slideshowItems.csv.map((item, index) => {
+        // Todo: determine which 'file' is being shown and show the csv data
+        // for that file.
+        const csvItems = props.slideshowItems.csv[0].data.map((item, index) => {
+
           // ["Time", "School Short Name", "GroupName", "FullCategoryName", "Room"]
           const key = item.join('_');
 

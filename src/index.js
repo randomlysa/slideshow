@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import ReduxPromise  from 'redux-promise';
+import promiseMiddleware from 'redux-promise-middleware';
+
 
 import './index.css';
 import slideshowApp from './reducers';
@@ -16,7 +17,7 @@ const persistedState = loadState();
 const store = createStore(
     slideshowApp,
     persistedState,
-    applyMiddleware(ReduxPromise),
+    applyMiddleware(promiseMiddleware()),
 );
 
 store.subscribe(() => {

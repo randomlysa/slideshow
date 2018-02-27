@@ -21,8 +21,9 @@ class Slideshow extends Component {
       displayWeather: false,
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
-      slideshowDir: this.props.match.params.name || "bb1"
-    }
+      slideshowDir: this.props.match.params.name || "bb1",
+      csvRequestedFor: []
+    };
   }
 
   componentDidMount() {
@@ -70,18 +71,28 @@ class Slideshow extends Component {
     // let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
     // this.setState({ displayWeather });
 
-    // Check for csv file. (Assuming only one file for now.)
-    const csvFile = _.find(this.props.slideshowItems.files, function(obj) {
-      if (obj) {
-        const fileType = obj.file.split('.').pop();
-        return fileType === 'csv';
-      }
+    // Make an array of csv files.
+    const csvFiles = _.filter(this.props.slideshowItems.files, function(obj) {
+      const fileType = obj.file.split('.').pop();
+      return fileType === 'csv';
     });
-    if (csvFile && !this.props.slideshowItems.csv) {
-      // Todo: Don't assume 'bb1.'
-      this.props.actions.getCSVData(csvFile, this.state.slideshowDir);
-    }
-  }
+
+    // Get data for CSV files.
+    if (csvFiles) {
+      csvFiles.map((csvFile) => {
+        const { file } = csvFile;
+        // Check if the file data has not been requested.
+        if (!this.state.csvRequestedFor.includes(file)) {
+          // Add file to state.
+          this.setState((prevState) => {
+            return {csvRequestedFor: [...prevState.csvRequestedFor, file]}
+          })
+          // Request data.
+          this.props.actions.getCSVData(file, this.state.slideshowDir);
+        } // if file hasn't been requested.
+      }); // csvFiles.map
+    } // if(csvFiles)
+  } // componentWillReceiveProps
 
   componentDidUpdate(nextprops) {
     // Number of items in slideshow changed. Hide all except first.
