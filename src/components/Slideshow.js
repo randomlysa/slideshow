@@ -18,15 +18,15 @@ class Slideshow extends Component {
     super(props);
 
     this.state = {
-      displayWeather: false
+      displayWeather: false,
+      // https://stackoverflow.com/a/45469647/3996097
+      // Get slideshowDir from props or default to bb1.
+      slideshowDir: this.props.match.params.name || "bb1"
     }
   }
 
   componentDidMount() {
-    // https://stackoverflow.com/a/45469647/3996097
-    // Get slideshowDir from props or default to bb1.
-    const slideshowDir = this.props.match.params.name || "bb1";
-    this.props.actions.updateSlideshow(slideshowDir);
+    this.props.actions.updateSlideshow(this.state.slideshowDir);
 
     // Set some defaults.
     let transitionDuration = this.props.config.transitionDuration || 500;
@@ -60,7 +60,7 @@ class Slideshow extends Component {
         .fadeIn(parseInt(transitionDuration, 10))
         .end()
         .appendTo('#slideshow');
-      this.props.actions.updateSlideshow(slideshowDir);
+      this.props.actions.updateSlideshow(this.state.slideshowDir);
 
       window.setTimeout(boundLoop, newSlideDisplayDuration);
     };
@@ -83,7 +83,7 @@ class Slideshow extends Component {
     });
     if (csvFile && !this.props.slideshowItems.csv) {
       // Todo: Don't assume 'bb1.'
-      this.props.actions.getCSVData(csvFile, 'bb1');
+      this.props.actions.getCSVData(csvFile, this.state.slideshowDir);
     }
   }
 
@@ -108,9 +108,6 @@ class Slideshow extends Component {
   render() {
 
     if (this.props.slideshowItems.files && this.props.slideshowItems.files.length > 0) {
-      // Get slideshowDir from route params or default to bb1.
-      const slideShowDir = this.props.match.params.name || "bb1";
-
       return (
         <div id="slideshow">
           {this.state.displayWeather &&
@@ -119,7 +116,7 @@ class Slideshow extends Component {
           <SlideshowItem
             slideshowItems={this.props.slideshowItems}
             slideshowRoot={this.props.slideshowRoot}
-            dir={slideShowDir}
+            dir={this.state.slideshowDir}
           />
         </div>
       )

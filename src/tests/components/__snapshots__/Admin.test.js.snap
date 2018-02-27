@@ -525,14 +525,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -1585,14 +1581,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -2853,14 +2845,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -3383,14 +3371,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -3913,14 +3897,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -4443,14 +4423,10 @@ ShallowWrapper {
     actions={
       Object {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "VERIFY_PASSWORD": "VERIFY_PASSWORD",
         "checkPassword": [Function],
         "logout": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
