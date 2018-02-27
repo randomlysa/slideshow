@@ -36,10 +36,6 @@ class Slideshow extends Component {
     let slideDisplayDuration = this.props.config.slideDuration * 1000 +
       parseInt(transitionDuration, 10) || 6000;
 
-
-    // Hide all items except first.
-    $(".slideshowItem:not(:first)").css('display', 'none');
-
     // Loop through the slideshow, fading items out and in and running update.
     // https://stackoverflow.com/a/30725868/3996097
     function loop() {
@@ -99,7 +95,7 @@ class Slideshow extends Component {
     const nextItems = nextprops.slideshowItems;
     if (thisItems.files && nextItems.files) {
       if (thisItems.files.length !== nextItems.files.length) {
-        $(".nextItemsowItem:not(:first)").css('display', 'none');
+        $(".slideshowItem:not(:first)").css('display', 'none');
       }
     }
   }
