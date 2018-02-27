@@ -94,10 +94,13 @@ class Slideshow extends Component {
     // Todo: If slides have a long show duration, and an item is removed and a
     // different item is added before this check runs, will the new item be
     // hidden?
-    if (this.props.slideshowItems.files.length
-        !== nextprops.slideshowItems.files.length)
-    {
-      $(".slideshowItem:not(:first)").css('display', 'none');
+
+    const thisItems = this.props.slideshowItems;
+    const nextItems = nextprops.slideshowItems;
+    if (thisItems.files && nextItems.files) {
+      if (thisItems.files.length !== nextItems.files.length) {
+        $(".nextItemsowItem:not(:first)").css('display', 'none');
+      }
     }
   }
 
