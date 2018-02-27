@@ -4,12 +4,16 @@ import moment from 'moment';
 const SlideshowItem = (props) => {
   return (
     props.slideshowItems.files.map((item, index) => {
+      let style;
+      // Hide items past index 0.
+      if (index > 0) style = {'display': 'none'};
+
       // https://stackoverflow.com/a/1203361/3996097
       const fileType = item.file.split('.').pop().toLowerCase();
       if (fileType === 'jpg') {
         const itemUrl = `${props.slideshowRoot}/slideshows/${props.dir}/${item.file}`;
         return (
-          <div key={item.file} className="slideshowItem imageHolder">
+          <div key={item.file} className="slideshowItem imageHolder" style={style}>
             <img src={itemUrl} alt="Slideshow Item" />
           </div>
         )
@@ -57,7 +61,7 @@ const SlideshowItem = (props) => {
           } // if
         }) // csvItems map
         return (
-          <div key={item.file} className="slideshowItem csvHolder rTable">
+          <div key={item.file} className="slideshowItem csvHolder rTable" style={style}>
             {csvItems}
           </div>
         ) // Final return.
