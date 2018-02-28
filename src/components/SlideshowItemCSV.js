@@ -14,7 +14,9 @@ const SlideshowItemCSV = (props) => {
 
   // Keep track of last occurence of 'time' since some rows have no time.
   let rowTime;
+  let timeColumn;
 
+  // rename item to row
   const csvItems = csv[match].data.map((item, index) => {
 
     // ["Time", "School Short Name", "GroupName", "FullCategoryName", "Room"]
@@ -23,6 +25,13 @@ const SlideshowItemCSV = (props) => {
     // Always return the  header row because other rows will be hidden
     // later based on time.
     if (index === 0) {
+
+      // Determine which (if any) column has the time. Used to hide events that
+      // have already occured.
+      timeColumn = _.findIndex(item, (o) => {
+        return o.toLowerCase() === 'time';
+      });
+
       return (
         <div key={key} className="rTableHeading">
           {item.map((column, index) => {
@@ -36,10 +45,11 @@ const SlideshowItemCSV = (props) => {
       );
     }
 
-    // If item[0] isn't set, get time from rowTime varaible.
-    if (item[0] === "") { item[0] = rowTime; }
-    // Otherwise, time is set, so set rowTime to be item[0].
-    else { rowTime = item[0]; }
+    // If a row doesn't have the time, get it from the last row that had time.
+    if (item[timeColumn] === "") { item[timeColumn] = rowTime; }
+    // If a row has time, save that so the next row that doesn't have time
+    // can use it.
+    else { rowTime = item[timeColumn]; }
 
     // Time example: 9:35:00 AM
     const eventTime = moment(rowTime, "hh:mm:ss a");
