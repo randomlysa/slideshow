@@ -25,11 +25,13 @@ const SlideshowItemCSV = (props) => {
     if (index === 0) {
       return (
         <div key={key} className="rTableHeading">
-          <div className="rTableCell">{item[0]}</div>
-          <div className="rTableCell">{item[1]}</div>
-          <div className="rTableCell">{item[2]}</div>
-          <div className="rTableCell">{item[3]}</div>
-          <div className="rTableCell">{item[4]}</div>
+          {item.map((column, index) => {
+            return (
+              <div className="rTableCell" key={column}>
+                {column}
+              </div>
+            )
+          })}
         </div>
       );
     }
@@ -45,11 +47,14 @@ const SlideshowItemCSV = (props) => {
     if (eventTime.isSameOrAfter(testTime)) {
       return (
         <div key={key} className="rTableRow">
-          <div className="rTableCell">{item[0]}</div>
-          <div className="rTableCell">{item[1]}</div>
-          <div className="rTableCell">{item[2]}</div>
-          <div className="rTableCell">{item[3]}</div>
-          <div className="rTableCell">{item[4]}</div>
+          {item.map(column => {
+            // Todo: not sure what to use for a key here.
+            return (
+              <div className="rTableCell">
+                {column}
+              </div>
+            )
+          })}
         </div>
       ) // return
     } // if
