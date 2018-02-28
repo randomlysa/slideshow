@@ -122,7 +122,6 @@ class Slideshow extends Component {
           }
           <SlideshowItem
             slideshowItems={this.props.slideshowItems}
-            slideshowRoot={this.props.slideshowRoot}
             dir={this.state.slideshowDir}
           />
         </div>
