@@ -1,10 +1,10 @@
 import {
     GET_SLIDESHOW_SLIDES_FULFILLED
-} from '../actions/slideshow';
+} from '../actions/actions_slideshow';
 
 import {
     GET_CSV_DATA_FULFILLED
-} from '../actions/csv';
+} from '../actions/actions_csv';
 
 export default function(state = {files: {}, csv: []}, action) {
 

@@ -4,7 +4,7 @@ import {
     FETCH_WEATHER_UPDATE,
 
     DELETE_ONE_CITY
-} from '../actions/weather';
+} from '../actions/actions_weather';
 import _ from 'lodash'
 
 export default function(state = [], action) {

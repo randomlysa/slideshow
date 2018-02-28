@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as adminActionCreators from '../actions/admin';
-import * as slideshowActionCreators from '../actions/slideshow';
-import * as csvActionCreators from '../actions/csv';
+import * as adminActionCreators from '../actions/actions_admin';
+import * as slideshowActionCreators from '../actions/actions_slideshow';
+import * as csvActionCreators from '../actions/actions_csv';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
 

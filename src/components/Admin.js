@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as adminActions from '../actions/admin';
-import * as slideshowActions  from '../actions/slideshow.js';
-import * as slideshowConfigActions  from '../actions/slideshowConfig.js';
+import * as adminActions from '../actions/actions_admin';
+import * as slideshowActions  from '../actions/actions_slideshow.js';
+import * as slideshowConfigActions  from '../actions/actions_slideshowConfig.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';

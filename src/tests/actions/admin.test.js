@@ -7,7 +7,7 @@ import {
   updateTransitionDuration,
   checkPassword,
   logout
-} from '../../actions/admin.js';
+} from '../../actions/actions_admin.js';
 
 test('should update slideshow duration', () => {
   const action = updateSlideshowDuration(8000);

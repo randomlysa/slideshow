@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import { Admin } from '../../components/Admin';
-import * as adminActions from '../../actions/admin';
-import * as slideshowActions from '../../actions/slideshow';
+import * as adminActions from '../../actions/actions_admin';
+import * as slideshowActions from '../../actions/actions_slideshow';
 
 const actions = {...adminActions, ...slideshowActions};
 

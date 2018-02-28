@@ -1,6 +1,6 @@
 import {
     VERIFY_PASSWORD
-} from '../actions/admin';
+} from '../actions/actions_admin';
 
 export default function(state = {}, action) {
 

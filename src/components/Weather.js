@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchWeatherFromLocalStorage, fetchWeatherFromOpenWeather } from '../actions/weather';
+import { fetchWeatherFromLocalStorage, fetchWeatherFromOpenWeather } from '../actions/actions_weather';
 
 class Weather extends Component {
   componentWillMount() {
