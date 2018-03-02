@@ -80,15 +80,15 @@ class Slideshow extends Component {
     // Get data for CSV files.
     if (csvFiles) {
       csvFiles.map((csvFile) => {
-        const { file } = csvFile;
-        // Check if the file data has not been requested.
-        if (!this.state.csvRequestedFor.includes(file)) {
-          // Add file to state.
+        const { filename } = csvFile;
+        // Check if the filename data has not been requested.
+        if (!this.state.csvRequestedFor.includes(filename)) {
+          // Add filename to state.
           this.setState((prevState) => {
-            return {csvRequestedFor: [...prevState.csvRequestedFor, file]}
+            return {csvRequestedFor: [...prevState.csvRequestedFor, filename]}
           })
           // Request data.
-          this.props.actions.getCSVData(file, this.state.slideshowDir);
+          this.props.actions.getCSVData(filename, this.state.slideshowDir);
         } // if file hasn't been requested.
       }); // csvFiles.map
     } // if(csvFiles)

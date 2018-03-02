@@ -4,8 +4,8 @@ import { SLIDESHOW_ROOT } from '../config/api-config';
 export const GET_CSV_DATA = 'GET_CSV_DATA';
 export const GET_CSV_DATA_FULFILLED = 'GET_CSV_DATA_FULFILLED';
 
-export function getCSVData(file, slideshowDir) {
-  const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${file}`;
+export function getCSVData(filename, slideshowDir) {
+  const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${filename}`;
 
   return {
       type: GET_CSV_DATA,
@@ -16,7 +16,7 @@ export function getCSVData(file, slideshowDir) {
             complete: function (response){
               try {
                 fulfill({
-                  file: file,
+                  filename: filename,
                   data: response.data
                 });
               } catch (ex) {

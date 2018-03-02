@@ -15,7 +15,7 @@ export default function(state = {files: {}, csv: []}, action) {
             const csv = [
                 ...state.csv,
                 {
-                    file: action.payload.file,
+                    filename: action.payload.filename,
                     data: action.payload.data
                 }
             ];
