@@ -29,7 +29,8 @@ foreach($dirscan as $file) {
         // Make a new array for each item so an array of objects is returned
         // instead of an object.
         $newArray = array();
-        $newArray['file'] = $file;
+        $newArray['filename'] = $file;
+        $newArray['md5'] = md5($file);
         $files[] = $newArray;
     }
 };
