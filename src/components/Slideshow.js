@@ -72,8 +72,8 @@ class Slideshow extends Component {
     // this.setState({ displayWeather });
 
     // Make an array of csv files.
-    const csvFiles = _.filter(this.props.slideshowItems.files, function(obj) {
-      const fileType = obj.file.split('.').pop();
+    const csvFiles = _.filter(this.props.slideshowItems.files, fileObject => {
+      const fileType = fileObject.filename.split('.').pop();
       return fileType === 'csv';
     });
 

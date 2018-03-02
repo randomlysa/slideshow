@@ -5,21 +5,21 @@ import SlideshowItemImage from './SlideshowItemImage';
 
 const SlideshowItem = (props) => {
   return (
-    props.slideshowItems.files.map((item, index) => {
+    props.slideshowItems.files.map((fileObject, index) => {
       let style;
-      // Hide items past index 0.
+      // Hide fileObjects past index 0.
       if (index > 0) style = {'display': 'none'};
 
       // https://stackoverflow.com/a/1203361/3996097
-      const fileType = item.file.split('.').pop().toLowerCase();
+      const fileType = fileObject.filename.split('.').pop().toLowerCase();
 
       if (fileType === 'jpg') {
         return (
           <SlideshowItemImage
-            key={item.file}
+            key={fileObject.filename}
             dir={props.dir}
             style={style}
-            item={item}
+            fileObject={fileObject}
             index={index}
             props={props.slideshowItems}
           />
@@ -29,9 +29,9 @@ const SlideshowItem = (props) => {
       if (fileType === 'csv' && props.slideshowItems.csv[0]) {
         return (
           <SlideshowItemCSV
-            key={item.file}
+            key={fileObject.filename}
             style={style}
-            item={item}
+            fileObject={fileObject}
             index={index}
             csvData={props.slideshowItems.csv}
           />

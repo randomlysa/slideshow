@@ -7,7 +7,7 @@ const SlideshowItemCSV = (props) => {
 
   // Match file name to csv data in props.
   const match = _.findIndex(csv, function(csv) {
-    return csv.file === props.item.file;
+    return csv.file === props.fileObject.filename;
   });
 
   if (match === -1) return null;
@@ -16,7 +16,6 @@ const SlideshowItemCSV = (props) => {
   let rowTime;
   let timeColumn;
 
-  // rename item to row
   const csvItems = csv[match].data.map((row, rowIndex) => {
 
     // Always return the  header row because other rows will be hidden
@@ -70,7 +69,7 @@ const SlideshowItemCSV = (props) => {
     } // if
   }) // csvItems map
   return (
-    <div key={props.item.file} className="slideshowItem csvHolder rTable" style={props.style}>
+    <div key={props.fileObject.filename} className="slideshowItem csvHolder rTable" style={props.style}>
       {csvItems}
     </div>
   ) // Final return.
