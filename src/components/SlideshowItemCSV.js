@@ -7,7 +7,7 @@ const SlideshowItemCSV = (props) => {
 
   // Match file name to csv data in props.
   const match = _.findIndex(csv, function(csv) {
-    return csv.file === props.fileObject.filename;
+    return csv.filename === props.fileObject.filename;
   });
 
   if (match === -1) return null;
