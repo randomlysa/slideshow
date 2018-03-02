@@ -17,24 +17,21 @@ const SlideshowItemCSV = (props) => {
   let timeColumn;
 
   // rename item to row
-  const csvItems = csv[match].data.map((item, index) => {
-
-    // ["Time", "School Short Name", "GroupName", "FullCategoryName", "Room"]
-    const key = item.join('_');
+  const csvItems = csv[match].data.map((row, rowIndex) => {
 
     // Always return the  header row because other rows will be hidden
     // later based on time.
-    if (index === 0) {
+    if (rowIndex === 0) {
 
       // Determine which (if any) column has the time. Used to hide events that
       // have already occured.
-      timeColumn = _.findIndex(item, (o) => {
+      timeColumn = _.findIndex(row, (o) => {
         return o.toLowerCase() === 'time';
       });
 
       return (
-        <div key={key} className="rTableHeading">
-          {item.map((column, index) => {
+        <div key={rowIndex} className="rTableHeading">
+          {row.map((column, columnIndex) => {
             return (
               <div className="rTableCell" key={column}>
                 {column}
@@ -46,10 +43,10 @@ const SlideshowItemCSV = (props) => {
     }
 
     // If a row doesn't have the time, get it from the last row that had time.
-    if (item[timeColumn] === "") { item[timeColumn] = rowTime; }
+    if (row[timeColumn] === "") { row[timeColumn] = rowTime; }
     // If a row has time, save that so the next row that doesn't have time
     // can use it.
-    else { rowTime = item[timeColumn]; }
+    else { rowTime = row[timeColumn]; }
 
     // Time example: 9:35:00 AM
     const eventTime = moment(rowTime, "hh:mm:ss a");
@@ -59,11 +56,11 @@ const SlideshowItemCSV = (props) => {
     if (eventTime.isBetween(startTime, endTime)) {
     // if (eventTime.isSameOrAfter(startTime)) {
       return (
-        <div key={key} className="rTableRow">
-          {item.map(column => {
-            // Todo: not sure what to use for a key here.
+        <div key={rowIndex} className="rTableRow">
+          {row.map((column, columnIndex) => {
+            const columnKey = `${rowIndex}_${columnIndex}`;
             return (
-              <div className="rTableCell">
+              <div className="rTableCell" key={columnKey}>
                 {column}
               </div>
             )
