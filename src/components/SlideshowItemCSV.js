@@ -53,8 +53,11 @@ const SlideshowItemCSV = (props) => {
 
     // Time example: 9:35:00 AM
     const eventTime = moment(rowTime, "hh:mm:ss a");
-    const testTime = moment("10:05:00 AM", "hh:mm:ss a");
-    if (eventTime.isSameOrAfter(testTime)) {
+    // const testTime = moment("10:05:00 AM", "hh:mm:ss a");
+    const startTime = eventTime.clone().subtract(15, 'm');
+    const endTime = eventTime.clone().add(15, 'm');
+    if (eventTime.isBetween(startTime, endTime)) {
+    // if (eventTime.isSameOrAfter(startTime)) {
       return (
         <div key={key} className="rTableRow">
           {item.map(column => {
