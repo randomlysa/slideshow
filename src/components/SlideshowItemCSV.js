@@ -23,6 +23,7 @@ const SlideshowItemCSV = (props) => {
   // Todo: this should be a per-csv prop.
   const hasHeader = true;
   const showHeader = true;
+  const filterByTime = false;
 
   // Set up a time filter.
   // Format of date in CSV file. See https://momentjs.com/docs/#/parsing/string/
@@ -65,11 +66,11 @@ const SlideshowItemCSV = (props) => {
 
     // A different filter.
     // if (eventTime.isSameOrAfter(startTime)) {
-    if (eventTime.isBetween(startTime, endTime, null, [])) {
+    if (filterByTime && eventTime.isBetween(startTime, endTime, null, [])) {
       return row;
     }
-  });
-  // End filter.
+    else if (!filterByTime) return row;
+  }); // filteredCsv = _.filter
 
   // Return null (don't render the div) if no data was found.
   // Todo: Add option to return some error text instead.
