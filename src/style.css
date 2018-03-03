@@ -144,7 +144,7 @@ img {
 
 /* csv table */
 /* https://html-cleaner.com/features/replace-html-table-tags-with-divs/ */
-.rTable { display: table; }
+.rTable { display: table; width: 98%; height: 98vh;}
 .rTableRow { display: table-row; }
 .rTableHeading { display: table-header-group; }
 .rTableBody { display: table-row-group; }
