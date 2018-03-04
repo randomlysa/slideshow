@@ -33,14 +33,39 @@ class Login extends React.Component {
   submitLogin(event) {
     event.preventDefault();
 
-    if (this.state.password === '') {
+    if (this.state.passwordLogin === '') {
       this.setState({ errorMessageLogin: 'Please enter a password.' });
-    } else {
-      this.props.checkPassword(this.state.password);
-      if(!this.props.isLoggedIn) {
-        this.setState({errorMessageLogin: 'Password incorrect.'});
-      }
+      return;
     }
+
+    $.ajax({
+      url: `${API_ROOT}/php/sqliteGetPasswordHash.php`,
+          type: 'GET',
+          dataType: 'json',
+          data: {username: this.state.usernameLogin}
+    })
+      .done((data) => {
+        // User not found.
+        if (data === null) {
+          this.setState({errorMessageLogin: 'Incorrect username or password'});
+          return;
+        }
+
+        const userhash = data.password;
+
+        // Verifying a hash
+        password(this.state.passwordLogin).verifyAgainst(
+          userhash, (error, verified) => {
+            if(error) {
+              throw new Error('Something went wrong!');
+            }
+            if(!verified) {
+              this.setState({errorMessageLogin: 'Incorrect username or password'});
+            } else {
+              console.log("Logged in");
+            }
+          })
+      });
   }
 
   submitCreate(e) {
