@@ -8,19 +8,24 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      password: '',
-      errorMessage: ''
+      usernameLogin: '',
+      passwordLogin: '',
+      errorMessageLogin: '',
+      usernameCreate: '',
+      passwordCreate: '',
+      emailCreate: '',
+      errorMessageCreate: ''
     };
 
     this.inputChange = this.inputChange.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   inputChange(e) {
-    this.setState({ password: e.target.value });
+    this.setState({ [e.target.id]: e.target.value });
   }
 
-  submitForm(event) {
+  submitLogin(event) {
     event.preventDefault();
 
     if (this.state.password === '') {
@@ -43,16 +48,61 @@ class Login extends React.Component {
     return (
       <div className="admin">
         <h1>Login</h1>
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={this.submitLogin}>
           <input
-            type="password"
-            value={this.state.password}
+            id="usernameLogin"
+            type="username"
+            placeholder="Username"
+            value={this.state.usernameLogin}
             onChange={this.inputChange}
           />
+          <br />
+          <input
+            id="passwordLogin"
+            type="password"
+            placeholder="Password"
+            value={this.state.passwordLogin}
+            onChange={this.inputChange}
+          />
+          <br />
           <input
               type="submit" />
         </form>
-        {this.state.errorMessage}
+        {this.state.errorMessageLogin}
+
+        <hr />
+        <h2>Create Account</h2>
+        <form onSubmit={this.submitCreate}>
+          <input
+            id="usernameCreate"
+            type="usernameCreate"
+            placeholder="Username"
+            value={this.state.usernameCreate}
+            onChange={this.inputChange}
+          />
+          <br />
+          <input
+            id="passwordCreate"
+            type="passwordCreate"
+            placeholder="Password"
+            value={this.state.passwordCreate}
+            onChange={this.inputChange}
+          />
+          <br />
+          <input
+            id="emailCreate"
+            type="emailCreate"
+            placeholder="Email (optional)"
+            value={this.state.emailCreate}
+            onChange={this.inputChange}
+          />
+          <br />
+          <input
+              type="submit" />
+        </form>
+
+
+
 
       </div>
     )
