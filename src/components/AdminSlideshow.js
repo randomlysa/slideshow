@@ -6,14 +6,14 @@ import { API_ROOT } from '../config/api-config';
 
 class AdminSlideshow extends Component {
 
-  deleteFile(item) {
+  deleteFile(filename) {
     if(window.confirm("Delete file?")) {
       let { activeFolder } = this.props;
       $.ajax({
         url: `${API_ROOT}/php/deleteFile.php`,
         type: 'POST',
         data: {
-          fileToDelete: item.file,
+          fileToDelete: filename,
           folder: activeFolder
         }
       }) // ajax
@@ -28,15 +28,15 @@ class AdminSlideshow extends Component {
   } // deleteFile
 
 
-  renderSlideshowItem(item, index) {
-    const itemUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${item.file}`;
+  renderSlideshowItem(filename, index) {
+    const fileUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
 
     return (
-      <div key={item.file} className="thumbnail">
+      <div key={filename} className="thumbnail">
         <img
-          src={itemUrl}
+          src={fileUrl}
           alt="Slideshow Item"
-          onClick={this.deleteFile.bind(this, item)}
+          onClick={this.deleteFile.bind(this, filename)}
         />
         <p>Click image to delete file</p>
       </div>
@@ -44,10 +44,10 @@ class AdminSlideshow extends Component {
   } // renderSlideshowItem
 
   render() {
-    if (this.props.activeFolder && this.props.slideshowItems) {
+    if (this.props.activeFolder && this.props.slideshowItems.files.length > 0) {
       return (
-          this.props.slideshowItems.map((item, index) => {
-            return this.renderSlideshowItem(item, index)
+          this.props.slideshowItems.files.map((fileObject, index) => {
+            return this.renderSlideshowItem(fileObject.filename, index)
           })
       )
     } else {
