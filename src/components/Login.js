@@ -72,12 +72,12 @@ class Login extends React.Component {
     const self = this;
     e.preventDefault();
 
-    if (this.state.usernameCreate ==- '') {
+    if (this.state.usernameCreate === '') {
       this.setState({ errorMessageCreate: 'Please enter a username.' });
       return;
     }
 
-    if (this.state.passwordCreate ==- '') {
+    if (this.state.passwordCreate === '') {
       this.setState({ errorMessageCreate: 'Please enter a password.' });
       return;
     }
