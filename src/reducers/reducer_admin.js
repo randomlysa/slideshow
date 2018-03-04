@@ -1,22 +1,20 @@
 import {
-    VERIFY_PASSWORD
+    DO_LOGIN, DO_LOGOUT
 } from '../actions/actions_admin';
 
 export default function(state = {}, action) {
 
     switch (action.type) {
-        case VERIFY_PASSWORD:
+        case DO_LOGIN:
             if(action.payload) {
               return { isLoggedIn: true };
             }
-            else {
-              return {
-                  isLoggedIn: false,
-                  passwordEntered: action.passwordEntered
-                };
+        case DO_LOGOUT:
+            return {
+                isLoggedIn: false
             }
         default:
-            return {...state, passwordEntered: false };
+            return {...state, isLoggedIn: false };
     }
 
 }

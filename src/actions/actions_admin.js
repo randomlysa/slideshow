@@ -1,23 +1,16 @@
-export const VERIFY_PASSWORD = 'VERIFY_PASSWORD';
+export const DO_LOGIN = 'DO_LOGIN';
+export const DO_LOGOUT = 'DO_LOGOUT';
 
-export function checkPassword(password) {
-    if (password === "14400") {
-        return {
-            type: VERIFY_PASSWORD,
-            payload: true
-        };
-    } else {
-        return {
-            type: VERIFY_PASSWORD,
-            payload: false,
-            passwordEntered: Boolean((password))
-        };
-    }
+export function login () {
+    return {
+        type: DO_LOGIN,
+        payload: true
+    };
 }
 
 export function logout() {
     return {
-        type: VERIFY_PASSWORD,
+        type: DO_LOGOUT,
         payload: false
     };
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { checkPassword } from '../actions/actions_admin';
+import { login } from '../actions/actions_admin';
 import password from 'password-hash-and-salt';
 
 import $ from 'jquery';
@@ -62,11 +62,11 @@ class Login extends React.Component {
             if(!verified) {
               this.setState({errorMessageLogin: 'Incorrect username or password'});
             } else {
-              console.log("Logged in");
+              this.props.login();
             }
-          })
-      });
-  }
+          }); // password.verifyAgainst
+      }); // ajax done
+  } // submitLogin
 
   submitCreate(e) {
     const self = this;
@@ -171,10 +171,6 @@ class Login extends React.Component {
           <br />
           {this.state.errorMessageCreate}
         </form>
-
-
-
-
       </div>
     )
   }
@@ -185,7 +181,7 @@ function mapStateToProps({ admin }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ checkPassword }, dispatch);
+  return bindActionCreators({ login }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
