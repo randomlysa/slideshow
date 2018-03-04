@@ -77,9 +77,9 @@ const SlideshowItemCSV = (props) => {
   // If hasHeader and showHeader, at least the header should have been returned,
   // so one row means empty (only the header was returned.)
   // If hasHeader and not showHeader, or if not has header, no rows means empty.
-  if (hasHeader && showHeader && filteredCsv.length === 1 ||
-    hasHeader && !showHeader && filteredCsv.length === 0 ||
-    !hasHeader && filteredCsv.length === 0) {
+  if ((hasHeader && showHeader && filteredCsv.length === 1) ||
+    (hasHeader && !showHeader && filteredCsv.length === 0) ||
+    (!hasHeader && filteredCsv.length === 0)) {
     return null;
   }
 

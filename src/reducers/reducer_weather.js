@@ -34,7 +34,7 @@ export default function(state = [], action) {
             } // if(action.payload)
         case DELETE_ONE_CITY:
             if (action.payload) {
-                return _.reject(state, {'id': parseInt(action.payload)});
+                return _.reject(state, {'id': parseInt(action.payload, 10)});
             }
         default:
             return state
