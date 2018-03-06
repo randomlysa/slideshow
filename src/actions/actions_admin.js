@@ -1,10 +1,10 @@
 export const DO_LOGIN = 'DO_LOGIN';
 export const DO_LOGOUT = 'DO_LOGOUT';
 
-export function login () {
+export function login (token) {
     return {
         type: DO_LOGIN,
-        payload: true
+        payload: token
     };
 }
 

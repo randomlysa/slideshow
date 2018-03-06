@@ -12,17 +12,17 @@ import MyRoutes from './components/MyRoutes';
 
 import { loadState, saveState } from './manageLocalStorage';
 
-// const persistedState = loadState();
+const persistedState = loadState();
 
 const store = createStore(
     slideshowApp,
-    // persistedState,
+    persistedState,
     applyMiddleware(promiseMiddleware()),
 );
 
-// store.subscribe(() => {
-//     saveState(store.getState());
-// });
+store.subscribe(() => {
+    saveState(store.getState());
+});
 
 ReactDOM.render(
     <Provider store={store}>

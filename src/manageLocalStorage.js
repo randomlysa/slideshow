@@ -2,7 +2,7 @@
 
 export const loadState = () => {
     try {
-        const serializedState = localStorage.getItem('slideShow');
+        const serializedState = localStorage.getItem('slideshow');
         if (serializedState === null) {
             return undefined;
         }
@@ -12,10 +12,10 @@ export const loadState = () => {
     }
 }
 
-export const saveState = (slideShow) => {
+export const saveState = (slideshow) => {
     try {
-        const serializedState = JSON.stringify(slideShow);
-        localStorage.setItem('slideShow', serializedState);
+        const serializedState = JSON.stringify(slideshow);
+        localStorage.setItem('slideshow', serializedState);
     } catch (err) {
         // Ignore write errors.
     }
@@ -23,7 +23,7 @@ export const saveState = (slideShow) => {
 
 export const clearStorage = () => {
     try {
-        localStorage.setItem('slideShow', '');
+        localStorage.setItem('slideshow', '');
         window.location.reload(true);
     } catch (err) {
         console.log(err);

@@ -29,3 +29,4 @@ if (origin && origin.includes('localhost:3000')) {
 export const API_ROOT = PHPRoot;
 export const BASENAME = basename;
 export const SLIDESHOW_ROOT = slideshowRoot;
+export const JWT_SECRET = '4lkdfjlkvcv55dfvgnmjuyyu6yraeqaerg4';

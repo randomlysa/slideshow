@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../actions/actions_admin';
 import password from 'password-hash-and-salt';
+import jwt from 'jwt-simple';
 
 import $ from 'jquery';
-import { API_ROOT } from '../config/api-config';
+import { API_ROOT, JWT_SECRET } from '../config/api-config';
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,6 +25,11 @@ class Login extends React.Component {
     this.inputChange = this.inputChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
     this.submitCreate = this.submitCreate.bind(this);
+  }
+
+  tokenForUser(user) {
+    const timestamp = new Date().getTime();
+    return jwt.encode({ sub: user.id, iat: timestamp}, JWT_SECRET);
   }
 
   inputChange(e) {
@@ -62,7 +68,8 @@ class Login extends React.Component {
             if(!verified) {
               this.setState({errorMessageLogin: 'Incorrect username or password'});
             } else {
-              this.props.login();
+              const token = this.tokenForUser(data);
+              this.props.login(token);
             }
           }); // password.verifyAgainst
       }); // ajax done
