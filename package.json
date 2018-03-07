@@ -12,6 +12,7 @@
     "papaparse": "^4.3.7",
     "password-hash-and-salt": "^0.1.4",
     "react": "^16.1.0",
+    "react-bootstrap-typeahead": "^2.5.0",
     "react-dom": "^16.1.0",
     "react-dropzone": "^4.2.7",
     "react-redux": "^5.0.6",

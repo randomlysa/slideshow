@@ -11,6 +11,7 @@ import { API_ROOT } from '../config/api-config';
 
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
+import AdminWeather from './AdminWeather'
 
 export class Admin extends Component {
   constructor(props) {
@@ -151,6 +152,8 @@ export class Admin extends Component {
         </button>
 
           <hr style={{'marginBottom': '30px'}} />
+
+          <AdminWeather />
 
           <select
             name="selectActiveFolder"
