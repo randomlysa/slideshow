@@ -68,8 +68,8 @@ export class Admin extends Component {
         cityToShowWeatherFor: this.state.cityToShowWeatherFor
       }
     })
-    .done((reponse) => {
-      console.log(reponse);
+    .done((response) => {
+      console.log(response);
     })
     .fail((e) => {
       console.log(e);
