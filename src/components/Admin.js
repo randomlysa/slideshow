@@ -130,6 +130,16 @@ export class Admin extends Component {
     });
   }
 
+  componentWillReceiveProps(nextprops) {
+    // Update inputs to reflect current (loaded from database) values.
+    this.setState({
+      slideDuration: nextprops.config.slideDuration,
+      transitionDuration: nextprops.config.transitionDuration,
+      slideToShowWeatherOn: nextprops.config.slideToShowWeatherOn,
+      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor
+    });
+  }
+
   render() {
     return (
       <div className="admin">
