@@ -7,14 +7,18 @@ export default function(state = {}, action) {
     switch (action.type) {
         case DO_LOGIN:
             if(action.payload) {
-              return { token: action.payload };
+              return {
+                  token: action.payload,
+                  isLoggedIn: true
+                };
             }
         case DO_LOGOUT:
             return {
-                token: null
+                token: null,
+                isLoggedIn: false
             }
         default:
-            return {...state, token: null };
+            return state
     }
 
 }
