@@ -125,25 +125,6 @@ export class Admin extends Component {
           onClick={this.confirmLogout}>
           Logout
         </button>
-          <form onSubmit={this.onFormSubmit} className="input-group">
-            Slide duration (seconds):
-              <input type="number"
-                id="slideDuration"
-                placeholder="Number (seconds)"
-                onChange={this.onInputChange}
-                value={this.state.slideDuration}
-              />
-              <br />
-              Transition duration (ms):
-              <input type="number"
-                id="transitionDuration"
-                placeholder="Number (milliseconds)"
-                onChange={this.onInputChange}
-                value={this.state.transitionDuration}
-              /> (1000ms = 1s)
-              <br />
-            <input type="submit" name="Save" />
-          </form>
 
           <hr style={{'marginBottom': '30px'}} />
 
@@ -163,19 +144,41 @@ export class Admin extends Component {
         </select>
 
         {this.state.activeFolder &&
-          <div className="adminFlexbox">
-            <div className="adminFlexbox--Slideshow">
-              <AdminSlideshow
-                activeFolder={this.state.activeFolder}
-                updateSlideshow={this.props.actions.updateSlideshow}
-              />
-            </div>
-            <div className="adminFlexbox--Dropzone">
-              <UploadFiles
-                activeFolder={this.state.activeFolder}
-                uploadStatus={this.state.uploadDisabled}
-                updateSlideshow={this.props.actions.updateSlideshow}
-              />
+          <div className="adminSection">
+            <form onSubmit={this.onFormSubmit} className="input-group">
+              Slide duration (seconds):
+                <input type="number"
+                  id="slideDuration"
+                  placeholder="Number (seconds)"
+                  onChange={this.onInputChange}
+                  value={this.state.slideDuration}
+                />
+                <br />
+                Transition duration (ms):
+                <input type="number"
+                  id="transitionDuration"
+                  placeholder="Number (milliseconds)"
+                  onChange={this.onInputChange}
+                  value={this.state.transitionDuration}
+                /> (1000ms = 1s)
+                <br />
+              <input type="submit" name="Save" />
+            </form>
+
+            <div className="adminFlexbox">
+              <div className="adminFlexbox--Slideshow">
+                <AdminSlideshow
+                  activeFolder={this.state.activeFolder}
+                  updateSlideshow={this.props.actions.updateSlideshow}
+                />
+              </div>
+              <div className="adminFlexbox--Dropzone">
+                <UploadFiles
+                  activeFolder={this.state.activeFolder}
+                  uploadStatus={this.state.uploadDisabled}
+                  updateSlideshow={this.props.actions.updateSlideshow}
+                />
+              </div>
             </div>
           </div>
         }
