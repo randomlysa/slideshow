@@ -2,8 +2,8 @@
   header("Access-Control-Allow-Origin: *");
 
   // http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
-  if( $_POST ){
-    $name = $_POST['name'];
+  if( $_GET ){
+    $name = $_GET['name'];
 
     try{
       include('sqliteConfig.php');

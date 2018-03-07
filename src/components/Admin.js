@@ -88,7 +88,21 @@ export class Admin extends Component {
         this.props.actions.updateSlideshow(this.state.activeFolder);
         this.props.actions.getConfigFromDatabase(this.state.activeFolder);
 
-
+        // Check if the folder config already exists in the database.
+        $.ajax({
+          url: `${API_ROOT}/php/sqliteGetByName.php?name=${this.state.activeFolder}`,
+          type: 'GET'
+        })
+        .done((response) => {
+          if (response === null) {
+            this.setState({existsInDatabase: false})
+          } else {
+            this.setState({existsInDatabase: true})
+          }
+        })
+        .fail((e) => {
+          console.log(e);
+        }) // ajax
       } // setState callback
     ); // setState
     } else {
