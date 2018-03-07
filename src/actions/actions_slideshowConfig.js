@@ -6,13 +6,13 @@ export const UPDATE_SLIDESHOW_DURATION = 'UPDATE_SLIDESHOW_DURATION';
 export const UPDATE_TRANSITION_DURATION = 'UPDATE_TRANSITION_DURATION';
 
 export function getConfigFromDatabase(name) {
+
   return {
     type: GET_CONFIG_FROM_DATABASE,
     payload: $.ajax({
-      url: `${API_ROOT}/php/sqliteGetByName.php`,
-      type: 'post',
-      dataType: 'json',
-      data: {name}
+      url: `${API_ROOT}/php/sqliteGetByName.php?name=${name}`,
+      type: 'GET',
+      dataType: 'json'
     })
   }; // return
 } // getConfigFromDatabase
