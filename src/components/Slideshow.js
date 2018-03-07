@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActionCreators from '../actions/actions_admin';
 import * as slideshowActionCreators from '../actions/actions_slideshow';
+import * as slideshowConfigActionCreators  from '../actions/actions_slideshowConfig.js';
 import * as csvActionCreators from '../actions/actions_csv';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
@@ -22,32 +23,35 @@ class Slideshow extends Component {
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || "bb1",
-      csvRequestedFor: []
+      csvRequestedFor: [],
+      slideDuration: '',
+      transitionDuration: ''
     };
+
+    this.props.actions.updateSlideshow(this.state.slideshowDir);
+    this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
   }
 
   componentDidMount() {
-    this.props.actions.updateSlideshow(this.state.slideshowDir);
-
-    // Set some defaults.
-    let transitionDuration = this.props.config.transitionDuration || 500;
-    // slideDisplayDuration needs to have transitionDuration added to it,
-    // otherwise if both values are equal, the slideshow will be constantly
-    // transitioning.
-    let slideDisplayDuration = this.props.config.slideDuration * 1000 +
-      parseInt(transitionDuration, 10) || 6000;
 
     // Loop through the slideshow, fading items out and in and running update.
     // https://stackoverflow.com/a/30725868/3996097
-    function loop() {
-      let newSlideDisplayDuration = slideDisplayDuration;
+    const loop = () => {
+      let transitionDuration = this.state.transitionDuration || 500;
+      // slideDuration needs to have transitionDuration added to it,
+      // otherwise if both values are equal, the slideshow will be constantly
+      // transitioning.
+
+      // Todo: this isn't set the first time this runs, so the initial slide
+      // durations is '500'
+      let newSlideDuration = this.state.slideDuration * 1000 + parseInt(transitionDuration, 10) || 6000;
 
       // Set a longer show duration for csv data.
       if ($('#slideshow > div').length > 1) {
         const nextItemClassname = $('#slideshow > div')[1].className;
 
         if (nextItemClassname.includes('csvHolder')) {
-          newSlideDisplayDuration = 10000;
+          newSlideDuration = 10000;
         }
       }
 
@@ -59,15 +63,24 @@ class Slideshow extends Component {
         .appendTo('#slideshow');
       this.props.actions.updateSlideshow(this.state.slideshowDir);
 
-      window.setTimeout(boundLoop, newSlideDisplayDuration);
+      window.setTimeout(loop, newSlideDuration);
     };
 
-    var boundLoop = loop.bind(this);
-    boundLoop();
+    loop();
 
   } // componentDidMount
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextprops) {
+
+    if (nextprops.config) {
+      if (nextprops.config.slideDuration !== this.state.slideDuration) {
+        this.setState({slideDuration: nextprops.config.slideDuration })
+      }
+      if (nextprops.config.transitionDuration !== this.state.transitionDuration) {
+        this.setState({transitionDuration: nextprops.config.transitionDuration })
+      }
+    }
+
     // let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
     // this.setState({ displayWeather });
 
@@ -111,7 +124,6 @@ class Slideshow extends Component {
     }
   }
 
-
   render() {
 
     if (this.props.slideshowItems.files && this.props.slideshowItems.files.length > 0) {
@@ -139,7 +151,10 @@ function mapStateToProps({ config, slideshowItems }) {
 function mapDispatchToProps(dispatch) {
   // Assign all actions (import * as actionCreators) to props.actions
   const actionCreators = {
-    ...adminActionCreators, ...slideshowActionCreators, ...csvActionCreators
+    ...adminActionCreators,
+    ...slideshowActionCreators,
+    ...csvActionCreators,
+    ...slideshowConfigActionCreators
   };
 
   return {
