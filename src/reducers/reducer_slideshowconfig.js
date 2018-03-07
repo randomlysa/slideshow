@@ -1,5 +1,6 @@
 import {
     GET_CONFIG_FROM_DATABASE,
+    GET_CONFIG_FROM_DATABASE_FULFILLED,
     UPDATE_SLIDESHOW_DURATION,
     UPDATE_TRANSITION_DURATION
 
@@ -7,8 +8,7 @@ import {
 
 export default function(state = {}, action) {
     switch (action.type) {
-
-        case GET_CONFIG_FROM_DATABASE:
+        case GET_CONFIG_FROM_DATABASE_FULFILLED:
             const {
                 slideDuration,
                 transitionDuration,
