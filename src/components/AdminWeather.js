@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
 
 import {AsyncTypeahead} from 'react-bootstrap-typeahead'; // ES2015
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 
