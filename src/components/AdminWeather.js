@@ -60,7 +60,7 @@ class AdminWeather extends Component {
         <AsyncTypeahead
           isLoading={this.state.isLoading}
           id="city"
-          placeholder="City name"
+          placeholder="Show weather for this city"
           onSearch={query => this.onInputChange(query)}
           onChange={city => this.props.actions.setWeatherCity(city)}
           options={this.state.options}
