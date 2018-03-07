@@ -33,7 +33,11 @@ class AdminWeather extends Component {
     .done((response) => {
       this.setState({
         isLoading: false,
-        options: response
+        options: response.map(item => {
+          // Typeahead filters by label. Make a label with city and country name
+          const label = `${item.NAME}, ${item.COUNTRY}`;
+          return {...item, label }
+        })
       })
     })
     .fail((e) => {
@@ -45,7 +49,6 @@ class AdminWeather extends Component {
     return (
       <div>
         <AsyncTypeahead
-          labelKey="NAME"
           isLoading={this.state.isLoading}
           id="city"
           placeholder="City name"
