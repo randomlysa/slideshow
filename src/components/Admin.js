@@ -22,7 +22,7 @@ export class Admin extends Component {
         transitionDuration: props.config.transitionDuration || 500,
         activeFolder: '',
         slideToShowWeatherOn: '',
-        cityToShowWeatherFor: '',
+        cityToShowWeatherFor: props.config.cityToShowWeatherFor,
         folders: [],
         uploadDisabled: true,
         existsInDatabase: ''
@@ -137,7 +137,7 @@ export class Admin extends Component {
       slideDuration: nextprops.config.slideDuration,
       transitionDuration: nextprops.config.transitionDuration,
       slideToShowWeatherOn: nextprops.config.slideToShowWeatherOn,
-      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor
+      cityToShowWeatherFor: JSON.stringify(nextprops.config.cityToShowWeatherFor)
     });
   }
 
@@ -152,8 +152,6 @@ export class Admin extends Component {
         </button>
 
           <hr style={{'marginBottom': '30px'}} />
-
-          <AdminWeather />
 
           <select
             name="selectActiveFolder"
@@ -172,7 +170,9 @@ export class Admin extends Component {
 
         {this.state.activeFolder &&
           <div className="adminSection">
-            <form onSubmit={this.onFormSubmit} className="input-group">
+            <form onSubmit={this.onFormSubmit}>
+              <AdminWeather />
+
               Slide duration (seconds):
                 <input type="number"
                   id="slideDuration"
@@ -189,7 +189,7 @@ export class Admin extends Component {
                   value={this.state.transitionDuration}
                 /> (1000ms = 1s)
                 <br />
-              <input type="submit" name="Save" />
+              <input type="submit" value="Save" />
             </form>
 
             <div className="adminFlexbox">

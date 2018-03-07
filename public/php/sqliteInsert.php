@@ -25,7 +25,7 @@
       $stmt -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':slideToShowWeatherOn', $slideToShowWeatherOn, PDO::PARAM_STR);
-      $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_INT);
+      $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR;
 
       /* execute the query */
       if( $stmt -> execute() ){
