@@ -45,7 +45,7 @@ class Login extends React.Component {
     }
 
     $.ajax({
-      url: `${API_ROOT}/php/sqliteGetPasswordHash.php`,
+      url: `${API_ROOT}/php/sqliteGetUserByIdOrName.php`,
           type: 'GET',
           dataType: 'json',
           data: {username: this.state.usernameLogin}
