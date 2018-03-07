@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as slideshowConfigActions  from '../actions/actions_slideshowConfig.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
@@ -54,7 +56,7 @@ class AdminWeather extends Component {
           id="city"
           placeholder="City name"
           onSearch={query => this.onInputChange(query)}
-
+          onChange={city => this.props.actions.setWeatherCity(city)}
           options={this.state.options}
         />
       </div>
@@ -67,4 +69,10 @@ function mapStateToProps({ slideshowItems }) {
   return { slideshowItems };
 }
 
-export default connect(mapStateToProps)(AdminWeather);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(slideshowConfigActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminWeather);

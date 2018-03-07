@@ -1,6 +1,7 @@
 import {
     GET_CONFIG_FROM_DATABASE,
     GET_CONFIG_FROM_DATABASE_FULFILLED,
+    SET_WEATHER_CITY,
     UPDATE_SLIDESHOW_DURATION,
     UPDATE_TRANSITION_DURATION
 
@@ -23,7 +24,8 @@ export default function(state = {}, action) {
                 slideToShowWeatherOn,
                 cityToShowWeatherFor
             }
-
+        case SET_WEATHER_CITY:
+            return {...state, cityToShowWeatherFor: action.payload};
         case UPDATE_SLIDESHOW_DURATION:
             return {...state, slideDuration: action.payload};
 
