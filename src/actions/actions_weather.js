@@ -5,6 +5,7 @@ const API_KEY = 'df53338709b54a2247c6e16358430a33';
 const WEATHER_URL = `http://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
 
 export const FETCH_WEATHER_FROM_OPENWEATHER = 'FETCH_WEATHER_FROM_OPENWEATHER';
+export const FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED = 'FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED';
 export const FETCH_WEATHER_FROM_LOCALSTORAGE = 'FETCH_WEATHER_FROM_LOCALSTORAGE';
 export const FETCH_WEATHER_UPDATE = 'FETCH_WEATHER_UPDATE';
 
@@ -33,8 +34,7 @@ function manageRequestVolume(url, cityId) {
     }
 }
 
-export function fetchWeatherFromOpenWeather(cityId = '5043779') {
-
+export function fetchWeatherFromOpenWeather(cityId) {
     const url = `${WEATHER_URL}&id=${cityId}`;
     const request = manageRequestVolume(url, cityId);
 

@@ -1,6 +1,7 @@
 import {
     FETCH_WEATHER_FROM_LOCALSTORAGE,
     FETCH_WEATHER_FROM_OPENWEATHER,
+    FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED,
     FETCH_WEATHER_UPDATE,
 
     DELETE_ONE_CITY
@@ -13,8 +14,9 @@ export default function(state = [], action) {
     switch (action.type) {
         case FETCH_WEATHER_FROM_LOCALSTORAGE:
             return action.payload
-        case FETCH_WEATHER_FROM_OPENWEATHER:
+        case FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED:
             // Copy payload.data (new city) to new object.
+            console.log(action.payload.data)
             let newCityObject = Object.assign({}, action.payload.data);
             newCityObject.timeFetched = now;
            return [ newCityObject, ...state]
