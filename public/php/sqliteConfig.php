@@ -1,4 +1,6 @@
 <?php
+	header("Access-Control-Allow-Origin: *");
+
 	// http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
 	/* Create / Connection to sqlite using PDO and set error mode */
 		$db = new PDO('sqlite:bulletin.sqlite3');
