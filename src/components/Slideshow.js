@@ -19,13 +19,14 @@ class Slideshow extends Component {
     super(props);
 
     this.state = {
-      displayWeather: false,
+      showWeather: false,
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || "bb1",
       csvRequestedFor: [],
       slideDuration: '',
-      transitionDuration: ''
+      transitionDuration: '',
+      slidesToShowWeatherOn: []
     };
 
     this.props.actions.updateSlideshow(this.state.slideshowDir);
@@ -61,6 +62,14 @@ class Slideshow extends Component {
         .fadeIn(parseInt(transitionDuration, 10))
         .end()
         .appendTo('#slideshow');
+
+      // Get classname(s) for current div.
+      const thisItem = $('#slideshow > div:first')[0].className;
+      // Show weather for divs with classname showWeather.
+      this.setState({
+        showWeather: thisItem.includes('showWeather')
+      });
+      // Check for new slideshow items.
       this.props.actions.updateSlideshow(this.state.slideshowDir);
 
       window.setTimeout(loop, newSlideDuration);
@@ -80,9 +89,6 @@ class Slideshow extends Component {
         this.setState({transitionDuration: nextprops.config.transitionDuration })
       }
     }
-
-    // let displayWeather = $('#slideshow > div:first')[0].innerHTML.includes('/11.jpg');
-    // this.setState({ displayWeather });
 
     // Make an array of csv files.
     const csvFiles = _.filter(this.props.slideshowItems.files, fileObject => {
@@ -129,10 +135,11 @@ class Slideshow extends Component {
     if (this.props.slideshowItems.files && this.props.slideshowItems.files.length > 0) {
       return (
         <div id="slideshow">
-          {this.state.displayWeather &&
+          {this.state.showWeather &&
           <Weather />
           }
           <SlideshowItem
+            slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
             slideshowItems={this.props.slideshowItems}
             dir={this.state.slideshowDir}
           />

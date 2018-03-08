@@ -22,6 +22,7 @@ const SlideshowItem = (props) => {
             fileObject={fileObject}
             index={index}
             props={props.slideshowItems}
+            showWeatherOn={props.slidesToShowWeatherOn}
           />
         )
       } // jpg
@@ -34,6 +35,7 @@ const SlideshowItem = (props) => {
             fileObject={fileObject}
             index={index}
             csvData={props.slideshowItems.csv}
+            showWeatherOn={props.slidesToShowWeatherOn}
           />
         );
       } // if csv

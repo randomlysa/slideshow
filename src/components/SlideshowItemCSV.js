@@ -113,8 +113,16 @@ const SlideshowItemCSV = (props) => {
     ) // return for all other rows except header.
   }) // csvItems map
 
+  // Set a default classname.
+  let className = "slideshowItem csvHolder rTable";
+  if (props.showWeatherOn.includes(props.fileObject.filename)) {
+    // props.showWeather contains any filesname(s) that were selected to show
+    // weather on. If this filename is in that list, add the class 'showWeather'
+    className = "slideshowItem csvHolder rTable showWeather";
+  }
+
   return (
-    <div key={props.fileObject.filename} className="slideshowItem csvHolder rTable" style={props.style}>
+    <div key={props.fileObject.filename} className={className} style={props.style}>
       {csvItems}
     </div>
   ) // return
