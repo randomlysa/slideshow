@@ -7,16 +7,18 @@ class Weather extends Component {
   componentWillMount() {
     // fetchWeatherFromOpenWeather if fetchWeatherFromLocalStorage is empty.
     this.props.actions.fetchWeatherFromLocalStorage();
-    const cityFromDB = JSON.parse(this.props.config.cityToShowWeatherFor);
-
-    // If weather wasn't loaded from localstorage.
-    // OR
-    // If  weather loaded from localstorage is not for the same city id that is
-    // in the database.
-    if ((this.props.weather.length === 0) ||
-        (this.props.weather[0].id !== parseInt(cityFromDB[0].ID, 10)))
-    {
-      this.props.actions.fetchWeatherFromOpenWeather(cityFromDB[0].ID);
+    // If weather isn't an empty string.
+    if (this.props.config.cityToShowWeatherFor !== "") {
+      const cityFromDB = JSON.parse(this.props.config.cityToShowWeatherFor);
+      // If weather wasn't loaded from localstorage.
+      // OR
+      // If  weather loaded from localstorage is not for the same city id that is
+      // in the database.
+      if ((this.props.weather.length === 0) ||
+          (this.props.weather[0].id !== parseInt(cityFromDB[0].ID, 10)))
+      {
+        this.props.actions.fetchWeatherFromOpenWeather(cityFromDB[0].ID);
+      }
     }
   } // componentWillMount
 
