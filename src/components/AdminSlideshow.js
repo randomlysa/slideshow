@@ -6,7 +6,19 @@ import { API_ROOT } from '../config/api-config';
 
 class AdminSlideshow extends Component {
 
-  setWeatherSlide(name, filename) {
+  setWeatherSlide(name, newFilename) {
+    const currentConfig = this.props.config.slideToShowWeatherOn.split(';');
+    let newConfig;
+    // If new filename exists in currentConfig, remove it.
+    if (currentConfig.includes(newFilename)) {
+      newConfig = currentConfig.filter((filename) => {
+        return filename !== newFilename;
+      }); // filter
+    // If new filename doesn't exist in currentConfig, add it.
+    } else {
+      newConfig = [...currentConfig, newFilename];
+    }
+
     // Update row 'name', column 'slideToShowWeatherOn' with 'filename'
     // of checked box (slide to show weather on.)
     $.ajax({
@@ -15,7 +27,7 @@ class AdminSlideshow extends Component {
       dataType: 'json',
       data: {
         name: name,
-        slideToShowWeatherOn: filename
+        slideToShowWeatherOn: newConfig.join(';')
       }
     });
   } // setWeatherSlide
