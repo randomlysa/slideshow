@@ -26,7 +26,7 @@ class Slideshow extends Component {
       csvRequestedFor: [],
       slideDuration: '',
       transitionDuration: '',
-      slidesToShowWeatherOn: []
+      slidesToShowWeatherOn: this.props.config.slideToShowWeatherOn
     };
 
     this.props.actions.updateSlideshow(this.state.slideshowDir);
