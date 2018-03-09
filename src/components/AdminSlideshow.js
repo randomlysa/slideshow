@@ -6,6 +6,20 @@ import { API_ROOT } from '../config/api-config';
 
 class AdminSlideshow extends Component {
 
+  setWeatherSlide(name, filename) {
+    // Update row 'name', column 'slideToShowWeatherOn' with 'filename'
+    // of checked box (slide to show weather on.)
+    $.ajax({
+      url: `${API_ROOT}/php/sqliteInsertSlideToShowWeatherOn.php`,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        name: name,
+        slideToShowWeatherOn: filename
+      }
+    });
+  } // setWeatherSlide
+
   deleteFile(filename) {
     if(window.confirm("Delete file?")) {
       let { activeFolder } = this.props;
@@ -39,6 +53,14 @@ class AdminSlideshow extends Component {
           onClick={this.deleteFile.bind(this, filename)}
         />
         <p>Click image to delete file</p>
+        <div className="showWeatherCheckbox">
+          <input type="checkbox"
+            value={filename}
+            name="check"
+            onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
+          />
+	        <label htmlFor={filename}></label>
+        </div>
       </div>
     )
   } // renderSlideshowItem
