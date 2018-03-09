@@ -44,6 +44,10 @@ class AdminSlideshow extends Component {
 
   renderSlideshowItem(filename, index) {
     const fileUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
+    let checkBoxStatus = '';
+    if (this.props.config.slideToShowWeatherOn.includes(filename)) {
+      checkBoxStatus = 'checked';
+    }
 
     return (
       <div key={filename} className="thumbnail">
@@ -58,6 +62,7 @@ class AdminSlideshow extends Component {
             value={filename}
             name="check"
             onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
+            checked={checkBoxStatus}
           />
 	        <label htmlFor={filename}></label>
         </div>
@@ -80,8 +85,8 @@ class AdminSlideshow extends Component {
   }; // render
 }
 
-function mapStateToProps({ slideshowItems }) {
-  return { slideshowItems };
+function mapStateToProps({ config, slideshowItems }) {
+  return { config, slideshowItems };
 }
 
 export default connect(mapStateToProps)(AdminSlideshow);
