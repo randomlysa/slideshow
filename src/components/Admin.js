@@ -53,9 +53,9 @@ export class Admin extends Component {
     let url;
     // Insert/update info about slideshow into database.
     if (this.state.existsInDatabase) {
-      url = `${API_ROOT}/php/sqliteUpdate.php`;
+      url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
     } else {
-      url = `${API_ROOT}/php/sqliteInsert.php`;
+      url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php`;
     }
     $.ajax({
       url,
@@ -91,7 +91,7 @@ export class Admin extends Component {
 
         // Check if the folder config already exists in the database.
         $.ajax({
-          url: `${API_ROOT}/php/sqliteGetByName.php?name=${this.state.activeFolder}`,
+          url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${this.state.activeFolder}`,
           type: 'GET'
         })
         .done((response) => {

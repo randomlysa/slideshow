@@ -12,7 +12,7 @@ export function getConfigFromDatabase(name) {
   return {
     type: GET_CONFIG_FROM_DATABASE,
     payload: $.ajax({
-      url: `${API_ROOT}/php/sqliteGetByName.php?name=${name}`,
+      url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${name}`,
       type: 'GET',
       dataType: 'json'
     })
