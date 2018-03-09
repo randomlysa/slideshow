@@ -62,22 +62,24 @@ class AdminSlideshow extends Component {
     }
 
     return (
-      <div key={filename} className="thumbnail">
-        <img
-          src={fileUrl}
-          alt="Slideshow Item"
-          onClick={this.deleteFile.bind(this, filename)}
-        />
-        <p>Click image to delete file</p>
-        <div className="showWeatherCheckbox">
-          <input type="checkbox"
-            value={filename}
-            name="check"
-            onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
-            checked={checkBoxStatus}
+      <div>
+        <div key={filename} className="thumbnail">
+          <img
+            src={fileUrl}
+            alt="Slideshow Item"
+            onClick={this.deleteFile.bind(this, filename)}
           />
-	        <label htmlFor={filename}></label>
+          <p>Click image to delete file</p>
         </div>
+        <div className="showWeatherCheckbox squaredThree">
+            <input type="checkbox"
+              value={filename}
+              name="check"
+              onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
+              checked={checkBoxStatus}
+            />
+            <label htmlFor={filename}></label>
+          </div>
       </div>
     )
   } // renderSlideshowItem

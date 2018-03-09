@@ -70,7 +70,8 @@ img {
 .thumbnail {
     position: relative;
     text-align: center;
-    width: 350px;
+    width: 305px;
+    float: left;
 }
 
 .thumbnail > img {
@@ -89,6 +90,16 @@ img {
     padding-bottom: 20px;
     opacity: 0;
     width: 300px;
+}
+
+.showWeatherCheckbox {
+    float: left;
+    height: 240px;
+    transform: translateY(40%);
+}
+
+.squaredThree input[type=checkbox] {
+    transform: translateY(50%);
 }
 
 /* when hovering over the image, fade in the p and grayscale the image */
