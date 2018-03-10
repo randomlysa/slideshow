@@ -64,11 +64,13 @@ class Slideshow extends Component {
         .appendTo('#slideshow');
 
       // Get classname(s) for current div.
-      const thisItem = $('#slideshow > div:first')[0].className;
-      // Show weather for divs with classname showWeather.
-      this.setState({
-        showWeather: thisItem.includes('showWeather')
-      });
+      if ($('#slideshow > div:first')[0]) {
+        const thisItem = $('#slideshow > div:first')[0].className;
+        // Show weather for divs with classname showWeather.
+        this.setState({
+          showWeather: thisItem.includes('showWeather')
+        });
+      }
       // Check for new slideshow items.
       this.props.actions.updateSlideshow(this.state.slideshowDir);
 
