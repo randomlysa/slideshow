@@ -50,6 +50,13 @@ export class Admin extends Component {
     this.props.actions.updateSlideshowDuration(this.state.slideDuration);
     this.props.actions.updateTransitionDuration(this.state.transitionDuration);
 
+    let cityForWeather;
+    if (typeof this.state.cityToShowWeatherFor === 'object') {
+      cityForWeather = JSON.stringify(this.state.cityToShowWeatherFor);
+    } else {
+      cityForWeather = this.state.cityToShowWeatherFor;
+    }
+
     let url;
     // Insert/update info about slideshow into database.
     if (this.state.existsInDatabase) {
@@ -66,7 +73,7 @@ export class Admin extends Component {
         transitionDuration: this.state.transitionDuration,
         city: this.state.city,
         slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
-        cityToShowWeatherFor: this.state.cityToShowWeatherFor
+        cityToShowWeatherFor: cityForWeather
       }
     })
     .done((response) => {
@@ -137,7 +144,7 @@ export class Admin extends Component {
       slideDuration: nextprops.config.slideDuration,
       transitionDuration: nextprops.config.transitionDuration,
       slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
-      cityToShowWeatherFor: JSON.stringify(nextprops.config.cityToShowWeatherFor)
+      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor
     });
   }
 
