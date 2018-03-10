@@ -1,10 +1,75 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
 
+
+// Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
+// from that example.
+
+// https://codesandbox.io/s/k260nyxq9v
+// A little function to help us with reordering the result.
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+// Size of border that changes color to indicate dragging.
+// Default was 8.
+const grid = 4;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // Some basic styles to make the items look a bit nicer.
+  userSelect: 'none',
+  padding: grid * 2,
+  margin: `0 0 ${grid}px 0`,
+
+  // Change background colour if dragging.
+  background: isDragging ? 'lightgreen' : 'grey',
+
+  // Styles we need to apply on draggables.
+  ...draggableStyle,
+});
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  padding: grid,
+  width: 250,
+});
+// End https://codesandbox.io/s/k260nyxq9v copy.
+
 class AdminSlideshow extends Component {
+  // https://codesandbox.io/s/k260nyxq9v
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: ''
+    };
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(result) {
+    // Dropped outside the list.
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      this.state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      items,
+    });
+  }
+  // End https://codesandbox.io/s/k260nyxq9v copy.
 
   setWeatherSlide(name, newFilename) {
     const currentConfig = this.props.config.slideToShowWeatherOn.split(';');
@@ -53,44 +118,56 @@ class AdminSlideshow extends Component {
     } // if window.confirm
   } // deleteFile
 
-
-  renderSlideshowItem(filename, index) {
-    const fileUrl = `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
-    let checkBoxStatus = '';
-    if (this.props.config.slideToShowWeatherOn.includes(filename)) {
-      checkBoxStatus = 'checked';
-    }
-
-    return (
-      <div key={filename}>
-        <div className="thumbnail">
-          <img
-            src={fileUrl}
-            alt="Slideshow Item"
-            onClick={this.deleteFile.bind(this, filename)}
-          />
-          <p>Click image to delete file</p>
-        </div>
-        <div className="showWeatherCheckbox squaredThree">
-            <input type="checkbox"
-              value={filename}
-              name="check"
-              onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
-              checked={checkBoxStatus}
-            />
-            <label htmlFor={filename}></label>
-          </div>
-      </div>
-    )
-  } // renderSlideshowItem
+  componentWillReceiveProps(nextprops) {
+    // Set list of files to state.items (unlike this.props, this.state can be
+    // reordered and used to rerender the items in the new order.)
+    this.setState({items: nextprops.slideshowItems.files});
+  }
 
   render() {
-    if (this.props.activeFolder && this.props.slideshowItems.files.length > 0) {
+    if (this.props.activeFolder && this.state.items.length > 0) {
+      // https://codesandbox.io/s/k260nyxq9v.
       return (
-          this.props.slideshowItems.files.map((fileObject, index) => {
-            return this.renderSlideshowItem(fileObject.filename, index)
-          })
+        <DragDropContext onDragEnd={this.onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+              {this.state.items.map((fileObject, index) => (
+                <Draggable key={fileObject.filename} draggableId={fileObject.filename} index={index}>
+                  {(provided, snapshot) => (
+                    <div>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style
+                        )}
+                      >
+                        <div>
+                        <img
+                          src={`${API_ROOT}/slideshows/${this.props.activeFolder}/${fileObject.filename}`}
+                          alt="Slideshow Item"
+                          onClick={this.deleteFile.bind(this, fileObject.filename)}
+                        />
+                        </div>
+                      </div>
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       )
+      // End https://codesandbox.io/s/k260nyxq9v copy.
     } else {
       return (
         <div>Loading</div>
