@@ -46,8 +46,15 @@ export function fetchWeatherFromOpenWeather(cityId) {
 
 export function fetchWeatherFromLocalStorage() {
     const getState = loadState();
-    const request = getState.weather || [];
+    // localstorage is empty.
+    if (!getState) {
+        return {
+            type: FETCH_WEATHER_FROM_LOCALSTORAGE,
+            payload: null
+        }
+    }
 
+    const request = getState.weather || [];
     return {
         type: FETCH_WEATHER_FROM_LOCALSTORAGE,
         payload: request

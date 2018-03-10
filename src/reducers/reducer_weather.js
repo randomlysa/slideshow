@@ -12,10 +12,14 @@ export default function(state = [], action) {
 
     switch (action.type) {
         case FETCH_WEATHER_FROM_LOCALSTORAGE:
-            return action.payload
+            //  May return null if localstorage is empty/disabled, etc.
+            if(action.payload) {
+                return action.payload
+            } else {
+                return state;
+            }
         case FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED:
             // Copy payload.data (new city) to new object.
-            console.log(action.payload.data)
             let newCityObject = Object.assign({}, action.payload.data);
             newCityObject.timeFetched = now;
             return [ newCityObject, ...state]
