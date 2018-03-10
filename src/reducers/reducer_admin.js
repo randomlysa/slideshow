@@ -11,6 +11,8 @@ export default function(state = {}, action) {
                   token: action.payload,
                   isLoggedIn: true
                 };
+            } else {
+                return state;
             }
         case DO_LOGOUT:
             return {

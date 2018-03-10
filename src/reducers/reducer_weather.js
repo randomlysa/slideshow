@@ -1,6 +1,5 @@
 import {
     FETCH_WEATHER_FROM_LOCALSTORAGE,
-    FETCH_WEATHER_FROM_OPENWEATHER,
     FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED,
     FETCH_WEATHER_UPDATE,
 
@@ -19,7 +18,7 @@ export default function(state = [], action) {
             console.log(action.payload.data)
             let newCityObject = Object.assign({}, action.payload.data);
             newCityObject.timeFetched = now;
-           return [ newCityObject, ...state]
+            return [ newCityObject, ...state]
         case FETCH_WEATHER_UPDATE:
             if(action.payload) {
                 let updatedCity = action.payload.data;
@@ -27,18 +26,19 @@ export default function(state = [], action) {
 
                 // Return state with updatedCity.
                 return state.map(city => {
-                    if(city.id !== action.payload.data.id) {
-                        return city;
-                    }
-
-                    return updatedCity;
-                });
-            } // if(action.payload)
+                    if(city.id !== action.payload.data.id) { return city; }
+                    else { return updatedCity; }
+                }); // return state.map(city)
+            } else {
+                return state;
+            }
         case DELETE_ONE_CITY:
             if (action.payload) {
                 return _.reject(state, {'id': parseInt(action.payload, 10)});
+            } else {
+                return state;
             }
         default:
-            return state
+            return state;
     } // switch
 }
