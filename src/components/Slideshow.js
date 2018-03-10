@@ -26,7 +26,7 @@ class Slideshow extends Component {
       csvRequestedFor: [],
       slideDuration: '',
       transitionDuration: '',
-      slidesToShowWeatherOn: this.props.config.slideToShowWeatherOn.split(';')
+      slidesToShowWeatherOn: ''
     };
 
     this.props.actions.updateSlideshow(this.state.slideshowDir);
@@ -80,6 +80,11 @@ class Slideshow extends Component {
   } // componentDidMount
 
   componentWillReceiveProps(nextprops) {
+
+    if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
+      this.setState({slidesToShowWeatherOn:
+          nextprops.config.slidesToShowWeatherOn.split(';')})
+    }
 
     if (nextprops.config) {
       if (nextprops.config.slideDuration !== this.state.slideDuration) {
