@@ -123,6 +123,11 @@ class AdminSlideshow extends Component {
     const fileUrl =
       `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
 
+    let checkBoxStatus = '';
+    if (this.props.config.slidesToShowWeatherOn.includes(filename)) {
+      checkBoxStatus = 'checked';
+    }
+
     return (
       <Draggable key={filename} draggableId={filename} index={index}>
         {(provided, snapshot) => (
@@ -141,6 +146,16 @@ class AdminSlideshow extends Component {
                 alt="Slideshow Item"
                 onClick={this.deleteFile.bind(this, filename)}
               />
+              <br />
+              <input type="checkbox"
+                value={filename}
+                name="check"
+                onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
+                checked={checkBoxStatus}
+              />
+              <label htmlFor={filename}></label>
+                {provided.placeholder}
+
             </div>
             {provided.placeholder}
           </div>
