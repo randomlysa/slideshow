@@ -62,8 +62,8 @@ class AdminSlideshow extends Component {
     }
 
     return (
-      <div>
-        <div key={filename} className="thumbnail">
+      <div key={filename}>
+        <div className="thumbnail">
           <img
             src={fileUrl}
             alt="Slideshow Item"
