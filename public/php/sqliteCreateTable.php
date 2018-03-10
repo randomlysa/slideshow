@@ -10,7 +10,7 @@
       (name TEXT PRIMARY KEY,
       slideDuration INT,
       transitionDuration INT,
-      slideToShowWeatherOn TEXT,
+      slidesToShowWeatherOn TEXT,
       cityToShowWeatherFor INT
       );
     ");

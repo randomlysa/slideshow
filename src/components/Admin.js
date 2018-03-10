@@ -21,7 +21,7 @@ export class Admin extends Component {
         slideDuration: props.config.slideDuration || 6,
         transitionDuration: props.config.transitionDuration || 500,
         activeFolder: '',
-        slideToShowWeatherOn: '',
+        slidesToShowWeatherOn: '',
         cityToShowWeatherFor: props.config.cityToShowWeatherFor,
         folders: [],
         uploadDisabled: true,
@@ -65,7 +65,7 @@ export class Admin extends Component {
         slideDuration: this.state.slideDuration,
         transitionDuration: this.state.transitionDuration,
         city: this.state.city,
-        slideToShowWeatherOn: this.state.slideToShowWeatherOn,
+        slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
         cityToShowWeatherFor: this.state.cityToShowWeatherFor
       }
     })
@@ -136,7 +136,7 @@ export class Admin extends Component {
     this.setState({
       slideDuration: nextprops.config.slideDuration,
       transitionDuration: nextprops.config.transitionDuration,
-      slideToShowWeatherOn: nextprops.config.slideToShowWeatherOn,
+      slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
       cityToShowWeatherFor: JSON.stringify(nextprops.config.cityToShowWeatherFor)
     });
   }

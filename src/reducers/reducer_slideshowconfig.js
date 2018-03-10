@@ -12,7 +12,7 @@ export default function(state = {}, action) {
             const {
                 slideDuration,
                 transitionDuration,
-                slideToShowWeatherOn,
+                slidesToShowWeatherOn,
                 cityToShowWeatherFor
             } = action.payload;
 
@@ -20,7 +20,7 @@ export default function(state = {}, action) {
                 ...state,
                 slideDuration,
                 transitionDuration,
-                slideToShowWeatherOn,
+                slidesToShowWeatherOn,
                 cityToShowWeatherFor
             }
         case SET_WEATHER_CITY:

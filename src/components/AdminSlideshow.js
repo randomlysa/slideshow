@@ -72,7 +72,7 @@ class AdminSlideshow extends Component {
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
   setWeatherSlide(name, newFilename) {
-    const currentConfig = this.props.config.slideToShowWeatherOn.split(';');
+    const currentConfig = this.props.config.slidesToShowWeatherOn.split(';');
     let newConfig;
     // If new filename exists in currentConfig, remove it.
     if (currentConfig.includes(newFilename)) {
@@ -84,15 +84,15 @@ class AdminSlideshow extends Component {
       newConfig = [...currentConfig, newFilename];
     }
 
-    // Update row 'name', column 'slideToShowWeatherOn' with 'filename'
+    // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
     // of checked box (slide to show weather on.)
     $.ajax({
-      url: `${API_ROOT}/php/sqliteInsertSlideToShowWeatherOn.php`,
+      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
       type: 'post',
       dataType: 'json',
       data: {
         name: name,
-        slideToShowWeatherOn: newConfig.join(';')
+        slidesToShowWeatherOn: newConfig.join(';')
       }
     });
   } // setWeatherSlide

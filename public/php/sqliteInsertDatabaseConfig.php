@@ -6,7 +6,7 @@
     $name                	= $_POST['name'];
     $slideDuration        = $_POST['slideDuration'];
     $transitionDuration   = $_POST['transitionDuration'];
-    $slideToShowWeatherOn = $_POST['slideToShowWeatherOn'];
+    $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
     $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
 
     try{
@@ -15,16 +15,16 @@
 
       /* Create a prepared statement */
       $stmt = $db -> prepare("INSERT INTO bulletins
-        (name, slideDuration, transitionDuration, slideToShowWeatherOn, cityToShowWeatherFor)
+        (name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor)
         VALUES
-        (:name, :slideDuration, :transitionDuration, :slideToShowWeatherOn, :cityToShowWeatherFor)
+        (:name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor)
       ");
 
       /* bind params */
       $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
       $stmt -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
-      $stmt -> bindParam(':slideToShowWeatherOn', $slideToShowWeatherOn, PDO::PARAM_STR);
+      $stmt -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
       $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR;
 
       /* execute the query */

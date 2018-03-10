@@ -6,7 +6,7 @@
     $name                	= $_POST['name'];
     $slideDuration        = $_POST['slideDuration'];
     $transitionDuration   = $_POST['transitionDuration'];
-    $slideToShowWeatherOn = $_POST['slideToShowWeatherOn'];
+    $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
     $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
 
     try{
@@ -18,7 +18,7 @@
         SET
           `slideDuration` = :slideDuration,
           `transitionDuration`   = :transitionDuration,
-          `slideToShowWeatherOn` = :slideToShowWeatherOn,
+          `slidesToShowWeatherOn` = :slidesToShowWeatherOn,
           `cityToShowWeatherFor` = :cityToShowWeatherFor
         WHERE `name` = :name
       ");
@@ -27,7 +27,7 @@
       $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
       $stmt -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
-      $stmt -> bindParam(':slideToShowWeatherOn', $slideToShowWeatherOn, PDO::PARAM_STR);
+      $stmt -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
       $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
 
       /* execute the query */
