@@ -118,6 +118,37 @@ class AdminSlideshow extends Component {
     } // if window.confirm
   } // deleteFile
 
+  renderDraggable(fileObject, index) {
+    const filename = fileObject.filename;
+    const fileUrl =
+      `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
+
+    return (
+      <Draggable key={filename} draggableId={filename} index={index}>
+        {(provided, snapshot) => (
+          <div>
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              style={getItemStyle(
+                snapshot.isDragging,
+                provided.draggableProps.style
+              )}
+            >
+              <img
+                src={fileUrl}
+                alt="Slideshow Item"
+                onClick={this.deleteFile.bind(this, filename)}
+              />
+            </div>
+            {provided.placeholder}
+          </div>
+        )}
+     </Draggable>
+    )
+  }
+
   componentWillReceiveProps(nextprops) {
     // Set list of files to state.items (unlike this.props, this.state can be
     // reordered and used to rerender the items in the new order.)
@@ -136,30 +167,7 @@ class AdminSlideshow extends Component {
               style={getListStyle(snapshot.isDraggingOver)}
             >
               {this.state.items.map((fileObject, index) => (
-                <Draggable key={fileObject.filename} draggableId={fileObject.filename} index={index}>
-                  {(provided, snapshot) => (
-                    <div>
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style
-                        )}
-                      >
-                        <div>
-                        <img
-                          src={`${API_ROOT}/slideshows/${this.props.activeFolder}/${fileObject.filename}`}
-                          alt="Slideshow Item"
-                          onClick={this.deleteFile.bind(this, fileObject.filename)}
-                        />
-                        </div>
-                      </div>
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Draggable>
+                this.renderDraggable(fileObject, index)
               ))}
               {provided.placeholder}
             </div>
