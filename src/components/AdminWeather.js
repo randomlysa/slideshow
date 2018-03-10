@@ -19,7 +19,8 @@ class AdminWeather extends Component {
       isLoading: false,
       caseSensitive: false,
       city: '',
-      options: []
+      options: [],
+      placeholder: ''
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -54,13 +55,25 @@ class AdminWeather extends Component {
     }) // ajax
   }
 
+  componentWillReceiveProps(nextprops) {
+    if (nextprops.config.cityToShowWeatherFor) {
+      const { NAME, COUNTRY } = JSON.parse(nextprops.config.cityToShowWeatherFor)[0];
+      if (NAME && COUNTRY) {
+        this.setState({placeholder: `Showing weather for: ${NAME}, ${COUNTRY}`});
+      }
+    // No nextprops.config.cityToShowWeatherFor
+    } else {
+      this.setState({placeholder: 'Search for a city to show weather for'});
+    };
+  }
+
   render() {
     return (
       <div>
         <AsyncTypeahead
           isLoading={this.state.isLoading}
           id="city"
-          placeholder="Show weather for this city"
+          placeholder={this.state.placeholder}
           onSearch={query => this.onInputChange(query)}
           onChange={city => this.props.actions.setWeatherCity(city)}
           options={this.state.options}
@@ -71,8 +84,8 @@ class AdminWeather extends Component {
   }; // render
 }
 
-function mapStateToProps({ slideshowItems }) {
-  return { slideshowItems };
+function mapStateToProps({ config }) {
+  return { config };
 }
 
 function mapDispatchToProps(dispatch) {
