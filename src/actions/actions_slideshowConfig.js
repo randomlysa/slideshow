@@ -37,6 +37,6 @@ export function updateTransitionDuration(duration) {
 export function setWeatherCity(name) {
   return {
     type: SET_WEATHER_CITY,
-    payload: name
+    payload: name[0]
   }
 }
