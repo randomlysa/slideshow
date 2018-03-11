@@ -124,7 +124,8 @@ class AdminSlideshow extends Component {
       `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
 
     let checkBoxStatus = '';
-    if (this.props.config.slidesToShowWeatherOn.includes(filename)) {
+    if (this.props.config.slidesToShowWeatherOn &&
+      this.props.config.slidesToShowWeatherOn.includes(filename)) {
       checkBoxStatus = 'checked';
     }
 
