@@ -11,6 +11,7 @@
     $slidesToShowWeatherOn = '';
     $cityToShowWeatherFor = '';
     $loadedCsv = '';
+    $slideOrder = '';
 
 
     // foreach ($_POST as $varname => $value) {
@@ -31,12 +32,24 @@
 
       include('sqliteConfig.php');
 
-      if ($loadedCsv) {
+      if ($slideOrder) {
         $stmt = $db -> prepare("UPDATE `bulletins`
-        SET
-          `loadedCsv` = :loadedCsv
-        WHERE `name` = :name
-      ");
+          SET
+            `slideOrder` = :slideOrder
+          WHERE `name` = :name
+        ");
+
+        /* bind params */
+        $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
+
+      } // End slideOrder.
+      else if ($loadedCsv) {
+        $stmt = $db -> prepare("UPDATE `bulletins`
+          SET
+            `loadedCsv` = :loadedCsv
+          WHERE `name` = :name
+        ");
 
       /* bind params */
       $stmt -> bindParam(':name', $name, PDO::PARAM_STR);

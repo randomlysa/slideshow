@@ -65,6 +65,23 @@ class AdminSlideshow extends Component {
       result.destination.index
     );
 
+    // Save item order to database.
+    const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
+    $.ajax({
+      url,
+      type: 'POST',
+      data: {
+        name: this.props.activeFolder,
+        slideOrder: JSON.stringify(items)
+      }
+    })
+    .done(() => {
+      console.log('updated slideshow order');
+    })
+    .fail(e => {
+      console.log(e);
+    });
+
     this.setState({
       items,
     });
@@ -166,9 +183,12 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    // Set list of files to state.items (unlike this.props, this.state can be
-    // reordered and used to rerender the items in the new order.)
-    this.setState({items: nextprops.slideshowItems.files});
+    // Set state to slideOrder if it exists.
+    if (nextprops.config.slideOrder) {
+      this.setState({items: JSON.parse(nextprops.config.slideOrder) });
+    } else {
+      this.setState({items: nextprops.slideshowItems.files});
+    }
   }
 
   render() {
