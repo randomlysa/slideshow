@@ -23,6 +23,7 @@ class Slideshow extends Component {
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || "bb1",
+      // Todo: load files that have csv data from database?
       csvRequestedFor: [],
       slideDuration: '',
       transitionDuration: '',
@@ -98,14 +99,14 @@ class Slideshow extends Component {
     }
 
     // Make an array of csv files.
-    const csvFiles = _.filter(this.props.slideshowItems.files, fileObject => {
+    const csvFileObjects = _.filter(this.props.slideshowItems.files, fileObject => {
       const fileType = fileObject.filename.split('.').pop();
       return fileType === 'csv';
     });
 
     // Get data for CSV files.
-    if (csvFiles) {
-      csvFiles.map((csvFile) => {
+    if (csvFileObjects) {
+      csvFileObjects.map((csvFile) => {
         const { filename } = csvFile;
         // Check if the filename data has not been requested.
         if (!this.state.csvRequestedFor.includes(filename)) {
@@ -114,10 +115,10 @@ class Slideshow extends Component {
             return {csvRequestedFor: [...prevState.csvRequestedFor, filename]}
           })
           // Request data.
-          this.props.actions.getCSVData(filename, this.state.slideshowDir);
+          this.props.actions.getCSVData(csvFile, this.state.slideshowDir);
         } // if file hasn't been requested.
-      }); // csvFiles.map
-    } // if(csvFiles)
+      }); // csvFileObjects.map
+    } // if(csvFileObjects)
   } // componentWillReceiveProps
 
   componentDidUpdate(nextprops) {
