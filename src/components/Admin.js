@@ -102,7 +102,7 @@ export class Admin extends Component {
           type: 'GET'
         })
         .done((response) => {
-          if (response === null) {
+          if (response === 'null') {
             this.setState({existsInDatabase: false})
           } else {
             this.setState({existsInDatabase: true})
