@@ -158,7 +158,10 @@ class Slideshow extends Component {
 
   render() {
 
-    if (this.props.slideshowItems.files && this.props.slideshowItems.files.length > 0) {
+    if (this.props.slideshowItems.files &&
+        this.props.slideshowItems.files.length > 0 &&
+        this.state.slideDuration)
+    {
       return (
         <div id="slideshow">
           {this.state.showWeather &&
@@ -172,7 +175,9 @@ class Slideshow extends Component {
         </div>
       )
     } else {
-      return 'Loading';
+      return (
+        <h1 className="loading">Loading</h1>
+      );
     }
   }; // render
 } // class App
