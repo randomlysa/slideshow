@@ -13,7 +13,9 @@ export default function(state = {}, action) {
                 slideDuration,
                 transitionDuration,
                 slidesToShowWeatherOn,
-                cityToShowWeatherFor
+                cityToShowWeatherFor,
+                loadedCsv,
+                slideOrder
             } = action.payload;
 
             return {
@@ -21,7 +23,9 @@ export default function(state = {}, action) {
                 slideDuration,
                 transitionDuration,
                 slidesToShowWeatherOn,
-                cityToShowWeatherFor
+                cityToShowWeatherFor,
+                loadedCsv,
+                slideOrder
             }
         case SET_WEATHER_CITY:
             return {...state, cityToShowWeatherFor: action.payload};
