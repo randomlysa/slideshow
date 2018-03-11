@@ -15,9 +15,9 @@ class Weather extends Component {
       // If  weather loaded from localstorage is not for the same city id that is
       // in the database.
       if ((this.props.weather.length === 0) ||
-          (this.props.weather[0].id !== parseInt(cityFromDB[0].ID, 10)))
+          (this.props.weather[0].id !== parseInt(cityFromDB.ID, 10)))
       {
-        this.props.actions.fetchWeatherFromOpenWeather(cityFromDB[0].ID);
+        this.props.actions.fetchWeatherFromOpenWeather(cityFromDB.ID);
       }
     }
   } // componentWillMount
