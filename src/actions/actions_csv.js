@@ -72,8 +72,8 @@ export const GET_CSV_DATA_FULFILLED = 'GET_CSV_DATA_FULFILLED';
 
 
 export function getCSVData(fileObject, slideshowDir) {
-  const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${filename}`;
   const { filename, md5 } = fileObject;
+  const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${filename}`;
 
   let loadedCsvFromDatabase, fileObjectFromDB, fromDBFilename, fromDBmd5;
   // Get loaded CSV from database.
