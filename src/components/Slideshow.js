@@ -18,13 +18,21 @@ class Slideshow extends Component {
   constructor(props) {
     super(props);
 
+    // Check if loadedCsv exists. If not, use an empty array.
+    let loadedCsvForState;
+    if (this.props.config.loadedCsv) {
+      loadedCsvForState = JSON.parse(this.props.config.loadedCsv)
+    } else {
+      loadedCsvForState = [];
+    }
+
     this.state = {
       showWeather: false,
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || "bb1",
       // Todo: load files that have csv data from database?
-      csvRequestedFor: [],
+      csvRequestedFor: loadedCsvForState,
       slideDuration: '',
       transitionDuration: '',
       slidesToShowWeatherOn: ''
@@ -106,16 +114,26 @@ class Slideshow extends Component {
 
     // Get data for CSV files.
     if (csvFileObjects) {
-      csvFileObjects.map((csvFile) => {
-        const { filename } = csvFile;
+      csvFileObjects.map((csvFileObject) => {
+        const { filename, md5 } = csvFileObject;
+
+        const findFileInState = _.find(this.state.csvRequestedFor, o => {
+          return o.filename === filename;
+        });
+        const findMd5InState = _.find(this.state.csvRequestedFor, o => {
+          return o.md5 === md5;
+        });
+
         // Check if the filename data has not been requested.
-        if (!this.state.csvRequestedFor.includes(filename)) {
-          // Add filename to state.
+        if (!findFileInState && !findMd5InState) {
+          // Add csvFileObject to state.
           this.setState((prevState) => {
-            return {csvRequestedFor: [...prevState.csvRequestedFor, filename]}
-          })
+            return {csvRequestedFor:
+              [...prevState.csvRequestedFor, csvFileObject]
+            }
+          });
           // Request data.
-          this.props.actions.getCSVData(csvFile, this.state.slideshowDir);
+          this.props.actions.getCSVData(csvFileObject, this.state.slideshowDir);
         } // if file hasn't been requested.
       }); // csvFileObjects.map
     } // if(csvFileObjects)
