@@ -33,8 +33,6 @@ class Slideshow extends Component {
       slideshowDir: this.props.match.params.name || "bb1",
       // Todo: load files that have csv data from database?
       csvRequestedFor: loadedCsvForState,
-      slideDuration: '',
-      transitionDuration: '',
       slidesToShowWeatherOn: ''
     };
 
@@ -46,15 +44,17 @@ class Slideshow extends Component {
 
     // Loop through the slideshow, fading items out and in and running update.
     // https://stackoverflow.com/a/30725868/3996097
+
+    let firstLoop = true;
     const loop = () => {
-      let transitionDuration = this.state.transitionDuration || 500;
+      let transitionDuration = this.props.config.transitionDuration || 1500;
       // slideDuration needs to have transitionDuration added to it,
       // otherwise if both values are equal, the slideshow will be constantly
       // transitioning.
 
       // Todo: this isn't set the first time this runs, so the initial slide
       // durations is '500'
-      let newSlideDuration = this.state.slideDuration * 1000 + parseInt(transitionDuration, 10) || 6000;
+      let newSlideDuration = this.props.config.slideDuration * 1000 + parseInt(transitionDuration, 10) || 6000;
 
       // Set a longer show duration for csv data.
       if ($('#slideshow > div').length > 1) {
@@ -65,12 +65,22 @@ class Slideshow extends Component {
         }
       }
 
-      $('#slideshow > div:first')
-        .fadeOut(parseInt(transitionDuration, 10))
-        .next()
-        .fadeIn(parseInt(transitionDuration, 10))
-        .end()
-        .appendTo('#slideshow');
+      const startSlideshow = function() {
+        $('#slideshow > div:first')
+          .fadeOut(parseInt(transitionDuration, 10))
+          .next()
+          .fadeIn(parseInt(transitionDuration, 10))
+          .end()
+          .appendTo('#slideshow');
+        }
+
+      if (firstLoop === true) {
+        setTimeout(function() { startSlideshow }, newSlideDuration);
+        firstLoop = false;
+      } else {
+        startSlideshow();
+      }
+
 
       // Get classname(s) for current div.
       if ($('#slideshow > div:first')[0]) {
@@ -95,15 +105,6 @@ class Slideshow extends Component {
     if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
       this.setState({slidesToShowWeatherOn:
           nextprops.config.slidesToShowWeatherOn.split(';')})
-    }
-
-    if (nextprops.config) {
-      if (nextprops.config.slideDuration !== this.state.slideDuration) {
-        this.setState({slideDuration: nextprops.config.slideDuration })
-      }
-      if (nextprops.config.transitionDuration !== this.state.transitionDuration) {
-        this.setState({transitionDuration: nextprops.config.transitionDuration })
-      }
     }
 
     // Make an array of csv files.
@@ -160,7 +161,7 @@ class Slideshow extends Component {
 
     if (this.props.slideshowItems.files &&
         this.props.slideshowItems.files.length > 0 &&
-        this.state.slideDuration)
+        this.props.config.slideDuration)
     {
       return (
         <div id="slideshow">
