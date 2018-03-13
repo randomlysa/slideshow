@@ -83,7 +83,7 @@ export function getCSVData(fileObject, slideshowDir) {
     dataType: 'json'
   })
   .done(data => {
-    if (data.loadedCsv === "") {
+    if (!data) {
       console.log('no data');
     } else {
       fileObjectFromDB = JSON.parse(data.loadedCsv);
