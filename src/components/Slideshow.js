@@ -93,8 +93,9 @@ class Slideshow extends Component {
           showWeather: thisItem.includes('showWeather')
         });
       }
-      // Check for new slideshow items.
+      // Check for new slideshow items and config.
       this.props.actions.updateSlideshow(this.state.slideshowDir);
+      this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
 
       window.setTimeout(loop, newSlideDuration);
     };
