@@ -177,15 +177,18 @@ class Slideshow extends Component {
         this.props.config.slideDuration)
     {
       return (
-        <div id="slideshow">
+        <div id="slideshowContainer">
           {this.state.showWeather &&
           <Weather />
           }
-          <SlideshowItem
-            slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
-            slideshowItems={this.state.finalSlideOrder}
-            dir={this.state.slideshowDir}
-          />
+
+          <div id="slideshow">
+            <SlideshowItem
+              slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
+              slideshowItems={this.state.finalSlideOrder}
+              dir={this.state.slideshowDir}
+            />
+          </div>
         </div>
       )
     } else {
