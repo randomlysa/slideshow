@@ -23,7 +23,10 @@ class Weather extends Component {
   } // componentWillMount
 
   render() {
-    if (this.props.weather && this.props.weather.length > 0) {
+    // There is no city to show weather for. Return nothing.
+    if (this.props.config.cityToShowWeatherFor === "") return null;
+
+    else if (this.props.weather && this.props.weather.length > 0) {
       return (
         <h2 className="weather">
           {this.props.weather[0].name} &nbsp;
@@ -32,7 +35,13 @@ class Weather extends Component {
         </h2>
       )
     } else {
-      return "Loading";
+      // Adding a class keeps the text from showing up at the top of the page
+      // and making the image move down - not an effect I'm going for.
+      return (
+        <p className="weather">
+          Loading Weather...
+        </p>
+      )
     }
   } // Render
 } // class
