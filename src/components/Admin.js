@@ -47,8 +47,6 @@ export class Admin extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    this.props.actions.updateSlideshowDuration(this.state.slideDuration);
-    this.props.actions.updateTransitionDuration(this.state.transitionDuration);
 
     let cityForWeather;
     if (typeof this.state.cityToShowWeatherFor === 'object') {

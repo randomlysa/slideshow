@@ -271,13 +271,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -1164,13 +1160,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -2057,13 +2049,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -2950,13 +2938,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -3843,13 +3827,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
@@ -4736,13 +4716,9 @@ ShallowWrapper {
         "GET_SLIDESHOW_SLIDES": "GET_SLIDESHOW_SLIDES",
         "GET_SLIDESHOW_SLIDES_FULFILLED": "GET_SLIDESHOW_SLIDES_FULFILLED",
         "SET_WEATHER_CITY": "SET_WEATHER_CITY",
-        "UPDATE_SLIDESHOW_DURATION": "UPDATE_SLIDESHOW_DURATION",
-        "UPDATE_TRANSITION_DURATION": "UPDATE_TRANSITION_DURATION",
         "getConfigFromDatabase": [Function],
         "setWeatherCity": [Function],
         "updateSlideshow": [Function],
-        "updateSlideshowDuration": [Function],
-        "updateTransitionDuration": [Function],
       }
     }
     config={
