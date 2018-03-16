@@ -34,11 +34,11 @@ class AdminWeather extends Component {
       type: 'GET',
       dataType: 'json'
     })
-    .done((response) => {
-      if (response) {
+    .done(data => {
+      if (data) {
         this.setState({
           isLoading: false,
-          options: response.map(item => {
+          options: data.map(item => {
             // Typeahead filters by label. Make a label with city and country name
             const label = `${item.NAME}, ${item.COUNTRY}`;
             return {...item, label }
@@ -50,7 +50,7 @@ class AdminWeather extends Component {
         })
       }
     })
-    .fail((e) => {
+    .fail(e => {
       console.log(e);
     }) // ajax
   }

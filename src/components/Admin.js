@@ -76,10 +76,11 @@ export class Admin extends Component {
         cityToShowWeatherFor: cityForWeather
       }
     })
-    .done((response) => {
-      console.log(response);
+    .done(data => {
+      if (data === 'Row Updated') console.log('Database config updated.');
+      else console.log('There was an error updating the database: ', data);
     })
-    .fail((e) => {
+    .fail(e => {
       console.log(e);
     }) // ajax
   }
@@ -101,14 +102,14 @@ export class Admin extends Component {
           url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${this.state.activeFolder}`,
           type: 'GET'
         })
-        .done((response) => {
-          if (response === 'null') {
+        .done(data => {
+          if (data === 'null') {
             this.setState({existsInDatabase: false})
           } else {
             this.setState({existsInDatabase: true})
           }
         })
-        .fail((e) => {
+        .fail(e => {
           console.log(e);
         }) // ajax
       } // setState callback
@@ -129,11 +130,11 @@ export class Admin extends Component {
       type: 'GET',
       dataType: 'json'
     })
-    .done((data) => {
+    .done(data => {
       let folders = Object.values(data);
       this.setState({ folders });
     })
-    .fail((e) => {
+    .fail(e => {
       console.log(e);
     });
   }

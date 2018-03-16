@@ -50,7 +50,7 @@ class Login extends React.Component {
           dataType: 'json',
           data: {username: this.state.usernameLogin}
     })
-      .done((data) => {
+      .done(data => {
         // User not found.
         if (data === null) {
           this.setState({errorMessageLogin: 'Incorrect username or password'});

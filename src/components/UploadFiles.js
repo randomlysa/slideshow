@@ -32,11 +32,11 @@ class UploadFiles extends Component {
         processData: false,
         contentType: false
       })
-      .done((data) => {
+      .done(data => {
         // Update the slideshow to show new images.
         this.props.updateSlideshow(this.props.activeFolder);
       })
-      .fail((e) => {
+      .fail(e => {
         console.log(e);
       });
     });

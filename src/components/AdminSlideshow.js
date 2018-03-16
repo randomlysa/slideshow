@@ -129,11 +129,11 @@ class AdminSlideshow extends Component {
           folder: activeFolder
         }
       }) // ajax
-      .done((data) => {
+      .done(data => {
         console.log('deleted', data);
         this.props.updateSlideshow(activeFolder);
       }) // ajax done
-      .fail((e) => {
+      .fail(e => {
         console.log('fail', e);
       }); // ajax fail
     } // if window.confirm

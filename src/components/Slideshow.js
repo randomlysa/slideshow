@@ -78,7 +78,7 @@ class Slideshow extends Component {
         }
 
       if (firstLoop === true) {
-        setTimeout(function() { startSlideshow }, newSlideDuration);
+        setTimeout(() => { startSlideshow }, newSlideDuration);
         firstLoop = false;
       } else {
         startSlideshow();
