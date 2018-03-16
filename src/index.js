@@ -7,9 +7,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 import './index.css';
 import slideshowApp from './reducers';
-
-import MyRoutes from './components/MyRoutes';
-
+import MyRoutes from './routers/MyRoutes';
 import { loadState, saveState } from './manageLocalStorage';
 
 const persistedState = loadState();

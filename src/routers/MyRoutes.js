@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom';
 
 // Import routes.
-import Slideshow from './Slideshow';
-import Admin from './Admin';
-import Login from './Login';
-import NotFound from './NotFound';
+import Slideshow from '../components/Slideshow';
+import Admin from '../components/Admin';
+import Login from '../components/Login';
+import NotFound from '../components/NotFound';
 
 // Import basename.
 import { BASENAME, SLIDESHOW_ROOT } from '../config/api-config';
