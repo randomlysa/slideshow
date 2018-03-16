@@ -78,8 +78,9 @@ class AdminSlideshow extends Component {
         slideOrder: JSON.stringify(items)
       }
     })
-    .done(() => {
-      console.log('updated slideshow order');
+    .done(data => {
+      if (data === 'Row Updated') console.log('updated slideshow order')
+      else console.log('there was an error updating the database', data);
     })
     .fail(e => {
       console.log(e);
