@@ -35,7 +35,7 @@ class Slideshow extends Component {
       slideshowDir: this.props.match.params.name || "bb1",
       // Todo: load files that have csv data from database?
       csvRequestedFor: loadedCsvForState,
-      slidesToShowWeatherOn: this.props.config.slidesToShowWeatherOn.split(';'),
+      slidesToShowWeatherOn: '',
       finalSlideOrder: ''
     };
 
