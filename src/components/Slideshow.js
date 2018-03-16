@@ -7,12 +7,14 @@ import * as slideshowConfigActionCreators  from '../actions/actions_slideshowCon
 import * as csvActionCreators from '../actions/actions_csv';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
+import $ from 'jquery';
 
 import Weather from './Weather';
 import SlideshowItem from './SlideshowItem';
 
 import '../style.css';
-import $ from 'jquery';
+
+import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
 class Slideshow extends Component {
   constructor(props) {
@@ -33,7 +35,8 @@ class Slideshow extends Component {
       slideshowDir: this.props.match.params.name || "bb1",
       // Todo: load files that have csv data from database?
       csvRequestedFor: loadedCsvForState,
-      slidesToShowWeatherOn: ''
+      slidesToShowWeatherOn: this.props.config.slidesToShowWeatherOn.split(';'),
+      finalSlideOrder: ''
     };
 
     this.props.actions.updateSlideshow(this.state.slideshowDir);
@@ -102,6 +105,15 @@ class Slideshow extends Component {
 
   componentWillReceiveProps(nextprops) {
 
+    if (nextprops.config.slideOrder) {
+      const slideOrder = JSON.parse(nextprops.config.slideOrder);
+      const { slideshowItems } = nextprops;
+      const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
+      this.setState({ finalSlideOrder: finalOrder });
+    } else {
+      this.setState({ finalSlideOrder: nextprops.slideshowItems.files});
+    } // if nextprops.config.slideOrder
+
     if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
       this.setState({slidesToShowWeatherOn:
         nextprops.config.slidesToShowWeatherOn.split(';')
@@ -160,8 +172,8 @@ class Slideshow extends Component {
 
   render() {
 
-    if (this.props.slideshowItems.files &&
-        this.props.slideshowItems.files.length > 0 &&
+    if (this.state.finalSlideOrder &&
+        this.state.finalSlideOrder.length > 0 &&
         this.props.config.slideDuration)
     {
       return (
@@ -171,7 +183,7 @@ class Slideshow extends Component {
           }
           <SlideshowItem
             slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
-            slideshowItems={this.props.slideshowItems}
+            slideshowItems={this.state.finalSlideOrder}
             dir={this.state.slideshowDir}
           />
         </div>

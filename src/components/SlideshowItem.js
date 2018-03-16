@@ -5,7 +5,7 @@ import SlideshowItemImage from './SlideshowItemImage';
 
 const SlideshowItem = (props) => {
   return (
-    props.slideshowItems.files.map((fileObject, index) => {
+    props.slideshowItems.map((fileObject, index) => {
       let style;
       // Hide fileObjects past index 0.
       if (index > 0) style = {'display': 'none'};
