@@ -37,9 +37,9 @@ export const GET_CSV_DATA_FULFILLED = 'GET_CSV_DATA_FULFILLED';
       return o.md5 === fileObject.md5;
     });
 
-    const { filename, md5 } = fileObject;
-    const fromDBFilename = fileObjectFromDB.filename;
-    const fromDBmd5 = fileObjectFromDB.md5;
+    // const { filename, md5 } = fileObject;
+    // const fromDBFilename = fileObjectFromDB.filename;
+    // const fromDBmd5 = fileObjectFromDB.md5;
 
     if (findFileInDb && findMd5InDb) {
       console.log('~~~~~~~~~everything is the same');
@@ -75,7 +75,7 @@ export function getCSVData(fileObject, slideshowDir) {
   const { filename, md5 } = fileObject;
   const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${filename}`;
 
-  let loadedCsvFromDatabase, fileObjectFromDB, fromDBFilename, fromDBmd5;
+  let fileObjectFromDB, fromDBFilename, fromDBmd5;
   // Get loaded CSV from database.
   $.ajax({
     url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${slideshowDir}`,
@@ -103,7 +103,7 @@ export function getCSVData(fileObject, slideshowDir) {
               try {
                 // I'm counting on fileObjectFromDB to resolve faster than
                 // Papa.parse - this could be a problem?
-                saveLoadedCsvToDatabase(slideshowDir, fileObject, fileObjectFromDB),
+                saveLoadedCsvToDatabase(slideshowDir, fileObject, fileObjectFromDB);
                 fulfill({
                   filename: filename,
                   data: response.data
