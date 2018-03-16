@@ -1,0 +1,25 @@
+import _ from 'lodash';
+// This function adds items that haven't been sorted to the end of the slideshow.
+
+function combineOrderedAndUnorderedSlides(ordered, unordered) {
+    const slideOrder = ordered;
+    const slideshowItems = unordered;
+
+    // Todo: check if files in slideOrder exists. Example - I renamed all
+    // three files and now this whole feature is broken.
+
+    // Make an array of filenames that we have the sort order for.
+    const slideOrderFiles = slideOrder.map(fileObject => {
+      return fileObject.filename;
+    });
+
+    // Make an array of files that are in slideshowItems.files, but are not
+    // in slideOrderFiles.
+    const newFiles = _.filter(slideshowItems.files, fileObject => {
+      return !slideOrderFiles.includes(fileObject.filename)
+    })
+
+    return [...slideOrder, ...newFiles];
+}
+
+export default combineOrderedAndUnorderedSlides;

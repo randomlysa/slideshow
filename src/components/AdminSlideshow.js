@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import $ from 'jquery';
-import _ from 'lodash';
+
 import { API_ROOT } from '../config/api-config';
+
+import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
 
 // Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
@@ -188,23 +190,7 @@ class AdminSlideshow extends Component {
     if (nextprops.config.slideOrder) {
       const slideOrder = JSON.parse(nextprops.config.slideOrder);
       const { slideshowItems } = nextprops;
-
-      // Todo: check if files in slideOrder exists. Example - I renamed all
-      // three files and now this whole feature is broken.
-
-      // Make an array of filenames that we have the sort order for.
-      const slideOrderFiles = slideOrder.map(fileObject => {
-        return fileObject.filename;
-      });
-
-      // Make an array of files that are in slideshowItems.files, but are not
-      // in slideOrderFiles.
-      const newFiles = _.filter(slideshowItems.files, fileObject => {
-        return !slideOrderFiles.includes(fileObject.filename)
-      })
-
-      const finalOrder = [...slideOrder, ...newFiles];
-
+      const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
       this.setState({items: finalOrder });
     } else {
       this.setState({items: nextprops.slideshowItems.files});
