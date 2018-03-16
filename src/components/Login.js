@@ -116,7 +116,7 @@ class Login extends React.Component {
   }; // submitCreate
 
   componentWillReceiveProps(nextprops) {
-    if (nextprops.isLoggedIn) {
+    if (nextprops.token) {
       this.props.history.push('/admin');
     }
   }
