@@ -21,7 +21,7 @@ class Slideshow extends Component {
     // Check if loadedCsv exists. If not, use an empty array.
     let loadedCsvForState;
     if (this.props.config.loadedCsv) {
-      loadedCsvForState = JSON.parse(this.props.config.loadedCsv)
+      loadedCsvForState = JSON.parse(this.props.config.loadedCsv);
     } else {
       loadedCsvForState = [];
     }
@@ -104,7 +104,8 @@ class Slideshow extends Component {
 
     if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
       this.setState({slidesToShowWeatherOn:
-          nextprops.config.slidesToShowWeatherOn.split(';')})
+        nextprops.config.slidesToShowWeatherOn.split(';')
+      });
     }
 
     // Make an array of csv files.
