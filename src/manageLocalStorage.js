@@ -1,4 +1,5 @@
 // https://egghead.io/lessons/javascript-redux-persisting-the-state-to-the-local-storage
+import _ from 'lodash';
 
 export const loadState = () => {
     try {
@@ -13,6 +14,10 @@ export const loadState = () => {
 }
 
 export const saveState = (slideshow) => {
+    const currentValue = loadState();
+    const same = _.isEqual(currentValue, slideshow);
+    if (same) return;
+
     try {
         const serializedState = JSON.stringify(slideshow);
         localStorage.setItem('slideshow', serializedState);
