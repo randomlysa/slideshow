@@ -8,7 +8,6 @@ import { API_ROOT } from '../config/api-config';
 
 import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
-
 // Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
 // from that example.
 
@@ -56,6 +55,34 @@ class AdminSlideshow extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  setWeatherSlide = (label) => {
+    const activeFolder = this.props.activeFolder;
+    const filename = label.target.value;
+
+    // This if block and the whole 'Set' idea:
+    // http://react.tips/checkboxes-in-react/
+    if (this.selectedCheckboxes.has(filename)) {
+      this.selectedCheckboxes.delete(filename);
+    } else {
+      this.selectedCheckboxes.add(filename);
+    }
+
+    // Update what checkboxes should be checked.
+    this.setState({checkedItems: [...this.selectedCheckboxes]});
+
+    // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
+    // of checked box (slide to show weather on.)
+    $.ajax({
+      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        name: activeFolder,
+        slidesToShowWeatherOn: [...this.selectedCheckboxes].join(";")
+      }
+    });
+  } // setWeatherSlide
+
   onDragEnd(result) {
     // Dropped outside the list.
     if (!result.destination) {
@@ -91,32 +118,6 @@ class AdminSlideshow extends Component {
     });
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
-
-  setWeatherSlide(name, newFilename) {
-    const currentConfig = this.props.config.slidesToShowWeatherOn.split(';');
-    let newConfig;
-    // If new filename exists in currentConfig, remove it.
-    if (currentConfig.includes(newFilename)) {
-      newConfig = currentConfig.filter((filename) => {
-        return filename !== newFilename;
-      }); // filter
-    // If new filename doesn't exist in currentConfig, add it.
-    } else {
-      newConfig = [...currentConfig, newFilename];
-    }
-
-    // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
-    // of checked box (slide to show weather on.)
-    $.ajax({
-      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
-      type: 'post',
-      dataType: 'json',
-      data: {
-        name: name,
-        slidesToShowWeatherOn: newConfig.join(';')
-      }
-    });
-  } // setWeatherSlide
 
   deleteFile(filename) {
     if(window.confirm("Delete file?")) {
@@ -169,13 +170,16 @@ class AdminSlideshow extends Component {
                 onClick={this.deleteFile.bind(this, filename)}
               />
               <br />
-              <input type="checkbox"
+              <input
+                type="checkbox"
                 value={filename}
-                name="check"
-                onChange={this.setWeatherSlide.bind(this, this.props.activeFolder, filename)}
-                checked={checkBoxStatus}
+                label={filename}
+                // https://stackoverflow.com/a/6293626/3996097
+                id={filename} // so label "Toggle show weather" is clickable.
+                onChange={this.setWeatherSlide}
+                checked={this.state.checkedItems.includes(filename)}
               />
-              <label htmlFor={filename}></label>
+              <label htmlFor={filename}>Toggle show weather</label>
                 {provided.placeholder}
 
             </div>
@@ -187,6 +191,16 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
+    let makeArray = '';
+    if (nextprops && nextprops.config.slidesToShowWeatherOn) {
+      makeArray = nextprops.config.slidesToShowWeatherOn.split(";");
+      this.setState({checkedItems: makeArray})
+    }
+    // Set this.selectedCheckboxes to whatever filesnames were loaded from the
+    // database, or '' (nothing.)
+    this.selectedCheckboxes = new Set(makeArray);
+
+
     // Set state to slideOrder if it exists.
     if (nextprops.config.slideOrder) {
       const slideOrder = JSON.parse(nextprops.config.slideOrder);

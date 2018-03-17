@@ -92,6 +92,10 @@ img {
     width: 300px;
 }
 
+input[type='checkbox'], label {
+    cursor: pointer;
+}
+
 .showWeatherCheckbox {
     float: left;
     height: 240px;
