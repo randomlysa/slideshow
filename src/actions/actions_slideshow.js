@@ -5,7 +5,7 @@ export const GET_SLIDESHOW_SLIDES = 'GET_SLIDESHOW_SLIDES';
 export const GET_SLIDESHOW_SLIDES_FULFILLED = 'GET_SLIDESHOW_SLIDES_FULFILLED';
 
 // Get list of files for slideshow.
-export function updateSlideshow(whichSlideshow) {
+export function getFilesInSlideshowDir(whichSlideshow) {
     return {
         type: GET_SLIDESHOW_SLIDES,
         async payload() {
@@ -18,4 +18,4 @@ export function updateSlideshow(whichSlideshow) {
             });
         } // async
     }; // return
-} // updateSlideShow
+} // getFilesInSlideshowDir

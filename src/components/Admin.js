@@ -92,7 +92,7 @@ export class Admin extends Component {
         // Run after state has updated.
         // TODO: Getting 404 in console, trying to load images for the
         // wrong slideshow.
-        this.props.actions.updateSlideshow(this.state.activeFolder);
+        this.props.actions.getFilesInSlideshowDir(this.state.activeFolder);
         this.props.actions.getConfigFromDatabase(this.state.activeFolder);
 
         // Check if the folder config already exists in the database.
@@ -202,14 +202,14 @@ export class Admin extends Component {
               <div className="adminFlexbox--Slideshow">
                 <AdminSlideshow
                   activeFolder={this.state.activeFolder}
-                  updateSlideshow={this.props.actions.updateSlideshow}
+                  getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                 />
               </div>
               <div className="adminFlexbox--Dropzone">
                 <UploadFiles
                   activeFolder={this.state.activeFolder}
                   uploadStatus={this.state.uploadDisabled}
-                  updateSlideshow={this.props.actions.updateSlideshow}
+                  getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                 />
               </div>
             </div>

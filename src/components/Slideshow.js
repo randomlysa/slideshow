@@ -39,7 +39,7 @@ class Slideshow extends Component {
       finalSlideOrder: ''
     };
 
-    this.props.actions.updateSlideshow(this.state.slideshowDir);
+    this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
     this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
   }
 
@@ -94,7 +94,7 @@ class Slideshow extends Component {
         });
       }
       // Check for new slideshow items and config.
-      this.props.actions.updateSlideshow(this.state.slideshowDir);
+      this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
       this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
 
       window.setTimeout(loop, newSlideDuration);

@@ -140,7 +140,7 @@ class AdminSlideshow extends Component {
         } else {
           console.log('Deleted file: ', data);
         }
-        this.props.updateSlideshow(activeFolder);
+        this.props.getFilesInSlideshowDir(activeFolder);
       }) // ajax done
       .fail(e => {
         console.log('fail', e);
