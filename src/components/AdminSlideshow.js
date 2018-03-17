@@ -145,12 +145,6 @@ class AdminSlideshow extends Component {
     const fileUrl =
       `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
 
-    let checkBoxStatus = '';
-    if (this.props.config.slidesToShowWeatherOn &&
-      this.props.config.slidesToShowWeatherOn.includes(filename)) {
-      checkBoxStatus = 'checked';
-    }
-
     return (
       <Draggable key={filename} draggableId={filename} index={index}>
         {(provided, snapshot) => (
