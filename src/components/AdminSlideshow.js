@@ -55,6 +55,28 @@ class AdminSlideshow extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  // Update slide order in database (including removing deleted files.)
+  updateSlideOrderInDatabase = (items) => {
+    const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
+    $.ajax({
+      url,
+      type: 'POST',
+      data: {
+        name: this.props.activeFolder,
+        slideOrder: JSON.stringify(items)
+      }
+    })
+    .done(data => {
+      if (data === 'Row Updated') console.log('updated slideshow order')
+      else console.log('there was an error updating the database', data);
+    })
+    .fail(e => {
+      console.log(e);
+    });
+
+    this.setState({items})
+  };
+
   setWeatherSlide = (label) => {
     const activeFolder = this.props.activeFolder;
     const filename = label.target.value;
@@ -96,26 +118,7 @@ class AdminSlideshow extends Component {
     );
 
     // Save item order to database.
-    const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
-    $.ajax({
-      url,
-      type: 'POST',
-      data: {
-        name: this.props.activeFolder,
-        slideOrder: JSON.stringify(items)
-      }
-    })
-    .done(data => {
-      if (data === 'Row Updated') console.log('updated slideshow order')
-      else console.log('there was an error updating the database', data);
-    })
-    .fail(e => {
-      console.log(e);
-    });
-
-    this.setState({
-      items,
-    });
+    this.updateSlideOrderInDatabase(items);
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
@@ -123,6 +126,7 @@ class AdminSlideshow extends Component {
     if(window.confirm("Delete file?")) {
       let { activeFolder } = this.props;
       $.ajax({
+        context: this,
         url: `${API_ROOT}/php/deleteFile.php`,
         type: 'POST',
         data: {
@@ -131,12 +135,25 @@ class AdminSlideshow extends Component {
         }
       }) // ajax
       .done(data => {
-        console.log('deleted', data);
+        if (data === "Error: file or folder not found") {
+          console.log(data);
+        } else {
+          console.log('Deleted file: ', data);
+        }
         this.props.updateSlideshow(activeFolder);
       }) // ajax done
       .fail(e => {
         console.log('fail', e);
-      }); // ajax fail
+      }) // ajax fail
+
+      .then(() => {
+        // Remove the deleted file from state and from the database.
+        const newList = this.state.items.filter(item => {
+          return item.filename !== filename;
+        });
+        this.updateSlideOrderInDatabase(newList);
+        this.setState({ items: newList });
+      }); // then
     } // if window.confirm
   } // deleteFile
 
@@ -197,7 +214,15 @@ class AdminSlideshow extends Component {
 
     // Set state to slideOrder if it exists.
     if (nextprops.config.slideOrder) {
-      const slideOrder = JSON.parse(nextprops.config.slideOrder);
+      let slideOrder;
+      // If an item has been deleted, state should have been updated, but
+      // props has not been.
+      if (this.state.items.length > 0) {
+        slideOrder = this.state.items;
+      } else {
+        slideOrder = JSON.parse(nextprops.config.slideOrder);
+      }
+
       const { slideshowItems } = nextprops;
       const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
       this.setState({items: finalOrder });
