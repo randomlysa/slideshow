@@ -213,15 +213,14 @@ class AdminSlideshow extends Component {
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
-
     // Update state - remove a deleted file, replace old items with new (if
     // folder) changed, add unsorted slides to the end of a sorted list.
     if (nextprops.config.slideOrder) {
       let slideOrder;
       // An item has been deleted. The sort order hasn't changed, only one item
       // has been removed. Use nextprops.slideshowItems.files as the slideOrder.
+      // Or folder has been changed.
       if (this.props.slideshowItems.files.length !== nextprops.slideshowItems.files) {
-        // This should only run when an item has been deleted.
         slideOrder = nextprops.slideshowItems.files
       } else {
         slideOrder = JSON.parse(nextprops.config.slideOrder);

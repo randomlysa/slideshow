@@ -44,13 +44,12 @@ class Slideshow extends Component {
   }
 
   componentDidMount() {
-
     // finalSlideOrder needs to exist and have a length > 0 for the app to load.
     let finalSlideOrder;
-    if (this.props.config.slideOrder === "") {
-      finalSlideOrder = this.props.slideshowItems.files;
-    } else {
+    if (this.props.config.slideOrder) {
       finalSlideOrder = JSON.parse(this.props.config.slideOrder);
+    } else {
+      finalSlideOrder = this.props.slideshowItems.files;
     }
     this.setState({ finalSlideOrder });
 
