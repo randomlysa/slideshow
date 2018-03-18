@@ -27,7 +27,10 @@ const SlideshowItem = (props) => {
         )
       } // jpg
 
-      if (fileType === 'csv' && props.slideshowItems.csv[0]) {
+      if (fileType === 'csv' &&
+          props.slideshowItems.csv &&
+          props.slideshowItems.csv[0])
+      {
         return (
           <SlideshowItemCSV
             key={fileObject.filename}

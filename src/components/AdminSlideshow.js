@@ -50,7 +50,8 @@ class AdminSlideshow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: ''
+      items: '',
+      checkedItems: []
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
