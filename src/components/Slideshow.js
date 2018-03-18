@@ -60,13 +60,15 @@ class Slideshow extends Component {
     let firstLoop = true;
     const loop = () => {
       let transitionDuration = this.props.config.transitionDuration || 1500;
-      // slideDuration needs to have transitionDuration added to it,
-      // otherwise if both values are equal, the slideshow will be constantly
-      // transitioning.
-
-      // Todo: this isn't set the first time this runs, so the initial slide
-      // durations is '500'
-      let newSlideDuration = this.props.config.slideDuration * 1000 + parseInt(transitionDuration, 10) || 6000;
+      let newSlideDuration;
+      if (this.props.config.slideDuration) {
+        // slideDuration needs to have transitionDuration added to it,
+        // otherwise if both values are equal, the slideshow will be constantly
+        // transitioning.
+        newSlideDuration = this.props.config.slideDuration * 1000 + parseInt(transitionDuration, 10);
+      } else {
+        newSlideDuration = 5000;
+      }
 
       // Set a longer show duration for csv data.
       if ($('#slideshow > div').length > 1) {
