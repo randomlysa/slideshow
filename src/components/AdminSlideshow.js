@@ -177,7 +177,7 @@ class AdminSlideshow extends Component {
             >
               <img
                 src={fileUrl}
-                alt="Slideshow Item"
+                alt={filename}
                 onClick={this.deleteFile.bind(this, filename)}
               />
               <br />
@@ -202,6 +202,7 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
+    // Set up which weather checkboxes should be checked.
     let makeArray = '';
     if (nextprops && nextprops.config.slidesToShowWeatherOn) {
       makeArray = nextprops.config.slidesToShowWeatherOn.split(";");
@@ -212,7 +213,8 @@ class AdminSlideshow extends Component {
     this.selectedCheckboxes = new Set(makeArray);
 
 
-    // Set state to slideOrder if it exists.
+    // Update state - remove a deleted file, replace old items with new (if
+    // folder) changed, add unsorted slides to the end of a sorted list.
     if (nextprops.config.slideOrder) {
       let slideOrder;
       // An item has been deleted. The sort order hasn't changed, only one item
@@ -224,7 +226,10 @@ class AdminSlideshow extends Component {
         slideOrder = JSON.parse(nextprops.config.slideOrder);
       }
 
+      // Get an array of objects that contains the file names of all files in
+      // this folder.
       const { slideshowItems } = nextprops;
+      // Combine slideOrder with any new items that haven't been sorted yet.
       const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
       this.setState({items: finalOrder });
     } else {
