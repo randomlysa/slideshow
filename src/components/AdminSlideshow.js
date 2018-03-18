@@ -215,10 +215,11 @@ class AdminSlideshow extends Component {
     // Set state to slideOrder if it exists.
     if (nextprops.config.slideOrder) {
       let slideOrder;
-      // If an item has been deleted, state should have been updated, but
-      // props has not been.
-      if (this.state.items.length > 0) {
-        slideOrder = this.state.items;
+      // An item has been deleted. The sort order hasn't changed, only one item
+      // has been removed. Use nextprops.slideshowItems.files as the slideOrder.
+      if (this.props.slideshowItems.files.length !== nextprops.slideshowItems.files) {
+        // This should only run when an item has been deleted.
+        slideOrder = nextprops.slideshowItems.files
       } else {
         slideOrder = JSON.parse(nextprops.config.slideOrder);
       }
