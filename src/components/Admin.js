@@ -18,15 +18,18 @@ export class Admin extends Component {
     super(props);
 
     this.state = {
-        slideDuration: props.config.slideDuration || 6,
-        transitionDuration: props.config.transitionDuration || 500,
-        activeFolder: '',
-        slidesToShowWeatherOn: '',
-        cityToShowWeatherFor: props.config.cityToShowWeatherFor,
-        folders: [],
-        uploadDisabled: true,
-        existsInDatabase: ''
-      };
+      folders: [],
+      activeFolder: '',
+      uploadDisabled: true,
+
+      // These aren't used until a folder is selected so no point setting them
+      // here, they will be changed before being used.
+      slideDuration: '',
+      transitionDuration: '',
+      slidesToShowWeatherOn: '',
+      cityToShowWeatherFor: '',
+      existsInDatabase: '',
+    };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -140,8 +143,8 @@ export class Admin extends Component {
   componentWillReceiveProps(nextprops) {
     // Update inputs to reflect current (loaded from database) values.
     this.setState({
-      slideDuration: nextprops.config.slideDuration,
-      transitionDuration: nextprops.config.transitionDuration,
+      slideDuration: nextprops.config.slideDuration || 6,
+      transitionDuration: nextprops.config.transitionDuration || 500,
       slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
       cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor
     });
