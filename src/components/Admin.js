@@ -78,7 +78,13 @@ export class Admin extends Component {
       }
     })
     .done(data => {
-      if (data === 'Row Updated') console.log('Database config updated.');
+      if (data === 'Row Inserted' || data === 'Row Updated') {
+        // If it didn't exist in the database, it does now.
+        // Make sure the next save is an update, not an insert.
+        this.setState({existsInDatabase: true})
+        console.log('Database config updated.');
+
+      }
       else console.log('There was an error updating the database: ', data);
     })
     .fail(e => {
