@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
 import $ from 'jquery';
+import swal from 'sweetalert2';
 
 import { API_ROOT } from '../config/api-config';
-
 import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
 // Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
@@ -137,9 +136,22 @@ class AdminSlideshow extends Component {
       }) // ajax
       .done(data => {
         if (data === "Error: file or folder not found") {
+          swal({
+            timer: 3000,
+            toast: true,
+            type: 'error',
+            position: 'bottom-end',
+            text: 'There was an error deleting the file.'
+          });;
           console.log(data);
         } else {
-          console.log('Deleted file: ', data);
+          swal({
+            timer: 1500,
+            toast: true,
+            type: 'success',
+            position: 'bottom-end',
+            text: 'File deleted!'
+          });;
         }
         this.props.getFilesInSlideshowDir(activeFolder);
       }) // ajax done

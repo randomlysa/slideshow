@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert2';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -82,13 +83,30 @@ export class Admin extends Component {
         // If it didn't exist in the database, it does now.
         // Make sure the next save is an update, not an insert.
         this.setState({existsInDatabase: true})
-        console.log('Database config updated.');
+        swal({
+          timer: 1500,
+          toast: true,
+          position: 'bottom-end',
+          text: 'Changes saved!'
+        });
 
       }
-      else console.log('There was an error updating the database: ', data);
+      else
+        swal({
+          timer: 3000,
+          toast: true,
+          type: 'error',
+          text: 'There was an error saving your changes.: ' + data
+        });;
     })
     .fail(e => {
       console.log(e);
+      swal({
+        timer: 3000,
+        toast: true,
+        type: 'error',
+        text: 'There was an error saving your changes.'
+      });;
     }) // ajax
   }
 

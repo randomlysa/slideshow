@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { API_ROOT } from '../config/api-config';
 import $ from 'jquery';
+import swal from 'sweetalert2';
 
 class UploadFiles extends Component {
   componentDidMount() {
@@ -17,6 +18,7 @@ class UploadFiles extends Component {
   }
 
   onDrop(acceptedFiles) {
+    console.log('ondrop')
     acceptedFiles.forEach(file => {
       // formData: https://stackoverflow.com/a/24939229/3996097
       var formData = new FormData();
@@ -33,11 +35,31 @@ class UploadFiles extends Component {
         contentType: false
       })
       .done(data => {
-        // Update the slideshow to show new images.
-        this.props.getFilesInSlideshowDir(this.props.activeFolder);
+        // Check for success.
+        if (data === 'File Uploaded') {
+          this.props.getFilesInSlideshowDir(this.props.activeFolder);
+        // Error.
+        } else {
+          swal({
+            timer: 4000,
+            toast: true,
+            type: 'error',
+            position: 'bottom-end',
+            text: 'Error uploading: ' + data
+          });;
+
+        }
       })
       .fail(e => {
         console.log(e);
+        swal({
+          timer: 3000,
+          toast: true,
+          type: 'error',
+          position: 'bottom-end',
+          text: 'Error uploading: ' + e
+        });;
+
       });
     });
   }
