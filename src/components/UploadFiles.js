@@ -36,7 +36,7 @@ class UploadFiles extends Component {
       })
       .done(data => {
         // Check for success.
-        if (data === 'File Uploaded') {
+        if (data === 'File uploaded.') {
           this.props.getFilesInSlideshowDir(this.props.activeFolder);
         // Error.
         } else {
