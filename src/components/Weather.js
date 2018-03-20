@@ -10,12 +10,19 @@ class Weather extends Component {
     // If weather isn't an empty string.
     if (this.props.config.cityToShowWeatherFor !== "") {
       const cityFromDB = JSON.parse(this.props.config.cityToShowWeatherFor);
-      // If weather wasn't loaded from localstorage.
-      // OR
-      // If  weather loaded from localstorage is not for the same city id that is
-      // in the database.
-      if ((this.props.weather.length === 0) ||
-          (this.props.weather[0].id !== parseInt(cityFromDB.ID, 10)))
+
+      const now = new Date().getTime();
+      const timeFetched = this.props.weather ? this.props.weather.timeFetched : null;
+      const timeDifference = (now - timeFetched) / 1000 / 60;
+
+      // Update weather if:
+      // timedifference is > 30 (weather is > 30 min old)
+      // weather wasn't loaded from localstorage.
+      // weather loaded from localstorage is not for the same city id that is
+      // in the database (the city in the database was updated.)
+      if (timeDifference > 30 ||
+          (!this.props.weather.name) ||
+          (this.props.weather.id !== parseInt(cityFromDB.ID, 10)))
       {
         this.props.actions.fetchWeatherFromOpenWeather(cityFromDB.ID);
       }
@@ -26,12 +33,12 @@ class Weather extends Component {
     // There is no city to show weather for. Return nothing.
     if (this.props.config.cityToShowWeatherFor === "") return null;
 
-    else if (this.props.weather && this.props.weather.length > 0) {
+    else if (this.props.weather) {
       return (
         <h2 className="weather">
-          {this.props.weather[0].name} &nbsp;
-          {Math.round(this.props.weather[0].main.temp)}&deg; C / &nbsp;
-          {Math.round(this.props.weather[0].main.temp * 9/5 + 32)}&deg; F
+          {this.props.weather.name} &nbsp;
+          {Math.round(this.props.weather.main.temp)}&deg; C / &nbsp;
+          {Math.round(this.props.weather.main.temp * 9/5 + 32)}&deg; F
         </h2>
       )
     } else {

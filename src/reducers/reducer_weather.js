@@ -7,7 +7,7 @@ import {
 } from '../actions/actions_weather';
 import _ from 'lodash'
 
-export default function(state = [], action) {
+export default function(state = '', action) {
     const now = new Date().getTime();
 
     switch (action.type) {
@@ -22,7 +22,7 @@ export default function(state = [], action) {
             // Copy payload.data (new city) to new object.
             let newCityObject = Object.assign({}, action.payload.data);
             newCityObject.timeFetched = now;
-            return [ newCityObject, ...state]
+            return newCityObject;
         case FETCH_WEATHER_UPDATE:
             if(action.payload) {
                 let updatedCity = action.payload.data;
