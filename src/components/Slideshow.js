@@ -30,12 +30,13 @@ export class Slideshow extends Component {
     }
 
     this.state = {
-      showWeather: false,
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || "bb1",
       // Todo: load files that have csv data from database?
       csvRequestedFor: loadedCsvForState,
+      // This is passed on to SlideshowItem* to see if class should be set
+      // to showWeather.
       slidesToShowWeatherOn: '',
       finalSlideOrder: ''
     };
@@ -45,6 +46,8 @@ export class Slideshow extends Component {
   }
 
   componentDidMount() {
+    this.showWeather = false;
+
     // finalSlideOrder needs to exist and have a length > 0 for the app to load.
     let finalSlideOrder;
     if (this.props.config.slideOrder) {
@@ -100,9 +103,7 @@ export class Slideshow extends Component {
       if ($('#slideshow > div:first')[0]) {
         const thisItem = $('#slideshow > div:first')[0].className;
         // Show weather for divs with classname showWeather.
-        this.setState({
-          showWeather: thisItem.includes('showWeather')
-        });
+        this.showWeather = thisItem.includes('showWeather');
       }
       // Check for new slideshow items and config.
       this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
@@ -116,6 +117,12 @@ export class Slideshow extends Component {
   } // componentDidMount
 
   componentWillReceiveProps(nextprops) {
+    // Without this, weather never shows on the first slide.
+    if ($('#slideshow > div:first')[0]) {
+      const thisItem = $('#slideshow > div:first')[0].className;
+      // Show weather for divs with classname showWeather.
+      this.showWeather = thisItem.includes('showWeather');
+    }
 
     if (nextprops.config.slideOrder) {
       const slideOrder = JSON.parse(nextprops.config.slideOrder);
@@ -128,7 +135,7 @@ export class Slideshow extends Component {
 
     if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
       this.setState({slidesToShowWeatherOn:
-        nextprops.config.slidesToShowWeatherOn.split(';')
+        nextprops.config.slidesToShowWeatherOn
       });
     }
 
@@ -189,7 +196,7 @@ export class Slideshow extends Component {
     {
       return (
         <div id="slideshowContainer">
-          {this.state.showWeather &&
+          {this.showWeather &&
           <Weather />
           }
 

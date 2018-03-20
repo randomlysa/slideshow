@@ -56,6 +56,7 @@ class AdminSlideshow extends Component {
   }
 
   // Update slide order in database (including removing deleted files.)
+  // Todo: remove from slideToShowWeatherOn also.
   updateSlideOrderInDatabase = (items) => {
     const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
     $.ajax({
@@ -100,7 +101,7 @@ class AdminSlideshow extends Component {
       dataType: 'json',
       data: {
         name: activeFolder,
-        slidesToShowWeatherOn: [...this.selectedCheckboxes].join(";")
+        slidesToShowWeatherOn: JSON.stringify([...this.selectedCheckboxes])
       }
     });
   } // setWeatherSlide
@@ -218,7 +219,7 @@ class AdminSlideshow extends Component {
     // Set up which weather checkboxes should be checked.
     let makeArray = '';
     if (nextprops && nextprops.config.slidesToShowWeatherOn) {
-      makeArray = nextprops.config.slidesToShowWeatherOn.split(";");
+      makeArray = JSON.parse(nextprops.config.slidesToShowWeatherOn);
       this.setState({checkedItems: makeArray})
     }
     // Set this.selectedCheckboxes to whatever filesnames were loaded from the
