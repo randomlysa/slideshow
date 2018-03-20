@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
+
+// Import named / not connected component.
+// export class Admin extends Component
 import { Admin } from '../../components/Admin';
 import * as slideshowActions from '../../actions/actions_slideshow';
 import * as slideshowConfigActions from '../../actions/actions_slideshowConfig';
@@ -29,24 +32,6 @@ test ('should set state.activeFolder to bb1 when selected', () => {
   expect(wrapper.state('activeFolder')).toEqual('bb1');
   // expect(wrapper).toMatchSnapshot();
 
-});
-
-test ('should return default values when clicking submit', () => {
-  const wrapper = shallow(<Admin
-    config={config}
-    actions={actions}
-  />);
-
-  // <form> does not render without an activeFolder.
-  wrapper.setState({ activeFolder: 'bb1' });
-
-  expect(wrapper).toMatchSnapshot();
-  wrapper.find('form').simulate('submit', {
-    preventDefault: () => {}
-  });
-  expect(wrapper.state('slideDuration')).toEqual(6);
-  expect(wrapper.state('transitionDuration')).toEqual(500);
-  expect(wrapper).toMatchSnapshot();
 });
 
 test ('should set slideDuration on input change', () => {

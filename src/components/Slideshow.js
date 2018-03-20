@@ -16,7 +16,8 @@ import '../style.css';
 
 import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
-class Slideshow extends Component {
+// This export is a { named } export for testing.
+export class Slideshow extends Component {
   constructor(props) {
     super(props);
 
