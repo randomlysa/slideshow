@@ -55,6 +55,36 @@ class AdminSlideshow extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
+  // of checked box (slide to show weather on.)
+  updateCheckboxesInDatabase () {
+    $.ajax({
+      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        name: this.props.activeFolder,
+        slidesToShowWeatherOn: JSON.stringify([...this.selectedCheckboxes])
+      }
+    });
+  }
+
+  checkAllBoxes = () => {
+    this.state.items.forEach(item => {
+      this.selectedCheckboxes.add(item.filename);
+    });
+    this.setState({checkedItems: [...this.selectedCheckboxes]},
+      this.updateCheckboxesInDatabase()
+    );
+  }
+
+  uncheckAllBoxes = () => {
+    this.selectedCheckboxes.clear();
+    this.setState({checkedItems: [...this.selectedCheckboxes]},
+      this.updateCheckboxesInDatabase()
+    );
+  }
+
   // Update slide order in database (including removing deleted files.)
   // Todo: remove from slideToShowWeatherOn also.
   updateSlideOrderInDatabase = (items) => {
@@ -95,15 +125,7 @@ class AdminSlideshow extends Component {
 
     // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
     // of checked box (slide to show weather on.)
-    $.ajax({
-      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
-      type: 'post',
-      dataType: 'json',
-      data: {
-        name: activeFolder,
-        slidesToShowWeatherOn: JSON.stringify([...this.selectedCheckboxes])
-      }
-    });
+    this.updateCheckboxesInDatabase();
   } // setWeatherSlide
 
   onDragEnd(result) {
@@ -254,21 +276,26 @@ class AdminSlideshow extends Component {
     if (this.props.activeFolder && this.state.items.length > 0) {
       // https://codesandbox.io/s/k260nyxq9v.
       return (
-        <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.state.items.map((fileObject, index) => (
-                this.renderDraggable(fileObject, index)
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+        <div>
+          <button onClick={this.checkAllBoxes}>Show weather on all slides</button>
+          <br />
+          <button onClick={this.uncheckAllBoxes}>Don't show weather</button>
+          <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {this.state.items.map((fileObject, index) => (
+                  this.renderDraggable(fileObject, index)
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
       )
       // End https://codesandbox.io/s/k260nyxq9v copy.
     } else {
