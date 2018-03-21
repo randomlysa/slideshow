@@ -176,6 +176,10 @@ class AdminSlideshow extends Component {
             text: 'File deleted!'
           });;
         }
+        // Remove filename from Set and update database.
+        this.selectedCheckboxes.delete(filename);
+        this.updateCheckboxesInDatabase();
+        this.props.getConfigFromDatabase(activeFolder);
         this.props.getFilesInSlideshowDir(activeFolder);
       }) // ajax done
       .fail(e => {

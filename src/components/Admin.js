@@ -230,6 +230,7 @@ export class Admin extends Component {
                 <AdminSlideshow
                   activeFolder={this.state.activeFolder}
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
+                  getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
                 />
               </div>
               <div className="adminFlexbox--Dropzone">
