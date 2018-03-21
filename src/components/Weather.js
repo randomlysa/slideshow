@@ -34,14 +34,15 @@ class Weather extends Component {
     if (this.props.config.cityToShowWeatherFor === "") return null;
 
     else if (this.props.weather) {
-      const icon = `http://openweathermap.org/img/w/${this.props.weather.weather[0].icon}.png`;
+      const { icon, description } = this.props.weather.weather[0];
+      const iconSrc = `http://openweathermap.org/img/w/${icon}.png`;
 
       return (
         <h2 className="weather">
           {this.props.weather.name} &nbsp;
           {Math.round(this.props.weather.main.temp)}&deg; C / &nbsp;
           {Math.round(this.props.weather.main.temp * 9/5 + 32)}&deg; F
-          <img src={icon} className="weatherIcon" />
+          <img src={iconSrc} className="weatherIcon" alt={description} />
         </h2>
       )
     } else {
