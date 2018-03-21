@@ -109,7 +109,6 @@ class AdminSlideshow extends Component {
   };
 
   setWeatherSlide = (label) => {
-    const activeFolder = this.props.activeFolder;
     const filename = label.target.value;
 
     // This if block and the whole 'Set' idea:
