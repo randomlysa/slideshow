@@ -86,7 +86,6 @@ class AdminSlideshow extends Component {
   }
 
   // Update slide order in database (including removing deleted files.)
-  // Todo: remove from slideToShowWeatherOn also.
   updateSlideOrderInDatabase = (items) => {
     const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
     $.ajax({
@@ -105,7 +104,7 @@ class AdminSlideshow extends Component {
       console.log(e);
     });
 
-    this.setState({items})
+    this.setState({items});
   };
 
   setWeatherSlide = (label) => {
