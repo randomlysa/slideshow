@@ -12,9 +12,7 @@ export default function(state = {}, action) {
                 token: action.payload
             };
         case DO_LOGOUT:
-            return {
-                token: null
-            };
+            return {};
         default:
             return state;
     }
