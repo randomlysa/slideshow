@@ -8,6 +8,7 @@ import {
 
 // Import routes.
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 import Slideshow from '../components/Slideshow';
 import Admin from '../components/Admin';
 import Login from '../components/Login';
@@ -22,7 +23,7 @@ class MyRoutes extends Component {
       <Router basename={BASENAME}>
         <Switch>
           <PrivateRoute exact path="/admin" component={Admin} />
-          <Route exact path="/login" component={Login} />
+          <PublicRoute exact path="/login" component={Login} />
 
           {/* make path optional, try to load default if not specified */}
           {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}
