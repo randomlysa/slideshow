@@ -3,28 +3,41 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
-
+import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
+import crossTabMiddleware from 'cross-tab-middleware';
 
 import './index.css';
 import slideshowApp from './reducers';
 import MyRoutes from './routers/MyRoutes';
-import { loadState, saveState } from './manageLocalStorage';
 
-const persistedState = loadState();
+// https://github.com/rt2zz/redux-persist
+const persistConfig = {
+    key: 'slideshow',
+    storage
+};
 
-const store = createStore(
-    slideshowApp,
-    persistedState,
-    applyMiddleware(promiseMiddleware()),
+// (config, reducer)
+const persistedReducer = persistReducer(persistConfig, slideshowApp);
+
+let store = createStore(
+    persistedReducer,
+    applyMiddleware(
+        promiseMiddleware(),
+        crossTabMiddleware('slideshow')
+    )
 );
 
-store.subscribe(() => {
-    saveState(store.getState());
-});
+let persistor = persistStore(store);
+persistStore(store);
 
 ReactDOM.render(
     <Provider store={store}>
-        <MyRoutes />
+        <PersistGate loading={null} persistor={persistor}>
+            <MyRoutes />
+        </PersistGate>
     </Provider>,
     document.getElementById('root')
 );

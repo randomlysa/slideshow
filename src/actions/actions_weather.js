@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { loadState } from '../manageLocalStorage';
-
 const API_KEY = 'df53338709b54a2247c6e16358430a33';
 const WEATHER_URL = `http://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
 
@@ -45,7 +43,7 @@ export function fetchWeatherFromOpenWeather(cityId) {
 }
 
 export function fetchWeatherFromLocalStorage() {
-    const getState = loadState();
+    const getState = localStorage.getItem('persist:slideshow');
     // localstorage is empty.
     if (!getState) {
         return {
