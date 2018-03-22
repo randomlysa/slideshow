@@ -33,7 +33,7 @@ class Weather extends Component {
     // There is no city to show weather for. Return nothing.
     if (this.props.config.cityToShowWeatherFor === "") return null;
 
-    else if (this.props.weather) {
+    else if (typeof this.props.weather.base !== 'undefined') {
       const { icon, description } = this.props.weather.weather[0];
       const iconSrc = `http://openweathermap.org/img/w/${icon}.png`;
 

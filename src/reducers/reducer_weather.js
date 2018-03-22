@@ -7,7 +7,7 @@ import {
 } from '../actions/actions_weather';
 import _ from 'lodash'
 
-export default function(state = '', action) {
+export default function(state = {}, action) {
     const now = new Date().getTime();
 
     switch (action.type) {
