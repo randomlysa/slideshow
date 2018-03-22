@@ -38,9 +38,19 @@ export class Admin extends Component {
   }
 
   confirmLogout() {
-    if(window.confirm("Logout?")) {
-      this.props.actions.logout();
-    }
+    swal({
+      title: 'Are you sure?',
+      text: "Logout!",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      console.log(result)
+      if (result.value) {
+        this.props.actions.logout();
+      }
+    });
   }
 
   onInputChange(event) {

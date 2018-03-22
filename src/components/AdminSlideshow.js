@@ -145,8 +145,17 @@ class AdminSlideshow extends Component {
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
   deleteFile(filename) {
-    if(window.confirm("Delete file?")) {
-      let { activeFolder } = this.props;
+
+    swal({
+      title: 'Are you sure?',
+      text: "Delete file",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.value) {
+        let { activeFolder } = this.props;
       $.ajax({
         context: this,
         url: `${API_ROOT}/php/deleteFile.php`,
@@ -193,7 +202,8 @@ class AdminSlideshow extends Component {
         this.updateSlideOrderInDatabase(newList);
         this.setState({ items: newList });
       }); // then
-    } // if window.confirm
+      }
+    });
   } // deleteFile
 
   renderDraggable(fileObject, index) {
