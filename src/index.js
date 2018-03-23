@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -21,13 +21,15 @@ const persistConfig = {
 
 // (config, reducer)
 const persistedReducer = persistReducer(persistConfig, slideshowApp);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let store = createStore(
     persistedReducer,
+    composeEnhancers(
     applyMiddleware(
         promiseMiddleware(),
         crossTabMiddleware('slideshow')
-    )
+    ))
 );
 
 let persistor = persistStore(store);
