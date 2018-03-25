@@ -68,56 +68,22 @@ export class Admin extends Component {
     } else {
       cityForWeather = this.state.cityToShowWeatherFor;
     }
-
-    let url;
     // Insert/update info about slideshow into database.
-    if (this.state.existsInDatabase) {
-      url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
-    } else {
-      url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php`;
-    }
-    $.ajax({
-      url,
-      type: 'POST',
-      data: {
-        name: this.state.activeFolder,
-        slideDuration: this.state.slideDuration,
-        transitionDuration: this.state.transitionDuration,
-        city: this.state.city,
-        slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
-        cityToShowWeatherFor: cityForWeather
-      }
-    })
-    .done(data => {
-      if (data === 'Row Inserted' || data === 'Row Updated') {
-        // If it didn't exist in the database, it does now.
-        // Make sure the next save is an update, not an insert.
-        this.setState({existsInDatabase: true})
-        swal({
-          timer: 1500,
-          toast: true,
-          position: 'bottom-end',
-          text: 'Changes saved!'
-        });
+    let updateOrInsert;
+    if(this.state.existsInDatabase) updateOrInsert = 'update';
+    else updateOrInsert = 'insert';
 
-      }
-      else
-        swal({
-          timer: 3000,
-          toast: true,
-          type: 'error',
-          text: 'There was an error saving your changes.: ' + data
-        });;
-    })
-    .fail(e => {
-      console.log(e);
-      swal({
-        timer: 3000,
-        toast: true,
-        type: 'error',
-        text: 'There was an error saving your changes.'
-      });;
-    }) // ajax
+    const dataObject = {
+      name: this.state.activeFolder,
+      slideDuration: this.state.slideDuration,
+      transitionDuration: this.state.transitionDuration,
+      slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
+      cityToShowWeatherFor: cityForWeather
+    }
+    this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject);
+    // Make sure the next save is an update, not an insert.
+    this.setState({existsInDatabase: true});
+
   }
 
   setActiveFolder(e) {

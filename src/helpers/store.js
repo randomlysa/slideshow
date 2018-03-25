@@ -21,6 +21,7 @@ export let store = createStore(
   persistedReducer,
   composeEnhancers(
   applyMiddleware(
+      thunk,
       promiseMiddleware(),
       crossTabMiddleware('slideshow')
   ))
