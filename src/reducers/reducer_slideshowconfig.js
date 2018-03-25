@@ -7,7 +7,9 @@ import {
 export default function(state = {}, action) {
     switch (action.type) {
         case UPDATE_CONFIG:
-            return action.payload;
+            const config = action.payload;
+            const newSlideOrder = JSON.parse(config.slideOrder);
+            return {...config, slideOrder: newSlideOrder};
 
         case GET_CONFIG_FROM_DATABASE_FULFILLED:
             // If nothing has been configured in the database for this
@@ -39,7 +41,7 @@ export default function(state = {}, action) {
                 slidesToShowWeatherOn,
                 cityToShowWeatherFor,
                 loadedCsv,
-                slideOrder
+                slideOrder: JSON.parse(slideOrder)
             }
         case SET_WEATHER_CITY:
             return {...state, cityToShowWeatherFor: action.payload};

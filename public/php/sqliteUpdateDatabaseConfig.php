@@ -32,19 +32,7 @@
 
       include('sqliteConfig.php');
 
-      if ($slideOrder) {
-        $stmt = $db -> prepare("UPDATE `bulletins`
-          SET
-            `slideOrder` = :slideOrder
-          WHERE `name` = :name
-        ");
-
-        /* bind params */
-        $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
-
-      } // End slideOrder.
-      else if ($loadedCsv) {
+      if ($loadedCsv) {
         $stmt = $db -> prepare("UPDATE `bulletins`
           SET
             `loadedCsv` = :loadedCsv
@@ -64,7 +52,8 @@
             `slideDuration` = :slideDuration,
             `transitionDuration`   = :transitionDuration,
             `slidesToShowWeatherOn` = :slidesToShowWeatherOn,
-            `cityToShowWeatherFor` = :cityToShowWeatherFor
+            `cityToShowWeatherFor` = :cityToShowWeatherFor,
+            `slideOrder` = :slideOrder
           WHERE `name` = :name
         ");
 
@@ -74,7 +63,7 @@
         $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
         $stmt -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
         $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
-
+        $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
       }
 
       /* execute the query */

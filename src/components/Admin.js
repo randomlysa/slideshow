@@ -29,7 +29,9 @@ export class Admin extends Component {
       transitionDuration: '',
       slidesToShowWeatherOn: '',
       cityToShowWeatherFor: '',
+      slideOrder: '',
       existsInDatabase: '',
+
     };
 
     this.onInputChange = this.onInputChange.bind(this);
@@ -78,12 +80,17 @@ export class Admin extends Component {
       slideDuration: this.state.slideDuration,
       transitionDuration: this.state.transitionDuration,
       slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
-      cityToShowWeatherFor: cityForWeather
+      cityToShowWeatherFor: cityForWeather,
+      slideOrder: JSON.stringify(this.state.slideOrder)
     }
     this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject);
     // Make sure the next save is an update, not an insert.
     this.setState({existsInDatabase: true});
 
+  }
+
+  updateSlideOrder = (items) => {
+    this.setState({slideOrder: items});
   }
 
   setActiveFolder(e) {
@@ -146,7 +153,8 @@ export class Admin extends Component {
       slideDuration: nextprops.config.slideDuration || 6,
       transitionDuration: nextprops.config.transitionDuration || 500,
       slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
-      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor
+      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor,
+      slideOrder: nextprops.config.slideOrder
     });
   }
 
@@ -207,6 +215,7 @@ export class Admin extends Component {
                   activeFolder={this.state.activeFolder}
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                   getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
+                  updateSlideOrder={this.updateSlideOrder}
                 />
               </div>
               <div className="adminFlexbox--Dropzone">

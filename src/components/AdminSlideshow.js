@@ -85,28 +85,6 @@ class AdminSlideshow extends Component {
     );
   }
 
-  // Update slide order in database (including removing deleted files.)
-  updateSlideOrderInDatabase = (items) => {
-    const url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
-    $.ajax({
-      url,
-      type: 'POST',
-      data: {
-        name: this.props.activeFolder,
-        slideOrder: JSON.stringify(items)
-      }
-    })
-    .done(data => {
-      if (data === 'Row Updated') console.log('updated slideshow order')
-      else console.log('there was an error updating the database', data);
-    })
-    .fail(e => {
-      console.log(e);
-    });
-
-    this.setState({items});
-  };
-
   setWeatherSlide = (label) => {
     const filename = label.target.value;
 
@@ -139,7 +117,8 @@ class AdminSlideshow extends Component {
     );
 
     // Save item order to database.
-    this.updateSlideOrderInDatabase(items);
+    this.props.updateSlideOrder(items);
+    this.setState({items})
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
@@ -198,7 +177,7 @@ class AdminSlideshow extends Component {
         const newList = this.state.items.filter(item => {
           return item.filename !== filename;
         });
-        this.updateSlideOrderInDatabase(newList);
+        this.props.updateSlideOrder(newList);
         this.setState({ items: newList });
       }); // then
       }
@@ -267,10 +246,14 @@ class AdminSlideshow extends Component {
       // An item has been deleted. The sort order hasn't changed, only one item
       // has been removed. Use nextprops.slideshowItems.files as the slideOrder.
       // Or folder has been changed.
-      if (this.props.slideshowItems.files.length !== nextprops.slideshowItems.files) {
+      if (this.props.slideshowItems.files.length !== nextprops.slideshowItems.files.length) {
         slideOrder = nextprops.slideshowItems.files
       } else {
-        slideOrder = JSON.parse(nextprops.config.slideOrder);
+        // if (typeof nextprops.config.slideOrder === 'string') {
+        //   slideOrder = JSON.parse(nextprops.config.slideOrder);
+        // } else {
+        slideOrder = nextprops.config.slideOrder;
+        // }
       }
 
       // Get an array of objects that contains the file names of all files in

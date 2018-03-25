@@ -42,7 +42,7 @@ export class Slideshow extends Component {
     };
 
     this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
-    this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
+    // this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
   }
 
   componentDidMount() {
@@ -51,7 +51,7 @@ export class Slideshow extends Component {
     // finalSlideOrder needs to exist and have a length > 0 for the app to load.
     let finalSlideOrder;
     if (this.props.config.slideOrder) {
-      finalSlideOrder = JSON.parse(this.props.config.slideOrder);
+      finalSlideOrder = this.props.config.slideOrder;
     } else {
       finalSlideOrder = this.props.slideshowItems.files;
     }
@@ -107,7 +107,7 @@ export class Slideshow extends Component {
       }
       // Check for new slideshow items and config.
       this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
-      this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
+      // this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
 
       window.setTimeout(loop, newSlideDuration);
     };
@@ -125,7 +125,7 @@ export class Slideshow extends Component {
     }
 
     if (nextprops.config.slideOrder) {
-      const slideOrder = JSON.parse(nextprops.config.slideOrder);
+      const slideOrder = nextprops.config.slideOrder;
       const { slideshowItems } = nextprops;
       const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
       this.setState({ finalSlideOrder: finalOrder });

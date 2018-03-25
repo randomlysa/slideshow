@@ -39,7 +39,8 @@ export const updateConfigInDatabase = (updateOrInsert, dataObject) => {
       slideDuration,
       transitionDuration,
       slidesToShowWeatherOn,
-      cityToShowWeatherFor
+      cityToShowWeatherFor,
+      slideOrder
     } = dataObject;
 
     $.ajax({
@@ -50,7 +51,8 @@ export const updateConfigInDatabase = (updateOrInsert, dataObject) => {
         slideDuration,
         transitionDuration,
         slidesToShowWeatherOn,
-        cityToShowWeatherFor
+        cityToShowWeatherFor,
+        slideOrder
       } // data
     }) // ajax
     .done(data => {
