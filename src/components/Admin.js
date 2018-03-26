@@ -61,9 +61,11 @@ export class Admin extends Component {
     });
   }
 
-  onFormSubmit(event) {
-    event.preventDefault();
-
+  // Set the variables needed and runs an update.
+  callUpdateConfigInDatabase =(slideOrder) => {
+    const newSlideOrder = JSON.stringify(slideOrder) || JSON.stringify(this.state.slideOrder);
+    console.log(this)
+    console.log('call update config');
     let cityForWeather;
     if (typeof this.state.cityToShowWeatherFor === 'object') {
       cityForWeather = JSON.stringify(this.state.cityToShowWeatherFor);
@@ -81,12 +83,16 @@ export class Admin extends Component {
       transitionDuration: this.state.transitionDuration,
       slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
       cityToShowWeatherFor: cityForWeather,
-      slideOrder: JSON.stringify(this.state.slideOrder)
+      slideOrder: newSlideOrder
     }
     this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject);
     // Make sure the next save is an update, not an insert.
     this.setState({existsInDatabase: true});
+  }
 
+  onFormSubmit(event) {
+    event.preventDefault();
+    this.callUpdateConfigInDatabase()
   }
 
   updateSlideOrder = (items) => {
@@ -216,6 +222,7 @@ export class Admin extends Component {
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                   getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
                   updateSlideOrder={this.updateSlideOrder}
+                  callUpdateConfigInDatabase={this.callUpdateConfigInDatabase}
                 />
               </div>
               <div className="adminFlexbox--Dropzone">

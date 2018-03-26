@@ -229,6 +229,20 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
+    const { files } = nextprops.slideshowItems;
+    const { slideOrder } = nextprops.config;
+
+    // If slideOrder is empty, update the database with all the files that
+    // exist = slideOrder.
+    if (slideOrder === "") {
+      this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files)
+    }
+
+    if (files && slideOrder && files.length !== slideOrder.length) {
+      // Todo: Possibly check if a file was added directly to the folder without using
+      // the upload form.
+    }
+
     // Set up which weather checkboxes should be checked.
     let makeArray = '';
     if (nextprops && nextprops.config.slidesToShowWeatherOn) {
@@ -239,32 +253,14 @@ class AdminSlideshow extends Component {
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
-    // Update state - remove a deleted file, replace old items with new (if
-    // folder) changed, add unsorted slides to the end of a sorted list.
-    if (nextprops.config.slideOrder) {
-      let slideOrder;
-      // An item has been deleted. The sort order hasn't changed, only one item
-      // has been removed. Use nextprops.slideshowItems.files as the slideOrder.
-      // Or folder has been changed.
-      if (this.props.slideshowItems.files.length !== nextprops.slideshowItems.files.length) {
-        slideOrder = nextprops.slideshowItems.files
-      } else {
-        // if (typeof nextprops.config.slideOrder === 'string') {
-        //   slideOrder = JSON.parse(nextprops.config.slideOrder);
-        // } else {
-        slideOrder = nextprops.config.slideOrder;
-        // }
-      }
 
-      // Get an array of objects that contains the file names of all files in
-      // this folder.
-      const { slideshowItems } = nextprops;
-      // Combine slideOrder with any new items that haven't been sorted yet.
-      const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
-      this.setState({items: finalOrder });
+    if (nextprops.config.slideOrder && nextprops.config.slideOrder.length > 0) {
+      this.setState({items: slideOrder });
     } else {
       this.setState({items: nextprops.slideshowItems.files});
     }
+
+
   }
 
   render() {

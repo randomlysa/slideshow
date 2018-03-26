@@ -8,7 +8,7 @@ export default function(state = {}, action) {
     switch (action.type) {
         case UPDATE_CONFIG:
             const config = action.payload;
-            const newSlideOrder = JSON.parse(config.slideOrder);
+            let newSlideOrder = JSON.parse(config.slideOrder);
             return {...config, slideOrder: newSlideOrder};
 
         case GET_CONFIG_FROM_DATABASE_FULFILLED:
@@ -21,7 +21,7 @@ export default function(state = {}, action) {
                     slidesToShowWeatherOn: '',
                     cityToShowWeatherFor: '',
                     loadedCsv: '',
-                    slideOrder: ''
+                    slideOrder: {}
                 };
             }
 
@@ -34,6 +34,8 @@ export default function(state = {}, action) {
                 slideOrder
             } = action.payload;
 
+            newSlideOrder = JSON.parse(slideOrder)
+
             return {
                 ...state,
                 slideDuration,
@@ -41,7 +43,7 @@ export default function(state = {}, action) {
                 slidesToShowWeatherOn,
                 cityToShowWeatherFor,
                 loadedCsv,
-                slideOrder: JSON.parse(slideOrder)
+                slideOrder: newSlideOrder
             }
         case SET_WEATHER_CITY:
             return {...state, cityToShowWeatherFor: action.payload};

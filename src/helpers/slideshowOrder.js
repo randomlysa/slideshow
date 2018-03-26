@@ -8,7 +8,7 @@ function combineOrderedAndUnorderedSlides(slideOrder, slideshowItems) {
     // If slideOrder has no values, return the list of files.
     // Otherwise, slideOrder.map will cause an error.
     if (Object.values(slideOrder).length === 0) {
-      return [...slideshowItems];
+      return slideshowItems.files;
     }
 
     // Make an array of filenames that we have the sort order for.
