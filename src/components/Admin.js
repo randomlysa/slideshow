@@ -280,6 +280,7 @@ export class Admin extends Component {
                   activeFolder={this.state.activeFolder}
                   uploadStatus={this.state.uploadDisabled}
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
+                  uploadFile={this.props.actions.uploadFile}
                 />
               </div>
             </div>

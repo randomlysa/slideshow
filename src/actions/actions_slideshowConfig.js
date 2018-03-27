@@ -9,6 +9,8 @@ export const UPDATE_CONFIG_IN_DATABASE_FULFILLED = 'UPDATE_CONFIG_IN_DATABASE_FU
 
 export const SET_WEATHER_CITY = 'SET_WEATHER_CITY';
 export const DELETE_FILE_FULFILLED = 'DELETE_FILE_FULFILLED';
+export const UPLOAD_FILE_FULFILLED = 'UPLOAD_FILE_FULFILLED';
+
 
 export function getConfigFromDatabase(name) {
   return {
@@ -111,6 +113,67 @@ export function deleteFile(filename, folder, typeOfUpdate, newConfig) {
     }); // ajax fail
   }; // return (dispatch)
 } // export function deleteFile
+
+// Remove deleted file from state (slideOrder)
+export function updateAfterUploadFile(filename, folder, currentConfig) {
+  // If delete failed, filename and folder will be null.
+  const result = (filename, folder) ? 'success' : 'fail';
+  return {
+    type: UPLOAD_FILE_FULFILLED,
+    result,
+    filename,
+    folder,
+    currentConfig
+  }
+}
+
+// Dispatches updateAfterDeleteFile when finished.
+export const uploadFile = (acceptedFiles, activeFolder) => (dispatch) => {
+  return new Promise(function (resolve, reject) {
+    acceptedFiles.forEach(file => {
+      // formData: https://stackoverflow.com/a/24939229/3996097
+      var formData = new FormData();
+      formData.append('photo', file);
+      // Set folder to upload file to.
+      formData.append('folder', activeFolder);
+
+      // http://localhost/slideshow/public/php/uploadFiles.php
+      return $.ajax({
+        url: `${API_ROOT}/php/uploadFiles.php`,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false
+      })
+      .then(data => {
+        const returnMessage = JSON.parse(data)[0];
+        if (returnMessage.filename) {
+          dispatch(getConfigFromDatabase(activeFolder))
+          .then(data => {
+            const currentConfig = data.action.payload;
+            const slideOrder = JSON.parse(currentConfig.slideOrder);
+            const newSlideOrder = JSON.stringify([...slideOrder, returnMessage]);
+            const newConfig = {...currentConfig, slideOrder: newSlideOrder};
+            console.log(newConfig);
+
+            dispatch(updateConfigInDatabase('update', newConfig));
+            return resolve();
+          });
+        // Error.
+        } else {
+          dispatch(updateAfterUploadFile(null, null, ''));
+          return reject(returnMessage);
+        }
+      })
+      .catch((e, returnMessage) => {
+        console.log(e);
+        dispatch(updateAfterUploadFile(null, null, ''));
+        return reject(returnMessage);
+      });
+    })
+  })
+}
+
 
 export function setWeatherCity(name) {
   return {

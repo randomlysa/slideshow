@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import { API_ROOT } from '../config/api-config';
 import $ from 'jquery';
 import swal from 'sweetalert2';
 
@@ -19,49 +18,19 @@ class UploadFiles extends Component {
 
   onDrop(acceptedFiles) {
     console.log('ondrop')
-    acceptedFiles.forEach(file => {
-      // formData: https://stackoverflow.com/a/24939229/3996097
-      var formData = new FormData();
-      formData.append('photo', file);
-      // Set folder to upload file to.
-      formData.append('folder', this.props.activeFolder);
-
-      // http://localhost/slideshow/public/php/uploadFiles.php
-      $.ajax({
-        url: `${API_ROOT}/php/uploadFiles.php`,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false
-      })
-      .done(data => {
-        // Check for success.
-        if (data === 'File uploaded.') {
-          this.props.getFilesInSlideshowDir(this.props.activeFolder);
-        // Error.
-        } else {
-          swal({
-            timer: 4000,
-            toast: true,
-            type: 'error',
-            position: 'bottom-end',
-            text: 'Error uploading: ' + data
-          });;
-
-        }
-      })
-      .fail(e => {
-        console.log(e);
-        swal({
-          timer: 3000,
-          toast: true,
-          type: 'error',
-          position: 'bottom-end',
-          text: 'Error uploading: ' + e
-        });;
-
-      });
-    });
+    this.props.uploadFile(acceptedFiles, this.props.activeFolder)
+    .then(() => {
+      console.log('success');
+    })
+    .catch(returnMessage => {
+      swal({
+        timer: 4000,
+        toast: true,
+        type: 'error',
+        position: 'bottom-end',
+        text: 'Error uploading: ' + returnMessage.error
+      });;
+    })
   }
 
   render() {
