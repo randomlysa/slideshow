@@ -64,8 +64,6 @@ export class Admin extends Component {
   // Set the variables needed and runs an update.
   callUpdateConfigInDatabase =(slideOrder) => {
     const newSlideOrder = JSON.stringify(slideOrder) || JSON.stringify(this.state.slideOrder);
-    console.log(this)
-    console.log('call update config');
     let cityForWeather;
     if (typeof this.state.cityToShowWeatherFor === 'object') {
       cityForWeather = JSON.stringify(this.state.cityToShowWeatherFor);
@@ -98,6 +96,41 @@ export class Admin extends Component {
   updateSlideOrder = (items) => {
     this.setState({slideOrder: items});
   }
+
+  deleteFile = (filename, folder) => {
+    const currentState =
+    swal({
+      title: 'Are you sure?',
+      text: "Delete file",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      // Delete confirmed.
+      if (result.value) {
+        let updateOrInsert;
+        if(this.state.existsInDatabase) updateOrInsert = 'update';
+        else updateOrInsert = 'insert';
+
+        const withoutDeletedFile = this.state.slideOrder.filter(item => {
+          return item.filename !== filename;
+        })
+        // Update local state.
+        this.setState({slideOrder: withoutDeletedFile});
+        const newConfig = {
+          name: this.state.activeFolder,
+          slideDuration: this.state.slideDuration,
+          transitionDuration: this.state.transitionDuration,
+          slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
+          slideOrder: JSON.stringify(withoutDeletedFile)
+        }
+        this.props.actions.deleteFile(filename, folder, updateOrInsert, newConfig);
+
+      } // if result.value
+    }); // then(result)
+  } // deleteFile
+
 
   setActiveFolder(e) {
     if (e.target.value) {
@@ -222,6 +255,7 @@ export class Admin extends Component {
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                   getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
                   updateSlideOrder={this.updateSlideOrder}
+                  deleteFile={this.deleteFile}
                   callUpdateConfigInDatabase={this.callUpdateConfigInDatabase}
                 />
               </div>

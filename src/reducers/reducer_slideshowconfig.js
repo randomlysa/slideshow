@@ -1,7 +1,8 @@
 import {
     GET_CONFIG_FROM_DATABASE_FULFILLED,
     SET_WEATHER_CITY,
-    UPDATE_CONFIG
+    UPDATE_CONFIG,
+    DELETE_FILE_FULFILLED
 } from '../actions/actions_slideshowConfig';
 
 export default function(state = {}, action) {
@@ -47,6 +48,13 @@ export default function(state = {}, action) {
             }
         case SET_WEATHER_CITY:
             return {...state, cityToShowWeatherFor: action.payload};
+
+        case DELETE_FILE_FULFILLED:
+            if (action.result === 'fail') return state;
+            const { newConfig } = action;
+            newSlideOrder = JSON.parse(newConfig.slideOrder);
+            return {...action.newConfig, slideOrder: newSlideOrder}
+
         default:
             return state;
 

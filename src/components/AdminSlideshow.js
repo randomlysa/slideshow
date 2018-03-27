@@ -123,68 +123,6 @@ class AdminSlideshow extends Component {
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
-  deleteFile(filename) {
-
-    swal({
-      title: 'Are you sure?',
-      text: "Delete file",
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
-    }).then((result) => {
-      if (result.value) {
-        let { activeFolder } = this.props;
-      $.ajax({
-        context: this,
-        url: `${API_ROOT}/php/deleteFile.php`,
-        type: 'POST',
-        data: {
-          fileToDelete: filename,
-          folder: activeFolder
-        }
-      }) // ajax
-      .done(data => {
-        if (data === "Error: file or folder not found") {
-          swal({
-            timer: 3000,
-            toast: true,
-            type: 'error',
-            position: 'bottom-end',
-            text: 'There was an error deleting the file.'
-          });;
-          console.log(data);
-        } else {
-          swal({
-            timer: 1500,
-            toast: true,
-            type: 'success',
-            position: 'bottom-end',
-            text: 'File deleted!'
-          });;
-        }
-        // Remove filename from Set and update database.
-        this.selectedCheckboxes.delete(filename);
-        this.updateCheckboxesInDatabase();
-        this.props.getConfigFromDatabase(activeFolder);
-        this.props.getFilesInSlideshowDir(activeFolder);
-      }) // ajax done
-      .fail(e => {
-        console.log('fail', e);
-      }) // ajax fail
-
-      .then(() => {
-        // Remove the deleted file from state and from the database.
-        const newList = this.state.items.filter(item => {
-          return item.filename !== filename;
-        });
-        this.props.updateSlideOrder(newList);
-        this.setState({ items: newList });
-      }); // then
-      }
-    });
-  } // deleteFile
-
   renderDraggable(fileObject, index) {
     const filename = fileObject.filename;
     const fileUrl =
@@ -206,7 +144,7 @@ class AdminSlideshow extends Component {
               <img
                 src={fileUrl}
                 alt={filename}
-                onClick={this.deleteFile.bind(this, filename)}
+                onClick={this.props.deleteFile.bind(this, filename, this.props.activeFolder)}
               />
               <br />
               <input
@@ -235,7 +173,6 @@ class AdminSlideshow extends Component {
     const { dir: nexFilesFolder, files } = nextprops.slideshowItems;
     const { name: nextConfigFolder, slideOrder } = nextprops.config;
 
-
     // If slideOrder is empty, set slideOrder to slideshowItems.files.
     if ((nextConfigFolder === activeFolder) &&
        (slideOrder === "" || typeof slideOrder === 'undefined'))
@@ -250,9 +187,10 @@ class AdminSlideshow extends Component {
     {
       // Todo: Possibly check if a file was added directly to the folder without
       // using the upload form.
-      const tempObject = {...files, ...slideOrder};
-      const mergedObjects = _.map(tempObject, (tempObject) => { return tempObject;});
-      this.props.callUpdateConfigInDatabase(mergedObjects);
+
+      // const tempObject = {...files, ...slideOrder};
+      // const mergedObjects = _.map(tempObject, (tempObject) => { return tempObject;});
+      // this.props.callUpdateConfigInDatabase(mergedObjects);
     }
 
     // Set up which weather checkboxes should be checked.
