@@ -83,7 +83,23 @@ export class Admin extends Component {
       cityToShowWeatherFor: cityForWeather,
       slideOrder: newSlideOrder
     }
-    this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject);
+    this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject)
+    .then(() => {
+      swal({
+        timer: 1500,
+        toast: true,
+        position: 'bottom-end',
+        text: 'Changes saved!'
+      });
+    })
+    .catch(() => {
+      swal({
+        timer: 3000,
+        toast: true,
+        type: 'error',
+        text: 'There was an error saving your changes.'
+      });
+    })
     // Make sure the next save is an update, not an insert.
     this.setState({existsInDatabase: true});
   }

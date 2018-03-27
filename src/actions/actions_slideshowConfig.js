@@ -1,6 +1,4 @@
 import $ from 'jquery';
-import swal from 'sweetalert2';
-
 import { API_ROOT } from '../config/api-config';
 
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
@@ -30,8 +28,8 @@ export function updateConfig(dataObject) {
   }; // return
 } // updateConfig
 
-export const updateConfigInDatabase = (updateOrInsert, dataObject) => {
-  return (dispatch) => {
+export const updateConfigInDatabase = (updateOrInsert, dataObject) => (dispatch) => {
+  return new Promise(function(resolve, reject) {
     let url;
     if (updateOrInsert === 'update') url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
     if (updateOrInsert === 'insert') url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php`;
@@ -45,7 +43,7 @@ export const updateConfigInDatabase = (updateOrInsert, dataObject) => {
       slideOrder
     } = dataObject;
 
-    $.ajax({
+    return $.ajax({
       url,
       type: 'POST',
       data: {
@@ -57,35 +55,20 @@ export const updateConfigInDatabase = (updateOrInsert, dataObject) => {
         slideOrder
       } // data
     }) // ajax
-    .done(data => {
+    .then(data => {
       if (data === 'Row Inserted' || data === 'Row Updated') {
-        swal({
-          timer: 1500,
-          toast: true,
-          position: 'bottom-end',
-          text: 'Changes saved!'
-        });
         dispatch(updateConfig(dataObject));
+        return resolve();
       } else {
-        swal({
-          timer: 3000,
-          toast: true,
-          type: 'error',
-          text: 'There was an error saving your changes.: ' + data
-        });
+        return reject(data);
       }
     }) // done
-    .fail(e => {
+    .catch(e => {
       console.log(e);
-      swal({
-        timer: 3000,
-        toast: true,
-        type: 'error',
-        text: 'There was an error saving your changes.'
-      })
+      return reject();
     }); // fail
-  } // return (dispatch)
-}
+  }); // return (dispatch)
+};
 
 // Remove deleted file from state (slideOrder)
 export function updateAfterDeleteFile(filename, folder, newConfig) {
