@@ -14,7 +14,7 @@ export function getFilesInSlideshowDir(whichSlideshow) {
                 dataType: 'json'
             })
             .then(data => {
-                return data
+                return {dir: whichSlideshow, files: data}
             });
         } // async
     }; // return

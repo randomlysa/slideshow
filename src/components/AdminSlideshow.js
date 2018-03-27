@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import $ from 'jquery';
+import _ from 'lodash'
 import swal from 'sweetalert2';
 
 import { API_ROOT } from '../config/api-config';
@@ -229,18 +230,29 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    const { files } = nextprops.slideshowItems;
-    const { slideOrder } = nextprops.config;
+    const { activeFolder, slideshowItems } = nextprops;
+    // When updating files or slideOrder, make sure dir/name = activeFolder.
+    const { dir: nexFilesFolder, files } = nextprops.slideshowItems;
+    const { name: nextConfigFolder, slideOrder } = nextprops.config;
 
-    // If slideOrder is empty, update the database with all the files that
-    // exist = slideOrder.
-    if (slideOrder === "") {
+
+    // If slideOrder is empty, set slideOrder to slideshowItems.files.
+    if ((nextConfigFolder === activeFolder) &&
+       (slideOrder === "" || typeof slideOrder === 'undefined'))
+    {
       this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files)
     }
 
-    if (files && slideOrder && files.length !== slideOrder.length) {
-      // Todo: Possibly check if a file was added directly to the folder without using
-      // the upload form.
+    // Check that slideOrder.length === files.length
+    if (files && slideOrder &&
+      nextConfigFolder === activeFolder &&
+      files.length !== slideOrder.length)
+    {
+      // Todo: Possibly check if a file was added directly to the folder without
+      // using the upload form.
+      const tempObject = {...files, ...slideOrder};
+      const mergedObjects = _.map(tempObject, (tempObject) => { return tempObject;});
+      this.props.callUpdateConfigInDatabase(mergedObjects);
     }
 
     // Set up which weather checkboxes should be checked.
@@ -253,14 +265,18 @@ class AdminSlideshow extends Component {
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
-
-    if (nextprops.config.slideOrder && nextprops.config.slideOrder.length > 0) {
+    // Set state.
+    if (nextprops.config.slideOrder &&
+       nextprops.config.slideOrder.length > 0 &&
+       nextprops.config.name === activeFolder
+      )
+    {
+      this.props.updateSlideOrder(slideOrder);
       this.setState({items: slideOrder });
     } else {
-      this.setState({items: nextprops.slideshowItems.files});
+      this.props.updateSlideOrder(files);
+      this.setState({items: files});
     }
-
-
   }
 
   render() {
