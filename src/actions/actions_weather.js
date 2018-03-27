@@ -52,7 +52,7 @@ export function fetchWeatherFromLocalStorage() {
         }
     }
 
-    const request = getState.weather || [];
+    const request = getState.weather || null;
     return {
         type: FETCH_WEATHER_FROM_LOCALSTORAGE,
         payload: request
