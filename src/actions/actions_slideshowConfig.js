@@ -129,50 +129,67 @@ export function updateAfterUploadFile(filename, folder, currentConfig) {
 
 // Dispatches updateAfterDeleteFile when finished.
 export const uploadFile = (acceptedFiles, activeFolder) => (dispatch) => {
-  return new Promise(function (resolve, reject) {
-    acceptedFiles.forEach(file => {
-      // formData: https://stackoverflow.com/a/24939229/3996097
-      var formData = new FormData();
-      formData.append('photo', file);
-      // Set folder to upload file to.
-      formData.append('folder', activeFolder);
+  let results;
+  let filesUploaded = [];
+  let filesFailed = [];
 
-      // http://localhost/slideshow/public/php/uploadFiles.php
-      return $.ajax({
-        url: `${API_ROOT}/php/uploadFiles.php`,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false
-      })
-      .then(data => {
-        const returnMessage = JSON.parse(data)[0];
-        if (returnMessage.filename) {
-          dispatch(getConfigFromDatabase(activeFolder))
-          .then(data => {
-            const currentConfig = data.action.payload;
-            const slideOrder = JSON.parse(currentConfig.slideOrder);
-            const newSlideOrder = JSON.stringify([...slideOrder, returnMessage]);
-            const newConfig = {...currentConfig, slideOrder: newSlideOrder};
-            console.log(newConfig);
+  results = new Promise(function (resolve, reject) {
+    dispatch(getConfigFromDatabase(activeFolder))
+    .then(data => {
 
-            dispatch(updateConfigInDatabase('update', newConfig));
-            return resolve();
-          });
-        // Error.
-        } else {
-          dispatch(updateAfterUploadFile(null, null, ''));
+      acceptedFiles.forEach(file => {
+        // formData: https://stackoverflow.com/a/24939229/3996097
+        var formData = new FormData();
+        formData.append('photo', file);
+        // Set folder to upload file to.
+        formData.append('folder', activeFolder);
+
+        // http://localhost/slideshow/public/php/uploadFiles.php
+        return $.ajax({
+          url: `${API_ROOT}/php/uploadFiles.php`,
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false
+        })
+        .then(data => {
+          const returnMessage = JSON.parse(data)[0];
+          if (returnMessage.filename) {
+
+            filesUploaded[filesUploaded.length + 1] = returnMessage.filename;
+
+              // const currentConfig = data.action.payload;
+              // const slideOrder = JSON.parse(currentConfig.slideOrder);
+              // const newSlideOrder = JSON.stringify([...slideOrder, returnMessage]);
+              // const newConfig = {...currentConfig, slideOrder: newSlideOrder};
+
+              // dispatch(updateConfigInDatabase('update', newConfig));
+              return resolve();
+
+          // Error.
+          } else {
+            // dispatch(updateAfterUploadFile(null, null, ''));
+            filesFailed[filesFailed.length + 1] = returnMessage.filename;
+            return reject(returnMessage);
+          }
+        }) // then
+        .catch((e, returnMessage) => {
+          console.log(e);
+          filesFailed[filesFailed.length + 1] = returnMessage.filename;
+          // dispatch(updateAfterUploadFile(null, null, ''));
           return reject(returnMessage);
-        }
-      })
-      .catch((e, returnMessage) => {
-        console.log(e);
-        dispatch(updateAfterUploadFile(null, null, ''));
-        return reject(returnMessage);
-      });
-    })
-  })
-}
+        }); // catch
+      }) // acceptedFiles.forEach
+    }); // dispatch(getConfigFromDatabase(activeFolder)).then
+  }); // const results = new Promise
+
+  return results.then(() => {
+    console.log(filesUploaded);
+    console.log(filesFailed);
+    return Promise.resolve();
+  });
+
+} // export const uploadFile
 
 
 export function setWeatherCity(name) {

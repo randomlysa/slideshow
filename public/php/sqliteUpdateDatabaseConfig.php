@@ -32,7 +32,19 @@
 
       include('sqliteConfig.php');
 
-      if ($loadedCsv) {
+      if ($slideOrder && !$slideDuration) {
+        $stmt = $db -> prepare("UPDATE `bulletins`
+          SET
+            `slideOrder` = :slideOrder
+          WHERE `name` = :name
+        ");
+
+        /* bind params */
+        $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
+
+      } // End slideOrder.
+      else if ($loadedCsv) {
         $stmt = $db -> prepare("UPDATE `bulletins`
           SET
             `loadedCsv` = :loadedCsv
