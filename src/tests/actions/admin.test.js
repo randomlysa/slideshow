@@ -20,6 +20,9 @@ test('should log the user out', () => {
   const action = logout();
   expect(action).toEqual({
     type: DO_LOGOUT,
+    meta: {
+      crossTab: true
+    },
     payload: false
   });
 });
