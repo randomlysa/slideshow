@@ -2,7 +2,8 @@ import {
     GET_CONFIG_FROM_DATABASE_FULFILLED,
     SET_WEATHER_CITY,
     UPDATE_CONFIG,
-    DELETE_FILE_FULFILLED
+    DELETE_FILE_FULFILLED,
+    UPLOAD_FILE_FULFILLED
 } from '../actions/actions_slideshowConfig';
 
 export default function(state = {}, action) {
@@ -37,7 +38,9 @@ export default function(state = {}, action) {
                 slideOrder
             } = action.payload;
 
-            newSlideOrder = JSON.parse(slideOrder)
+            // Todo: make a helper to deal with slideOrder.
+            if (slideOrder === '') newSlideOrder = '';
+            else newSlideOrder = JSON.parse(slideOrder)
 
             return {
                 ...state,
@@ -57,6 +60,9 @@ export default function(state = {}, action) {
             const { newConfig } = action;
             newSlideOrder = JSON.parse(newConfig.slideOrder);
             return {...action.newConfig, slideOrder: newSlideOrder}
+
+        case UPLOAD_FILE_FULFILLED:
+            return {...state, slideOrder: JSON.parse(action.slideOrder)}
 
         default:
             return state;

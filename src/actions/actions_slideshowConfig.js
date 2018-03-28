@@ -115,81 +115,82 @@ export function deleteFile(filename, folder, typeOfUpdate, newConfig) {
 } // export function deleteFile
 
 // Remove deleted file from state (slideOrder)
-export function updateAfterUploadFile(filename, folder, currentConfig) {
+export function updateAfterUploadFile(newSlideOrder) {
   // If delete failed, filename and folder will be null.
-  const result = (filename, folder) ? 'success' : 'fail';
+  // const result = (filename, folder) ? 'success' : 'fail';
   return {
     type: UPLOAD_FILE_FULFILLED,
-    result,
-    filename,
-    folder,
-    currentConfig
+    slideOrder: newSlideOrder
   }
 }
 
 // Dispatches updateAfterDeleteFile when finished.
 export const uploadFile = (acceptedFiles, activeFolder) => (dispatch) => {
-  let results;
+  let slideOrder;
   let filesUploaded = [];
   let filesFailed = [];
+  let uploads = [];
 
-  results = new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     dispatch(getConfigFromDatabase(activeFolder))
     .then(data => {
+      const currentConfig = data.action.payload;
+      if (slideOrder !== '') slideOrder = JSON.parse(currentConfig.slideOrder);
+      else slideOrder = '';
 
-      acceptedFiles.forEach(file => {
+      // https://stackoverflow.com/q/5627284/3996097 and
+      // https://stackoverflow.com/a/5627301/3996097
+      acceptedFiles.map(file => {
         // formData: https://stackoverflow.com/a/24939229/3996097
         var formData = new FormData();
         formData.append('photo', file);
         // Set folder to upload file to.
         formData.append('folder', activeFolder);
 
-        // http://localhost/slideshow/public/php/uploadFiles.php
-        return $.ajax({
-          url: `${API_ROOT}/php/uploadFiles.php`,
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false
-        })
-        .then(data => {
-          const returnMessage = JSON.parse(data)[0];
-          if (returnMessage.filename) {
-
-            filesUploaded[filesUploaded.length + 1] = returnMessage.filename;
-
-              // const currentConfig = data.action.payload;
-              // const slideOrder = JSON.parse(currentConfig.slideOrder);
-              // const newSlideOrder = JSON.stringify([...slideOrder, returnMessage]);
-              // const newConfig = {...currentConfig, slideOrder: newSlideOrder};
-
-              // dispatch(updateConfigInDatabase('update', newConfig));
+        uploads.push(
+          $.ajax({
+            url: `${API_ROOT}/php/uploadFiles.php`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false
+          }) // $.ajax
+          .then(data => {
+            const returnMessage = JSON.parse(data)[0];
+            if (returnMessage.filename) {
+              filesUploaded[filesUploaded.length] = returnMessage;
               return resolve();
-
-          // Error.
-          } else {
-            // dispatch(updateAfterUploadFile(null, null, ''));
-            filesFailed[filesFailed.length + 1] = returnMessage.filename;
+            // Error.
+            } else {
+              filesFailed[filesFailed.length] = returnMessage.filename;
+              return reject(returnMessage);
+            } // else
+          }) // $ajax.then
+          .catch((e, returnMessage) => {
+            console.log(e);
+            filesFailed[filesFailed.length] = returnMessage.filename;
             return reject(returnMessage);
-          }
-        }) // then
-        .catch((e, returnMessage) => {
-          console.log(e);
-          filesFailed[filesFailed.length + 1] = returnMessage.filename;
-          // dispatch(updateAfterUploadFile(null, null, ''));
-          return reject(returnMessage);
-        }); // catch
-      }) // acceptedFiles.forEach
+          }) // catch
+        ); // uploads.push
+      }); // acceptedFiles.forEach
+
+      // When all uploads have finished.
+      $.when.apply($, uploads).done(data => {
+        const newSlideOrder = JSON.stringify([...slideOrder, ...filesUploaded]);
+        // Update database.
+        dispatch(updateConfigInDatabase('update', {
+          name: activeFolder,
+          slideOrder: newSlideOrder
+        }));
+        // Update redux.
+        dispatch(updateAfterUploadFile(newSlideOrder));
+        // So UploadFiles.js > onDrop can return failed files.
+        return Promise.resolve();
+      }); // When all uploads have finished.
+
     }); // dispatch(getConfigFromDatabase(activeFolder)).then
-  }); // const results = new Promise
-
-  return results.then(() => {
-    console.log(filesUploaded);
-    console.log(filesFailed);
-    return Promise.resolve();
-  });
-
-} // export const uploadFile
+  }); // return new Promise.
+}; // export const uploadFile
 
 
 export function setWeatherCity(name) {
