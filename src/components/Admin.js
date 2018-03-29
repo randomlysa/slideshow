@@ -12,7 +12,7 @@ import { API_ROOT } from '../config/api-config';
 
 import UploadFiles from './UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
-import AdminWeather from './AdminWeather'
+import AdminWeather from './AdminWeather';
 
 export class Admin extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ export class Admin extends Component {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
     }).then((result) => {
-      console.log(result)
+      console.log(result);
       if (result.value) {
         this.props.actions.logout();
       }
@@ -62,7 +62,7 @@ export class Admin extends Component {
   }
 
   // Set the variables needed and runs an update.
-  callUpdateConfigInDatabase =(slideOrder) => {
+  callUpdateConfigInDatabase = (slideOrder) => {
     const newSlideOrder = JSON.stringify(slideOrder) || JSON.stringify(this.state.slideOrder);
     let cityForWeather;
     if (typeof this.state.cityToShowWeatherFor === 'object') {
@@ -82,7 +82,7 @@ export class Admin extends Component {
       slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
       cityToShowWeatherFor: cityForWeather,
       slideOrder: newSlideOrder
-    }
+    };
     this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject)
     .then(() => {
       swal({
@@ -99,7 +99,7 @@ export class Admin extends Component {
         type: 'error',
         text: 'There was an error saving your changes.'
       });
-    })
+    });
     // Make sure the next save is an update, not an insert.
     this.setState({existsInDatabase: true});
   }
@@ -118,7 +118,6 @@ export class Admin extends Component {
   }
 
   deleteFile = (filename, folder) => {
-    const currentState =
     swal({
       title: 'Are you sure?',
       text: "Delete file",
@@ -150,7 +149,6 @@ export class Admin extends Component {
       } // if result.value
     }); // then(result)
   } // deleteFile
-
 
   setActiveFolder(e) {
     if (e.target.value) {

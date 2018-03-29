@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import $ from 'jquery';
-import _ from 'lodash'
-import swal from 'sweetalert2';
 
 import { API_ROOT } from '../config/api-config';
-import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
+// Currently unused.
+// import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 
 // Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
 // from that example.
@@ -89,6 +87,7 @@ class AdminSlideshow extends Component {
     this.props.updateWeatherCheckboxes(this.selectedCheckboxes);
   }; // setWeatherSlide
 
+  // Drag items.
   onDragEnd(result) {
     // Dropped outside the list.
     if (!result.destination) {
@@ -103,7 +102,7 @@ class AdminSlideshow extends Component {
 
     // Save item order to database.
     this.props.updateSlideOrder(items);
-    this.setState({items})
+    this.setState({items});
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
@@ -152,9 +151,9 @@ class AdminSlideshow extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    const { activeFolder, slideshowItems } = nextprops;
+    const { activeFolder } = nextprops;
     // When updating files or slideOrder, make sure dir/name = activeFolder.
-    const { dir: nexFilesFolder, files } = nextprops.slideshowItems;
+    const { dir: nextFilesFolder, files } = nextprops.slideshowItems;
     const { name: nextConfigFolder, slideOrder } = nextprops.config;
 
     // If slideOrder is empty, set slideOrder to slideshowItems.files.
