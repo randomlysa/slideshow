@@ -33,13 +33,9 @@ export class Admin extends Component {
       existsInDatabase: '',
 
     };
-
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.confirmLogout = this.confirmLogout.bind(this);
   }
 
-  confirmLogout() {
+  confirmLogout = () => {
     swal({
       title: 'Are you sure?',
       text: "Logout!",
@@ -55,7 +51,7 @@ export class Admin extends Component {
     });
   }
 
-  onInputChange(event) {
+  onInputChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -104,7 +100,7 @@ export class Admin extends Component {
     this.setState({existsInDatabase: true});
   }
 
-  onFormSubmit(event) {
+  onFormSubmit = (event) => {
     event.preventDefault();
     this.callUpdateConfigInDatabase()
   }
