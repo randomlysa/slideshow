@@ -109,6 +109,10 @@ export class Admin extends Component {
     this.callUpdateConfigInDatabase()
   }
 
+  updateWeatherCheckboxes = (slides) => {
+    this.setState({slidesToShowWeatherOn: JSON.stringify([...slides]) });
+  }
+
   updateSlideOrder = (items) => {
     this.setState({slideOrder: items});
   }
@@ -271,6 +275,7 @@ export class Admin extends Component {
                   getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
                   getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
                   updateSlideOrder={this.updateSlideOrder}
+                  updateWeatherCheckboxes={this.updateWeatherCheckboxes}
                   deleteFile={this.deleteFile}
                   callUpdateConfigInDatabase={this.callUpdateConfigInDatabase}
                 />

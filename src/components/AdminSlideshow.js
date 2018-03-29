@@ -56,35 +56,22 @@ class AdminSlideshow extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
-  // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
-  // of checked box (slide to show weather on.)
-  updateCheckboxesInDatabase () {
-    $.ajax({
-      url: `${API_ROOT}/php/sqliteInsertslidesToShowWeatherOn.php`,
-      type: 'post',
-      dataType: 'json',
-      data: {
-        name: this.props.activeFolder,
-        slidesToShowWeatherOn: JSON.stringify([...this.selectedCheckboxes])
-      }
-    });
-  }
-
+  // Weather items.
   checkAllBoxes = () => {
     this.state.items.forEach(item => {
       this.selectedCheckboxes.add(item.filename);
-    });
+    })
     this.setState({checkedItems: [...this.selectedCheckboxes]},
-      this.updateCheckboxesInDatabase()
-    );
+      this.props.updateWeatherCheckboxes(this.selectedCheckboxes)
+    )
   }
 
   uncheckAllBoxes = () => {
     this.selectedCheckboxes.clear();
     this.setState({checkedItems: [...this.selectedCheckboxes]},
-      this.updateCheckboxesInDatabase()
+      this.props.updateWeatherCheckboxes(this.selectedCheckboxes)
     );
-  }
+  };
 
   setWeatherSlide = (label) => {
     const filename = label.target.value;
@@ -96,14 +83,11 @@ class AdminSlideshow extends Component {
     } else {
       this.selectedCheckboxes.add(filename);
     }
-
     // Update what checkboxes should be checked.
     this.setState({checkedItems: [...this.selectedCheckboxes]});
-
-    // Update row 'name', column 'slidesToShowWeatherOn' with 'filename'
-    // of checked box (slide to show weather on.)
-    this.updateCheckboxesInDatabase();
-  } // setWeatherSlide
+      // Update parent state.
+    this.props.updateWeatherCheckboxes(this.selectedCheckboxes);
+  }; // setWeatherSlide
 
   onDragEnd(result) {
     // Dropped outside the list.
