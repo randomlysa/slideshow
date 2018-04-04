@@ -18,7 +18,7 @@ export default function(state = {}, action) {
             // slideshow, action.payload will be undefined.
             if (action.payload === undefined) {
                 return {
-                    name,
+                    name: '',
                     slideDuration: '',
                     transitionDuration: '',
                     slidesToShowWeatherOn: '',
