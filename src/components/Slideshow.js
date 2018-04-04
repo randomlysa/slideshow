@@ -82,7 +82,7 @@ export class Slideshow extends Component {
         }
       }
 
-      const startSlideshow = function() {
+      const switchToNextSlide = function() {
         $('#slideshow > div:first')
           .fadeOut(parseInt(transitionDuration, 10))
           .next()
@@ -92,10 +92,10 @@ export class Slideshow extends Component {
         }
 
       if (firstLoop === true) {
-        setTimeout(() => { startSlideshow }, newSlideDuration);
+        setTimeout(() => { switchToNextSlide }, newSlideDuration);
         firstLoop = false;
       } else {
-        startSlideshow();
+        switchToNextSlide();
       }
 
 
