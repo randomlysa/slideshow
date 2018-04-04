@@ -107,7 +107,9 @@ export class Slideshow extends Component {
       }
       // Check for new slideshow items and config.
       this.props.actions.getFilesInSlideshowDir(this.state.slideshowDir);
-      // this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
+      // Todo: why do the slides start switching like crazy with this line
+      // commented out?
+      this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
 
       window.setTimeout(loop, newSlideDuration);
     };
