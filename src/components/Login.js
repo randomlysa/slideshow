@@ -115,8 +115,8 @@ class Login extends React.Component {
     }); // password()
   }; // submitCreate
 
-  componentWillReceiveProps(nextprops) {
-    if (nextprops.token) {
+  componentDidUpdate() {
+    if (this.props.token) {
       this.props.history.push('/admin');
     }
   }
