@@ -55,28 +55,44 @@ class AdminWeather extends Component {
     }) // ajax
   }
 
-  componentWillReceiveProps(nextprops) {
-    if (nextprops.config.cityToShowWeatherFor) {
+  // Determine what to show in the 'search for weather' input
+  formatCityToShowWeatherFor(input) {
+    if (input) {
       let NAME, COUNTRY;
-      if (typeof nextprops.config.cityToShowWeatherFor === 'string') {
+      if (typeof input === 'string') {
         // Returned from database.
-        const data = JSON.parse(nextprops.config.cityToShowWeatherFor);
+        const data = JSON.parse(input);
         NAME = data.NAME;
         COUNTRY = data.COUNTRY;
-      } else if (typeof nextprops.config.cityToShowWeatherFor === 'object') {
+      } else if (typeof input === 'object') {
         // Selected from input.
-        const data = nextprops.config.cityToShowWeatherFor;
+        const data = input;
         NAME = data.NAME;
         COUNTRY = data.COUNTRY;
       }
 
-      if (NAME && COUNTRY) {
+      if (NAME && COUNTRY &&
+        this.state.placeholder !== `Showing weather for: ${NAME}, ${COUNTRY}`)
+      {
         this.setState({placeholder: `Showing weather for: ${NAME}, ${COUNTRY}`});
       }
-    // No nextprops.config.cityToShowWeatherFor
-    } else {
+    } // if (input)
+    // No input
+    if (!input &&
+      this.state.placeholder !== 'Search for a city to show weather for')
+    {
       this.setState({placeholder: 'Search for a city to show weather for'});
-    }; // if nextprops.config.cityToShowWeatherFor
+    } // if (!input)
+  }
+
+  componentDidMount() {
+    // Determine what to show in the 'search for weather' input
+    this.formatCityToShowWeatherFor(this.props.config.cityToShowWeatherFor);
+  }
+
+  componentDidUpdate() {
+    // Determine what to show in the 'search for weather' input
+    this.formatCityToShowWeatherFor(this.props.config.cityToShowWeatherFor);
   }
 
   render() {
