@@ -183,7 +183,7 @@ export class Admin extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // Get list of folders (slideshows) so the user can select a slideshow,
     // upload, sort, and delete slides (images) in the folder.
     $.ajax({

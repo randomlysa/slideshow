@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { fetchWeatherFromLocalStorage, fetchWeatherFromOpenWeather } from '../actions/actions_weather';
 
 class Weather extends Component {
-  componentWillMount() {
+  componentDidMount() {
     // fetchWeatherFromOpenWeather if fetchWeatherFromLocalStorage is empty.
     this.props.actions.fetchWeatherFromLocalStorage();
     // If weather isn't an empty string.
@@ -27,7 +27,7 @@ class Weather extends Component {
         this.props.actions.fetchWeatherFromOpenWeather(cityFromDB.ID);
       }
     }
-  } // componentWillMount
+  } // componentDidMount
 
   render() {
     // There is no city to show weather for. Return nothing.
