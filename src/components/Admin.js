@@ -183,7 +183,14 @@ export class Admin extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    // Set these values for the form.
+    this.setState({
+      transitionDuration: this.props.config.transitionDuration,
+      slideDuration: this.props.config.slideDuration,
+      slidesToShowWeatherOn: this.props.slidesToShowWeatherOn
+    });
+
     // Get list of folders (slideshows) so the user can select a slideshow,
     // upload, sort, and delete slides (images) in the folder.
     $.ajax({
@@ -198,17 +205,18 @@ export class Admin extends Component {
     .fail(e => {
       console.log(e);
     });
-  }
+  };
 
-  componentWillReceiveProps(nextprops) {
-    // Update inputs to reflect current (loaded from database) values.
-    this.setState({
-      slideDuration: nextprops.config.slideDuration || 6,
-      transitionDuration: nextprops.config.transitionDuration || 500,
-      slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
-      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor,
-      slideOrder: nextprops.config.slideOrder
-    });
+  componentDidUpdate(prevProps) {
+    // Critical - this needs to check all three...
+    if (this.props.config.transitionDuration !== prevProps.config.transitionDuration) {
+      console.log("UPDATING!!!!!!!!!!!!!!")
+      this.setState({
+        transitionDuration: this.props.config.transitionDuration,
+        slideDuration: this.props.config.slideDuration,
+        slidesToShowWeatherOn: this.props.slidesToShowWeatherOn
+      })
+    }
   }
 
   render() {
