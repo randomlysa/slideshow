@@ -132,6 +132,7 @@ export class Slideshow extends Component {
       const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
       this.setState({ finalSlideOrder: finalOrder });
     } else {
+      // If no slideOrder in config, use list of files as the order.
       this.setState({ finalSlideOrder: nextprops.slideshowItems.files});
     } // if nextprops.config.slideOrder
 
