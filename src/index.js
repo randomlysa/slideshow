@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -11,13 +10,11 @@ import './index.css';
 
 const renderApp = Component => {
     render(
-        <AppContainer>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <MyRoutes />
-                </PersistGate>
-            </Provider>
-        </AppContainer>,
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <MyRoutes />
+            </PersistGate>
+        </Provider>,
         document.getElementById('root')
     );
 }
