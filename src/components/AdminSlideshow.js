@@ -150,17 +150,17 @@ class AdminSlideshow extends Component {
     )
   }
 
-  componentWillReceiveProps(nextprops) {
-    const { activeFolder } = nextprops;
+  componentDidUpdate(prevProps) {
+    const { activeFolder } = this.props;
     // When updating files or slideOrder, make sure dir/name = activeFolder.
-    const { dir: nextFilesFolder, files } = nextprops.slideshowItems;
-    const { name: nextConfigFolder, slideOrder } = nextprops.config;
+    const { dir: nextFilesFolder, files } = this.props.slideshowItems;
+    const { name: nextConfigFolder, slideOrder } = this.props.config;
 
     // If slideOrder is empty, set slideOrder to slideshowItems.files.
     if ((nextConfigFolder === activeFolder) &&
        (slideOrder === "" || typeof slideOrder === 'undefined'))
     {
-      this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files)
+      this.props.callUpdateConfigInDatabase(this.props.slideshowItems.files)
     }
 
     // Check that slideOrder.length === files.length
@@ -178,23 +178,31 @@ class AdminSlideshow extends Component {
 
     // Set up which weather checkboxes should be checked.
     let makeArray = '';
-    if (nextprops && nextprops.config.slidesToShowWeatherOn) {
-      makeArray = JSON.parse(nextprops.config.slidesToShowWeatherOn);
+
+    if (this.props && this.props.config.slidesToShowWeatherOn &&
+      prevProps.config.slidesToShowWeatherOn !== this.props.config.slidesToShowWeatherOn)
+    {
+      makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
       this.setState({checkedItems: makeArray})
     }
     // Set this.selectedCheckboxes to whatever filesnames were loaded from the
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
-    // Set state.
-    if (nextprops.config.slideOrder &&
-       nextprops.config.slideOrder.length > 0 &&
-       nextprops.config.name === activeFolder
+    // Set state with slideOrder from db (slides have been moved around.)
+    if (this.props.config.slideOrder &&
+       this.props.config.slideOrder.length > 0 &&
+       this.props.config.name === activeFolder &&
+       this.props.config.slideOrder !== prevProps.config.slideOrder
       )
     {
       this.props.updateSlideOrder(slideOrder);
       this.setState({items: slideOrder });
-    } else {
+    }
+    // Set state with slideOrder from dir listing.
+    else if (this.props.config.name === activeFolder &&
+      !this.props.config.slideOrder)
+    {
       this.props.updateSlideOrder(files);
       this.setState({items: files});
     }
