@@ -89,13 +89,13 @@ export class Slideshow extends Component {
           .fadeIn(parseInt(transitionDuration, 10))
           .end()
           .appendTo('#slideshow');
-        }
+      }
 
       if (firstLoop === true) {
-        setTimeout(() => { switchToNextSlide }, newSlideDuration);
+        setTimeout(switchToNextSlide, newSlideDuration);
         firstLoop = false;
       } else {
-        switchToNextSlide();
+        setTimeout(switchToNextSlide, newSlideDuration);
       }
 
 
