@@ -9,13 +9,12 @@ export function getFilesInSlideshowDir(whichSlideshow) {
     return {
         type: GET_SLIDESHOW_SLIDES,
         async payload() {
-            return await $.ajax({
+            const result = await $.ajax({
                 url: `${API_ROOT}/php/getFiles.php?dir=${whichSlideshow}`,
                 dataType: 'json'
             })
-            .then(data => {
-                return {dir: whichSlideshow, files: data}
-            });
-        } // async
+            return {dir: whichSlideshow, files: result}
+        }
+
     }; // return
 } // getFilesInSlideshowDir
