@@ -200,16 +200,23 @@ export class Admin extends Component {
     });
   }
 
-  componentWillReceiveProps(nextprops) {
-    // Update inputs to reflect current (loaded from database) values.
-    this.setState({
-      slideDuration: nextprops.config.slideDuration || 6,
-      transitionDuration: nextprops.config.transitionDuration || 500,
-      slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn,
-      cityToShowWeatherFor: nextprops.config.cityToShowWeatherFor,
-      slideOrder: nextprops.config.slideOrder
-    });
-  }
+  componentDidUpdate() {
+    if (this.state.slideDuration !== this.props.config.slideDuration &&
+      this.state.slideDuration !== this.props.config.slideDuration &&
+      this.state.transitionDuration !== this.props.config.transitionDuration &&
+      this.state.slidesToShowWeatherOn !== this.props.config.slidesToShowWeatherOn &&
+      this.state.cityToShowWeatherFor !== this.props.config.cityToShowWeatherFor &&
+      this.state.slideOrder !== this.props.config.slideOrder)
+    {
+      this.setState({
+        slideDuration: this.props.config.slideDuration,
+        transitionDuration: this.props.config.transitionDuration,
+        slidesToShowWeatherOn: this.props.config.slidesToShowWeatherOn,
+        cityToShowWeatherFor: this.props.config.cityToShowWeatherFor,
+        slideOrder: this.props.config.slideOrder
+      });
+    } // if
+  } // componentDidUpdate
 
   render() {
     return (
