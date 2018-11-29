@@ -231,6 +231,7 @@ export class Admin extends Component {
           <hr style={{'marginBottom': '30px'}} />
 
           <select
+            data-cy="selectActiveFolder"
             name="selectActiveFolder"
             className="selectActiveFolder"
             onChange={this.setActiveFolder.bind(this)}

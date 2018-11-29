@@ -8,6 +8,7 @@
     "bootstrap": "^4.0.0",
     "cross-tab-channel": "^1.1.0",
     "cross-tab-middleware": "^1.1.0",
+    "cypress": "^3.1.2",
     "jquery": "^3.2.1",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
@@ -34,7 +35,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
+
   },
   "devDependencies": {
     "enzyme": "^3.3.0",

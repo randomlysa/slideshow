@@ -125,8 +125,9 @@ class Login extends React.Component {
     return (
       <div className="admin">
         <h1>Login</h1>
-        <form onSubmit={this.submitLogin}>
+        <form data-cy="loginForm" onSubmit={this.submitLogin}>
           <input
+            data-cy="usernameLogin"
             id="usernameLogin"
             type="username"
             placeholder="Username"
@@ -135,6 +136,7 @@ class Login extends React.Component {
           />
           <br />
           <input
+            data-cy="passwordLogin"
             id="passwordLogin"
             type="password"
             placeholder="Password"
@@ -149,7 +151,7 @@ class Login extends React.Component {
 
         <hr />
         <h2>Create Account</h2>
-        <form onSubmit={this.submitCreate}>
+        <form data-cy="createAccountForm" onSubmit={this.submitCreate}>
           <input
             id="usernameCreate"
             type="usernameCreate"
