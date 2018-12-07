@@ -21,20 +21,12 @@ export class Slideshow extends Component {
   constructor(props) {
     super(props);
 
-    // Check if loadedCsv exists. If not, use an empty array.
-    let loadedCsvForState;
-    if (this.props.config.loadedCsv) {
-      loadedCsvForState = JSON.parse(this.props.config.loadedCsv);
-    } else {
-      loadedCsvForState = [];
-    }
-
     this.state = {
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
       slideshowDir: this.props.match.params.name || 'bb1',
       // Todo: load files that have csv data from database?
-      csvRequestedFor: loadedCsvForState,
+      csvRequestedFor: [],
       // This is passed on to SlideshowItem* to see if class should be set
       // to showWeather.
       slidesToShowWeatherOn: '',
@@ -49,7 +41,12 @@ export class Slideshow extends Component {
     // Check props for what csv data we have:
     // slideshowItems.csv has the filename and csv data of csv files.
     // Update state with an array of files that we have csv data for.
-    const files = this.props.slideshowItems.csv.map(file => file.filename);
+    const files = this.props.slideshowItems.csv.map(file => {
+      return {
+        filename: file.filename,
+        md5: file.md5
+      };
+    });
     this.setState({ csvRequestedFor: files });
 
     this.showWeather = false;
@@ -163,21 +160,28 @@ export class Slideshow extends Component {
     // Get data for CSV files.
     if (csvFileObjects) {
       csvFileObjects.map(csvFileObject => {
-        const { filename } = csvFileObject;
+        const { filename, md5 } = csvFileObject;
+        const findFileInState = _.find(this.state.csvRequestedFor, o => {
+          return o.filename === filename;
+        });
 
-        const findFileInState = this.state.csvRequestedFor.includes(filename);
-
-        // Check if the filename data has not been requested.
+        // If the file isn't in state, get the csv data for it.
         if (!findFileInState) {
           // Add csv filename to state.
           this.setState(prevState => {
             return {
-              csvRequestedFor: [...prevState.csvRequestedFor, filename]
+              csvRequestedFor: [...prevState.csvRequestedFor, csvFileObject]
             };
           });
           // Request data.
           this.props.actions.getCSVData(csvFileObject, this.state.slideshowDir);
         } // if file hasn't been requested.
+        // File exists, but file md5 in state is not same as md5 in newly received file list.
+        else if (findFileInState && findFileInState.md5 !== md5) {
+          // MD5 change detected.
+          // Get new data for file.
+          // Update state with new filename md5.
+        }
       }); // csvFileObjects.map
     } // if(csvFileObjects)
   } // componentWillReceiveProps
