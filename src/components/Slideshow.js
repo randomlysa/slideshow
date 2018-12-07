@@ -46,6 +46,12 @@ export class Slideshow extends Component {
   }
 
   componentDidMount() {
+    // Check props for what csv data we have:
+    // slideshowItems.csv has the filename and csv data of csv files.
+    // Update state with an array of files that we have csv data for.
+    const files = this.props.slideshowItems.csv.map(file => file.filename);
+    this.setState({ csvRequestedFor: files });
+
     this.showWeather = false;
 
     // finalSlideOrder needs to exist and have a length > 0 for the app to load.
@@ -157,21 +163,16 @@ export class Slideshow extends Component {
     // Get data for CSV files.
     if (csvFileObjects) {
       csvFileObjects.map(csvFileObject => {
-        const { filename, md5 } = csvFileObject;
+        const { filename } = csvFileObject;
 
-        const findFileInState = _.find(this.state.csvRequestedFor, o => {
-          return o.filename === filename;
-        });
-        const findMd5InState = _.find(this.state.csvRequestedFor, o => {
-          return o.md5 === md5;
-        });
+        const findFileInState = this.state.csvRequestedFor.includes(filename);
 
         // Check if the filename data has not been requested.
-        if (!findFileInState && !findMd5InState) {
-          // Add csvFileObject to state.
+        if (!findFileInState) {
+          // Add csv filename to state.
           this.setState(prevState => {
             return {
-              csvRequestedFor: [...prevState.csvRequestedFor, csvFileObject]
+              csvRequestedFor: [...prevState.csvRequestedFor, filename]
             };
           });
           // Request data.

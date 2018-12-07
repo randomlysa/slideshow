@@ -27,7 +27,7 @@ export default function(state = {}, action) {
           transitionDuration: '',
           slidesToShowWeatherOn: '',
           cityToShowWeatherFor: '',
-          loadedCsv: '',
+
           slideOrder: {}
         };
       }
@@ -38,7 +38,7 @@ export default function(state = {}, action) {
         transitionDuration,
         slidesToShowWeatherOn,
         cityToShowWeatherFor,
-        loadedCsv,
+
         slideOrder
       } = action.payload;
 
@@ -53,7 +53,7 @@ export default function(state = {}, action) {
         transitionDuration,
         slidesToShowWeatherOn,
         cityToShowWeatherFor,
-        loadedCsv,
+
         slideOrder: newSlideOrder
       };
     case SET_WEATHER_CITY:
