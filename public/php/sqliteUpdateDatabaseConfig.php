@@ -5,28 +5,29 @@
   if($_POST){
 
     // Define accepted $_POST variables.
-    $name = '';
-    $slideDuration = '';
-    $transitionDuration = '';
-    $slidesToShowWeatherOn = '';
-    $cityToShowWeatherFor = '';
-    $loadedCsv = '';
-    $slideOrder = '';
-
+    // $name = '';
+    // $slideDuration = '';
+    // $transitionDuration = '';
+    // $slidesToShowWeatherOn = '';
+    // $cityToShowWeatherFor = '';
+    // $loadedCsv = '';
+    // $slideOrder = '';
+    // extract ($_POST, EXTR_IF_EXISTS);
 
     // foreach ($_POST as $varname => $value) {
     //   ${$varname} = $value;
     // }
-    extract ($_POST, EXTR_IF_EXISTS);
 
-    // $name                	= $_POST['name'];
-    // $slideDuration        = $_POST['slideDuration'];
-    // $transitionDuration   = $_POST['transitionDuration'];
-    // $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
-    // $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
+
+    $name                	= $_POST['name'];
+    $slideDuration        = $_POST['slideDuration'];
+    $transitionDuration   = $_POST['transitionDuration'];
+    $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
+    $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
+    $slideOrder           = $_POST['slideOrder'];
 
     // loadedCsv is updated by itself.
-    // $loadedCsv            = $_POST['loadedCsv'];
+    $loadedCsv            = $_POST['loadedCsv'];
 
     try{
 

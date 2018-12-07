@@ -208,6 +208,7 @@ export class Slideshow extends Component {
             <SlideshowItem
               slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
               slideshowItems={this.state.finalSlideOrder}
+              slideshowCsv={this.props.slideshowItems.csv}
               dir={this.state.slideshowDir}
             />
           </div>
