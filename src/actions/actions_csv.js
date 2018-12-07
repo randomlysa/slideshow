@@ -21,7 +21,8 @@ export function getCSVData(fileObject, slideshowDir) {
             complete: function(response) {
               try {
                 fulfill({
-                  filename: filename,
+                  filename,
+                  md5,
                   data: response.data
                 });
               } catch (ex) {
