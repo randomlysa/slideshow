@@ -28,9 +28,11 @@ foreach($dirscan as $file) {
     if(is_int($findFile)) {
         // Make a new array for each item so an array of objects is returned
         // instead of an object.
+        $contents = file_get_contents("$whichDirToScan/$file");
+
         $newArray = array();
         $newArray['filename'] = $file;
-        $newArray['md5'] = md5($file);
+        $newArray['md5'] = md5($contents);
         $files[] = $newArray;
     }
 };
