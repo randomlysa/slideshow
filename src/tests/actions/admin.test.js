@@ -1,7 +1,6 @@
 import {
   DO_LOGIN,
   DO_LOGOUT,
-
   login,
   logout
 } from '../../actions/actions_admin.js';
@@ -14,7 +13,6 @@ import {
 //     payload: token
 //   });
 // });
-
 
 test('should log the user out', () => {
   const action = logout();

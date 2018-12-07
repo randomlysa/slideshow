@@ -17,20 +17,21 @@ class UploadFiles extends Component {
   }
 
   onDrop(acceptedFiles) {
-    console.log('ondrop')
-    this.props.uploadFile(acceptedFiles, this.props.activeFolder)
-    .then(() => {
-      console.log('success');
-    })
-    .catch(returnMessage => {
-      swal({
-        timer: 4000,
-        toast: true,
-        type: 'error',
-        position: 'bottom-end',
-        text: 'Error uploading: ' + returnMessage.error
-      });;
-    })
+    console.log('ondrop');
+    this.props
+      .uploadFile(acceptedFiles, this.props.activeFolder)
+      .then(() => {
+        console.log('success');
+      })
+      .catch(returnMessage => {
+        swal({
+          timer: 4000,
+          toast: true,
+          type: 'error',
+          position: 'bottom-end',
+          text: 'Error uploading: ' + returnMessage.error
+        });
+      });
   }
 
   render() {
@@ -46,12 +47,13 @@ class UploadFiles extends Component {
     return (
       <Dropzone
         className="dropzone"
-        onDrop={this.onDrop.bind(this)} disabled={this.props.uploadStatus}
+        onDrop={this.onDrop.bind(this)}
+        disabled={this.props.uploadStatus}
       >
         {}
         <p>{dropzoneMessage}</p>
       </Dropzone>
-    )
+    );
   }
 }
 

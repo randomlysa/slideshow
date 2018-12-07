@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActionCreators from '../actions/actions_admin';
 import * as slideshowActionCreators from '../actions/actions_slideshow';
-import * as slideshowConfigActionCreators  from '../actions/actions_slideshowConfig.js';
+import * as slideshowConfigActionCreators from '../actions/actions_slideshowConfig.js';
 import * as csvActionCreators from '../actions/actions_csv';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import _ from 'lodash';
 import $ from 'jquery';
 
@@ -32,7 +32,7 @@ export class Slideshow extends Component {
     this.state = {
       // https://stackoverflow.com/a/45469647/3996097
       // Get slideshowDir from props or default to bb1.
-      slideshowDir: this.props.match.params.name || "bb1",
+      slideshowDir: this.props.match.params.name || 'bb1',
       // Todo: load files that have csv data from database?
       csvRequestedFor: loadedCsvForState,
       // This is passed on to SlideshowItem* to see if class should be set
@@ -68,7 +68,9 @@ export class Slideshow extends Component {
         // slideDuration needs to have transitionDuration added to it,
         // otherwise if both values are equal, the slideshow will be constantly
         // transitioning.
-        newSlideDuration = this.props.config.slideDuration * 1000 + parseInt(transitionDuration, 10);
+        newSlideDuration =
+          this.props.config.slideDuration * 1000 +
+          parseInt(transitionDuration, 10);
       } else {
         newSlideDuration = 5000;
       }
@@ -89,7 +91,7 @@ export class Slideshow extends Component {
           .fadeIn(parseInt(transitionDuration, 10))
           .end()
           .appendTo('#slideshow');
-      }
+      };
 
       if (firstLoop === true) {
         setTimeout(switchToNextSlide, newSlideDuration);
@@ -97,7 +99,6 @@ export class Slideshow extends Component {
       } else {
         setTimeout(switchToNextSlide, newSlideDuration);
       }
-
 
       // Get classname(s) for current div.
       if ($('#slideshow > div:first')[0]) {
@@ -115,7 +116,6 @@ export class Slideshow extends Component {
     };
 
     loop();
-
   } // componentDidMount
 
   componentWillReceiveProps(nextprops) {
@@ -129,28 +129,34 @@ export class Slideshow extends Component {
     if (nextprops.config.slideOrder) {
       const slideOrder = nextprops.config.slideOrder;
       const { slideshowItems } = nextprops;
-      const finalOrder = combineOrderedAndUnorderedSlides(slideOrder, slideshowItems);
+      const finalOrder = combineOrderedAndUnorderedSlides(
+        slideOrder,
+        slideshowItems
+      );
       this.setState({ finalSlideOrder: finalOrder });
     } else {
       // If no slideOrder in config, use list of files as the order.
-      this.setState({ finalSlideOrder: nextprops.slideshowItems.files});
+      this.setState({ finalSlideOrder: nextprops.slideshowItems.files });
     } // if nextprops.config.slideOrder
 
     if (nextprops.config && nextprops.config.slidesToShowWeatherOn) {
-      this.setState({slidesToShowWeatherOn:
-        nextprops.config.slidesToShowWeatherOn
+      this.setState({
+        slidesToShowWeatherOn: nextprops.config.slidesToShowWeatherOn
       });
     }
 
     // Make an array of csv files.
-    const csvFileObjects = _.filter(this.props.slideshowItems.files, fileObject => {
-      const fileType = fileObject.filename.split('.').pop();
-      return fileType === 'csv';
-    });
+    const csvFileObjects = _.filter(
+      this.props.slideshowItems.files,
+      fileObject => {
+        const fileType = fileObject.filename.split('.').pop();
+        return fileType === 'csv';
+      }
+    );
 
     // Get data for CSV files.
     if (csvFileObjects) {
-      csvFileObjects.map((csvFileObject) => {
+      csvFileObjects.map(csvFileObject => {
         const { filename, md5 } = csvFileObject;
 
         const findFileInState = _.find(this.state.csvRequestedFor, o => {
@@ -163,10 +169,10 @@ export class Slideshow extends Component {
         // Check if the filename data has not been requested.
         if (!findFileInState && !findMd5InState) {
           // Add csvFileObject to state.
-          this.setState((prevState) => {
-            return {csvRequestedFor:
-              [...prevState.csvRequestedFor, csvFileObject]
-            }
+          this.setState(prevState => {
+            return {
+              csvRequestedFor: [...prevState.csvRequestedFor, csvFileObject]
+            };
           });
           // Request data.
           this.props.actions.getCSVData(csvFileObject, this.state.slideshowDir);
@@ -187,21 +193,16 @@ export class Slideshow extends Component {
     const nextItems = nextprops.slideshowItems;
     if (thisItems.files && nextItems.files) {
       if (thisItems.files.length !== nextItems.files.length) {
-        $(".slideshowItem:not(:first)").css('display', 'none');
+        $('.slideshowItem:not(:first)').css('display', 'none');
       }
     }
   }
 
   render() {
-
-    if (this.state.finalSlideOrder &&
-        this.state.finalSlideOrder.length > 0)
-    {
+    if (this.state.finalSlideOrder && this.state.finalSlideOrder.length > 0) {
       return (
         <div id="slideshowContainer">
-          {this.showWeather &&
-          <Weather />
-          }
+          {this.showWeather && <Weather />}
 
           <div id="slideshow">
             <SlideshowItem
@@ -211,13 +212,11 @@ export class Slideshow extends Component {
             />
           </div>
         </div>
-      )
-    } else {
-      return (
-        <h1 className="loading">Loading</h1>
       );
+    } else {
+      return <h1 className="loading">Loading</h1>;
     }
-  }; // render
+  } // render
 } // class App
 
 function mapStateToProps({ config, slideshowItems }) {
@@ -234,8 +233,13 @@ function mapDispatchToProps(dispatch) {
   };
 
   return {
-      actions: bindActionCreators(actionCreators, dispatch)
-  }
+    actions: bindActionCreators(actionCreators, dispatch)
+  };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Slideshow));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Slideshow)
+);

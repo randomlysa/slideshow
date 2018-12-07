@@ -29,7 +29,7 @@ class Login extends React.Component {
 
   tokenForUser(user) {
     const timestamp = new Date().getTime();
-    return jwt.encode({ sub: user.id, iat: timestamp}, JWT_SECRET);
+    return jwt.encode({ sub: user.id, iat: timestamp }, JWT_SECRET);
   }
 
   inputChange(e) {
@@ -46,33 +46,36 @@ class Login extends React.Component {
 
     $.ajax({
       url: `${API_ROOT}/php/sqliteGetUserByIdOrName.php`,
-          type: 'GET',
-          dataType: 'json',
-          data: {username: this.state.usernameLogin}
-    })
-      .done(data => {
-        // User not found.
-        if (data === null) {
-          this.setState({errorMessageLogin: 'Incorrect username or password'});
-          return;
+      type: 'GET',
+      dataType: 'json',
+      data: { username: this.state.usernameLogin }
+    }).done(data => {
+      // User not found.
+      if (data === null) {
+        this.setState({ errorMessageLogin: 'Incorrect username or password' });
+        return;
+      }
+
+      const userhash = data.password;
+
+      // Verifying a hash
+      password(this.state.passwordLogin).verifyAgainst(
+        userhash,
+        (error, verified) => {
+          if (error) {
+            throw new Error('Something went wrong!');
+          }
+          if (!verified) {
+            this.setState({
+              errorMessageLogin: 'Incorrect username or password'
+            });
+          } else {
+            const token = this.tokenForUser(data);
+            this.props.login(token);
+          }
         }
-
-        const userhash = data.password;
-
-        // Verifying a hash
-        password(this.state.passwordLogin).verifyAgainst(
-          userhash, (error, verified) => {
-            if(error) {
-              throw new Error('Something went wrong!');
-            }
-            if(!verified) {
-              this.setState({errorMessageLogin: 'Incorrect username or password'});
-            } else {
-              const token = this.tokenForUser(data);
-              this.props.login(token);
-            }
-          }); // password.verifyAgainst
-      }); // ajax done
+      ); // password.verifyAgainst
+    }); // ajax done
   } // submitLogin
 
   submitCreate(e) {
@@ -90,10 +93,9 @@ class Login extends React.Component {
     }
 
     password(this.state.passwordCreate).hash(function(error, hash) {
-      if(error) {
+      if (error) {
         throw new Error('Something went wrong!');
       } else {
-
         // Post info to database.
         $.ajax({
           url: `${API_ROOT}/php/sqliteCreateUser.php`,
@@ -105,15 +107,15 @@ class Login extends React.Component {
             email: self.state.emailCreate
           }
         })
-         .done(data => {
-           console.log(data)
-         })
-         .fail(e => {
-           console.log(e);
-         }); // ajax
+          .done(data => {
+            console.log(data);
+          })
+          .fail(e => {
+            console.log(e);
+          }); // ajax
       } // else
     }); // password()
-  }; // submitCreate
+  } // submitCreate
 
   componentDidUpdate() {
     if (this.props.token) {
@@ -144,8 +146,7 @@ class Login extends React.Component {
             onChange={this.inputChange}
           />
           <br />
-          <input
-              type="submit" />
+          <input type="submit" />
         </form>
         {this.state.errorMessageLogin}
 
@@ -181,7 +182,7 @@ class Login extends React.Component {
           {this.state.errorMessageCreate}
         </form>
       </div>
-    )
+    );
   }
 }
 
@@ -193,4 +194,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ login }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

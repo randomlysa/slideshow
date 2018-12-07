@@ -7,14 +7,12 @@ export const PublicRoute = ({
   component: Component,
   ...rest
 }) => (
-  <Route {...rest} component={(props) => (
-    isAuthenticated ? (
-      <Redirect to="/admin" />
-    ) : (
-      <Component {...props} />
-    )
-
-  )} />
+  <Route
+    {...rest}
+    component={props =>
+      isAuthenticated ? <Redirect to="/admin" /> : <Component {...props} />
+    }
+  />
 );
 
 function mapStateToProps(state) {

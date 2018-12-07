@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as slideshowConfigActions  from '../actions/actions_slideshowConfig.js';
+import * as slideshowConfigActions from '../actions/actions_slideshowConfig.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
 
-import {AsyncTypeahead} from 'react-bootstrap-typeahead'; // ES2015
+import { AsyncTypeahead } from 'react-bootstrap-typeahead'; // ES2015
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-
 
 class AdminWeather extends Component {
   constructor(props) {
@@ -27,32 +26,32 @@ class AdminWeather extends Component {
   } // constructor
 
   onInputChange(query) {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
 
     $.ajax({
-      url:  `${API_ROOT}/php/weather/sqliteSearchForName.php?name=${query}`,
+      url: `${API_ROT}/sqlite/sqliteSearchForName.php?name=${query}`,
       type: 'GET',
       dataType: 'json'
     })
-    .done(data => {
-      if (data) {
-        this.setState({
-          isLoading: false,
-          options: data.map(item => {
-            // Typeahead filters by label. Make a label with city and country name
-            const label = `${item.NAME}, ${item.COUNTRY}`;
-            return {...item, label }
-          })
-        });
-      } else {
-        this.setState({
-          isLoading: false
-        })
-      }
-    })
-    .fail(e => {
-      console.log(e);
-    }) // ajax
+      .done(data => {
+        if (data) {
+          this.setState({
+            isLoading: false,
+            options: data.map(item => {
+              // Typeahead filters by label. Make a label with city and country name
+              const label = `${item.NAME}, ${item.COUNTRY}`;
+              return { ...item, label };
+            })
+          });
+        } else {
+          this.setState({
+            isLoading: false
+          });
+        }
+      })
+      .fail(e => {
+        console.log(e);
+      }); // ajax
   }
 
   // Determine what to show in the 'search for weather' input
@@ -71,17 +70,22 @@ class AdminWeather extends Component {
         COUNTRY = data.COUNTRY;
       }
 
-      if (NAME && COUNTRY &&
-        this.state.placeholder !== `Showing weather for: ${NAME}, ${COUNTRY}`)
-      {
-        this.setState({placeholder: `Showing weather for: ${NAME}, ${COUNTRY}`});
+      if (
+        NAME &&
+        COUNTRY &&
+        this.state.placeholder !== `Showing weather for: ${NAME}, ${COUNTRY}`
+      ) {
+        this.setState({
+          placeholder: `Showing weather for: ${NAME}, ${COUNTRY}`
+        });
       }
     } // if (input)
     // No input
-    if (!input &&
-      this.state.placeholder !== 'Search for a city to show weather for')
-    {
-      this.setState({placeholder: 'Search for a city to show weather for'});
+    if (
+      !input &&
+      this.state.placeholder !== 'Search for a city to show weather for'
+    ) {
+      this.setState({ placeholder: 'Search for a city to show weather for' });
     } // if (!input)
   }
 
@@ -107,9 +111,8 @@ class AdminWeather extends Component {
           options={this.state.options}
         />
       </div>
-    )
-
-  }; // render
+    );
+  } // render
 }
 
 function mapStateToProps({ config }) {
@@ -119,7 +122,10 @@ function mapStateToProps({ config }) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(slideshowConfigActions, dispatch)
-  }
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminWeather);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminWeather);

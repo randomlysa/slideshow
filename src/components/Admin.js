@@ -4,8 +4,8 @@ import swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActions from '../actions/actions_admin';
-import * as slideshowActions  from '../actions/actions_slideshow.js';
-import * as slideshowConfigActions  from '../actions/actions_slideshowConfig.js';
+import * as slideshowActions from '../actions/actions_slideshow.js';
+import * as slideshowConfigActions from '../actions/actions_slideshowConfig.js';
 
 import $ from 'jquery';
 import { API_ROOT } from '../config/api-config';
@@ -30,36 +30,36 @@ export class Admin extends Component {
       slidesToShowWeatherOn: '',
       cityToShowWeatherFor: '',
       slideOrder: '',
-      existsInDatabase: '',
-
+      existsInDatabase: ''
     };
   }
 
   confirmLogout = () => {
     swal({
       title: 'Are you sure?',
-      text: "Logout!",
+      text: 'Logout!',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
-    }).then((result) => {
+    }).then(result => {
       console.log(result);
       if (result.value) {
         this.props.actions.logout();
       }
     });
-  }
+  };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   // Set the variables needed and runs an update.
-  callUpdateConfigInDatabase = (slideOrder) => {
-    const newSlideOrder = JSON.stringify(slideOrder) || JSON.stringify(this.state.slideOrder);
+  callUpdateConfigInDatabase = slideOrder => {
+    const newSlideOrder =
+      JSON.stringify(slideOrder) || JSON.stringify(this.state.slideOrder);
     let cityForWeather;
     if (typeof this.state.cityToShowWeatherFor === 'object') {
       cityForWeather = JSON.stringify(this.state.cityToShowWeatherFor);
@@ -68,7 +68,7 @@ export class Admin extends Component {
     }
     // Insert/update info about slideshow into database.
     let updateOrInsert;
-    if(this.state.existsInDatabase) updateOrInsert = 'update';
+    if (this.state.existsInDatabase) updateOrInsert = 'update';
     else updateOrInsert = 'insert';
 
     const dataObject = {
@@ -79,102 +79,111 @@ export class Admin extends Component {
       cityToShowWeatherFor: cityForWeather,
       slideOrder: newSlideOrder
     };
-    this.props.actions.updateConfigInDatabase(updateOrInsert, dataObject)
-    .then(() => {
-      swal({
-        timer: 1500,
-        toast: true,
-        position: 'bottom-end',
-        text: 'Changes saved!'
+    this.props.actions
+      .updateConfigInDatabase(updateOrInsert, dataObject)
+      .then(() => {
+        swal({
+          timer: 1500,
+          toast: true,
+          position: 'bottom-end',
+          text: 'Changes saved!'
+        });
+      })
+      .catch(() => {
+        swal({
+          timer: 3000,
+          toast: true,
+          type: 'error',
+          text: 'There was an error saving your changes.'
+        });
       });
-    })
-    .catch(() => {
-      swal({
-        timer: 3000,
-        toast: true,
-        type: 'error',
-        text: 'There was an error saving your changes.'
-      });
-    });
     // Make sure the next save is an update, not an insert.
-    this.setState({existsInDatabase: true});
-  }
+    this.setState({ existsInDatabase: true });
+  };
 
-  onFormSubmit = (event) => {
+  onFormSubmit = event => {
     event.preventDefault();
-    this.callUpdateConfigInDatabase()
-  }
+    this.callUpdateConfigInDatabase();
+  };
 
-  updateWeatherCheckboxes = (slides) => {
-    this.setState({slidesToShowWeatherOn: JSON.stringify([...slides]) });
-  }
+  updateWeatherCheckboxes = slides => {
+    this.setState({ slidesToShowWeatherOn: JSON.stringify([...slides]) });
+  };
 
-  updateSlideOrder = (items) => {
-    this.setState({slideOrder: items});
-  }
+  updateSlideOrder = items => {
+    this.setState({ slideOrder: items });
+  };
 
   deleteFile = (filename, folder) => {
     swal({
       title: 'Are you sure?',
-      text: "Delete file",
+      text: 'Delete file',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
-    }).then((result) => {
+    }).then(result => {
       // Delete confirmed.
       if (result.value) {
         let updateOrInsert;
-        if(this.state.existsInDatabase) updateOrInsert = 'update';
+        if (this.state.existsInDatabase) updateOrInsert = 'update';
         else updateOrInsert = 'insert';
 
         const withoutDeletedFile = this.state.slideOrder.filter(item => {
           return item.filename !== filename;
-        })
+        });
         // Update local state.
-        this.setState({slideOrder: withoutDeletedFile});
+        this.setState({ slideOrder: withoutDeletedFile });
         const newConfig = {
           name: this.state.activeFolder,
           slideDuration: this.state.slideDuration,
           transitionDuration: this.state.transitionDuration,
           slidesToShowWeatherOn: this.state.slidesToShowWeatherOn,
           slideOrder: JSON.stringify(withoutDeletedFile)
-        }
-        this.props.actions.deleteFile(filename, folder, updateOrInsert, newConfig);
-
+        };
+        this.props.actions.deleteFile(
+          filename,
+          folder,
+          updateOrInsert,
+          newConfig
+        );
       } // if result.value
     }); // then(result)
-  } // deleteFile
+  }; // deleteFile
 
   setActiveFolder(e) {
     if (e.target.value) {
-      this.setState({
-        uploadDisabled: false,
-        activeFolder: e.target.value
-      }, () => {
-        // Run after state has updated.
-        // TODO: Getting 404 in console, trying to load images for the
-        // wrong slideshow.
-        this.props.actions.getFilesInSlideshowDir(this.state.activeFolder);
-        this.props.actions.getConfigFromDatabase(this.state.activeFolder);
+      this.setState(
+        {
+          uploadDisabled: false,
+          activeFolder: e.target.value
+        },
+        () => {
+          // Run after state has updated.
+          // TODO: Getting 404 in console, trying to load images for the
+          // wrong slideshow.
+          this.props.actions.getFilesInSlideshowDir(this.state.activeFolder);
+          this.props.actions.getConfigFromDatabase(this.state.activeFolder);
 
-        // Check if the folder config already exists in the database.
-        $.ajax({
-          url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${this.state.activeFolder}`,
-          type: 'GET'
-        })
-        .done(data => {
-          if (data === 'null') {
-            this.setState({existsInDatabase: false})
-          } else {
-            this.setState({existsInDatabase: true})
-          }
-        })
-        .fail(e => {
-          console.log(e);
-        }) // ajax
-      } // setState callback
-    ); // setState
+          // Check if the folder config already exists in the database.
+          $.ajax({
+            url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${
+              this.state.activeFolder
+            }`,
+            type: 'GET'
+          })
+            .done(data => {
+              if (data === 'null') {
+                this.setState({ existsInDatabase: false });
+              } else {
+                this.setState({ existsInDatabase: true });
+              }
+            })
+            .fail(e => {
+              console.log(e);
+            }); // ajax
+        } // setState callback
+      ); // setState
     } else {
       this.setState({
         uploadDisabled: true,
@@ -191,23 +200,26 @@ export class Admin extends Component {
       type: 'GET',
       dataType: 'json'
     })
-    .done(data => {
-      let folders = Object.values(data);
-      this.setState({ folders });
-    })
-    .fail(e => {
-      console.log(e);
-    });
+      .done(data => {
+        let folders = Object.values(data);
+        this.setState({ folders });
+      })
+      .fail(e => {
+        console.log(e);
+      });
   }
 
   componentDidUpdate() {
-    if (this.state.slideDuration !== this.props.config.slideDuration &&
+    if (
+      this.state.slideDuration !== this.props.config.slideDuration &&
       this.state.slideDuration !== this.props.config.slideDuration &&
       this.state.transitionDuration !== this.props.config.transitionDuration &&
-      this.state.slidesToShowWeatherOn !== this.props.config.slidesToShowWeatherOn &&
-      this.state.cityToShowWeatherFor !== this.props.config.cityToShowWeatherFor &&
-      this.state.slideOrder !== this.props.config.slideOrder)
-    {
+      this.state.slidesToShowWeatherOn !==
+        this.props.config.slidesToShowWeatherOn &&
+      this.state.cityToShowWeatherFor !==
+        this.props.config.cityToShowWeatherFor &&
+      this.state.slideOrder !== this.props.config.slideOrder
+    ) {
       this.setState({
         slideDuration: this.props.config.slideDuration,
         transitionDuration: this.props.config.transitionDuration,
@@ -222,51 +234,51 @@ export class Admin extends Component {
     return (
       <div className="admin">
         <h1>Admin Page</h1>
-        <button
-          className="btn-logout"
-          onClick={this.confirmLogout}>
+        <button className="btn-logout" onClick={this.confirmLogout}>
           Logout
         </button>
 
-          <hr style={{'marginBottom': '30px'}} />
+        <hr style={{ marginBottom: '30px' }} />
 
-          <select
-            data-cy="selectActiveFolder"
-            name="selectActiveFolder"
-            className="selectActiveFolder"
-            onChange={this.setActiveFolder.bind(this)}
-          >
+        <select
+          data-cy="selectActiveFolder"
+          name="selectActiveFolder"
+          className="selectActiveFolder"
+          onChange={this.setActiveFolder.bind(this)}
+        >
           <option value="">Select a slideshow folder to edit</option>
-          {this.state.folders.map((folder) => {
+          {this.state.folders.map(folder => {
             return (
               <option value={folder} key={folder}>
                 {folder}
               </option>
-            )
+            );
           })}
         </select>
 
-        {this.state.activeFolder &&
+        {this.state.activeFolder && (
           <div className="adminSection">
             <form onSubmit={this.onFormSubmit}>
               <AdminWeather />
-
               Slide duration (seconds):
-                <input type="number"
-                  id="slideDuration"
-                  placeholder="Number (seconds)"
-                  onChange={this.onInputChange}
-                  value={this.state.slideDuration}
-                />
-                <br />
-                Transition duration (ms):
-                <input type="number"
-                  id="transitionDuration"
-                  placeholder="Number (milliseconds)"
-                  onChange={this.onInputChange}
-                  value={this.state.transitionDuration}
-                /> (1000ms = 1s)
-                <br />
+              <input
+                type="number"
+                id="slideDuration"
+                placeholder="Number (seconds)"
+                onChange={this.onInputChange}
+                value={this.state.slideDuration}
+              />
+              <br />
+              Transition duration (ms):
+              <input
+                type="number"
+                id="transitionDuration"
+                placeholder="Number (milliseconds)"
+                onChange={this.onInputChange}
+                value={this.state.transitionDuration}
+              />{' '}
+              (1000ms = 1s)
+              <br />
               <input type="submit" value="Save" />
             </form>
 
@@ -274,8 +286,12 @@ export class Admin extends Component {
               <div className="adminFlexbox--Slideshow">
                 <AdminSlideshow
                   activeFolder={this.state.activeFolder}
-                  getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
-                  getConfigFromDatabase={this.props.actions.getConfigFromDatabase}
+                  getFilesInSlideshowDir={
+                    this.props.actions.getFilesInSlideshowDir
+                  }
+                  getConfigFromDatabase={
+                    this.props.actions.getConfigFromDatabase
+                  }
                   updateSlideOrder={this.updateSlideOrder}
                   updateWeatherCheckboxes={this.updateWeatherCheckboxes}
                   deleteFile={this.deleteFile}
@@ -286,17 +302,17 @@ export class Admin extends Component {
                 <UploadFiles
                   activeFolder={this.state.activeFolder}
                   uploadStatus={this.state.uploadDisabled}
-                  getFilesInSlideshowDir={this.props.actions.getFilesInSlideshowDir}
+                  getFilesInSlideshowDir={
+                    this.props.actions.getFilesInSlideshowDir
+                  }
                   uploadFile={this.props.actions.uploadFile}
                 />
               </div>
             </div>
           </div>
-        }
-
+        )}
       </div>
-
-    )
+    );
   } // render()
 } // class Admin extends Component
 
@@ -306,10 +322,17 @@ function mapStateToProps({ config }) {
 
 function mapDispatchToProps(dispatch) {
   // Assign { actions } to props.actions
-  const actions = {...adminActions, ...slideshowActions, ...slideshowConfigActions};
+  const actions = {
+    ...adminActions,
+    ...slideshowActions,
+    ...slideshowConfigActions
+  };
   return {
     actions: bindActionCreators(actions, dispatch)
-  }
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Admin);

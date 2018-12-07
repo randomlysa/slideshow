@@ -33,13 +33,13 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   background: isDragging ? 'lightgreen' : 'grey',
 
   // Styles we need to apply on draggables.
-  ...draggableStyle,
+  ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250,
+  width: 250
 });
 // End https://codesandbox.io/s/k260nyxq9v copy.
 
@@ -58,20 +58,22 @@ class AdminSlideshow extends Component {
   checkAllBoxes = () => {
     this.state.items.forEach(item => {
       this.selectedCheckboxes.add(item.filename);
-    })
-    this.setState({checkedItems: [...this.selectedCheckboxes]},
-      this.props.updateWeatherCheckboxes(this.selectedCheckboxes)
-    )
-  }
-
-  uncheckAllBoxes = () => {
-    this.selectedCheckboxes.clear();
-    this.setState({checkedItems: [...this.selectedCheckboxes]},
+    });
+    this.setState(
+      { checkedItems: [...this.selectedCheckboxes] },
       this.props.updateWeatherCheckboxes(this.selectedCheckboxes)
     );
   };
 
-  setWeatherSlide = (label) => {
+  uncheckAllBoxes = () => {
+    this.selectedCheckboxes.clear();
+    this.setState(
+      { checkedItems: [...this.selectedCheckboxes] },
+      this.props.updateWeatherCheckboxes(this.selectedCheckboxes)
+    );
+  };
+
+  setWeatherSlide = label => {
     const filename = label.target.value;
 
     // This if block and the whole 'Set' idea:
@@ -82,8 +84,8 @@ class AdminSlideshow extends Component {
       this.selectedCheckboxes.add(filename);
     }
     // Update what checkboxes should be checked.
-    this.setState({checkedItems: [...this.selectedCheckboxes]});
-      // Update parent state.
+    this.setState({ checkedItems: [...this.selectedCheckboxes] });
+    // Update parent state.
     this.props.updateWeatherCheckboxes(this.selectedCheckboxes);
   }; // setWeatherSlide
 
@@ -102,14 +104,15 @@ class AdminSlideshow extends Component {
 
     // Save item order to database.
     this.props.updateSlideOrder(items);
-    this.setState({items});
+    this.setState({ items });
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
   renderDraggable(fileObject, index) {
     const filename = fileObject.filename;
-    const fileUrl =
-      `${API_ROOT}/slideshows/${this.props.activeFolder}/${filename}`;
+    const fileUrl = `${API_ROOT}/slideshows/${
+      this.props.activeFolder
+    }/${filename}`;
 
     return (
       <Draggable key={filename} draggableId={filename} index={index}>
@@ -127,7 +130,11 @@ class AdminSlideshow extends Component {
               <img
                 src={fileUrl}
                 alt={filename}
-                onClick={this.props.deleteFile.bind(this, filename, this.props.activeFolder)}
+                onClick={this.props.deleteFile.bind(
+                  this,
+                  filename,
+                  this.props.activeFolder
+                )}
               />
               <br />
               <input
@@ -140,14 +147,13 @@ class AdminSlideshow extends Component {
                 checked={this.state.checkedItems.includes(filename)}
               />
               <label htmlFor={filename}>Toggle show weather</label>
-                {provided.placeholder}
-
+              {provided.placeholder}
             </div>
             {provided.placeholder}
           </div>
         )}
-     </Draggable>
-    )
+      </Draggable>
+    );
   }
 
   componentWillReceiveProps(nextprops) {
@@ -157,20 +163,22 @@ class AdminSlideshow extends Component {
     const { name: nextConfigFolder, slideOrder } = nextprops.config;
 
     // If slideOrder is empty, set slideOrder to slideshowItems.files.
-    if ((nextConfigFolder === activeFolder) &&
-       (slideOrder === "" || typeof slideOrder === 'undefined'))
-    {
-      this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files)
+    if (
+      nextConfigFolder === activeFolder &&
+      (slideOrder === '' || typeof slideOrder === 'undefined')
+    ) {
+      this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files);
     }
 
     // Check that slideOrder.length === files.length
-    if (files && slideOrder &&
+    if (
+      files &&
+      slideOrder &&
       nextConfigFolder === activeFolder &&
-      files.length !== slideOrder.length)
-    {
+      files.length !== slideOrder.length
+    ) {
       // Todo: Possibly check if a file was added directly to the folder without
       // using the upload form.
-
       // const tempObject = {...files, ...slideOrder};
       // const mergedObjects = _.map(tempObject, (tempObject) => { return tempObject;});
       // this.props.callUpdateConfigInDatabase(mergedObjects);
@@ -180,23 +188,23 @@ class AdminSlideshow extends Component {
     let makeArray = '';
     if (nextprops && nextprops.config.slidesToShowWeatherOn) {
       makeArray = JSON.parse(nextprops.config.slidesToShowWeatherOn);
-      this.setState({checkedItems: makeArray})
+      this.setState({ checkedItems: makeArray });
     }
     // Set this.selectedCheckboxes to whatever filesnames were loaded from the
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
     // Set state.
-    if (nextprops.config.slideOrder &&
-       nextprops.config.slideOrder.length > 0 &&
-       nextprops.config.name === activeFolder
-      )
-    {
+    if (
+      nextprops.config.slideOrder &&
+      nextprops.config.slideOrder.length > 0 &&
+      nextprops.config.name === activeFolder
+    ) {
       this.props.updateSlideOrder(slideOrder);
-      this.setState({items: slideOrder });
+      this.setState({ items: slideOrder });
     } else {
       this.props.updateSlideOrder(files);
-      this.setState({items: files});
+      this.setState({ items: files });
     }
   }
 
@@ -205,33 +213,33 @@ class AdminSlideshow extends Component {
       // https://codesandbox.io/s/k260nyxq9v.
       return (
         <div>
-          <button onClick={this.checkAllBoxes}>Show weather on all slides</button>
+          <button onClick={this.checkAllBoxes}>
+            Show weather on all slides
+          </button>
           <br />
           <button onClick={this.uncheckAllBoxes}>Don't show weather</button>
           <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                style={getListStyle(snapshot.isDraggingOver)}
-              >
-                {this.state.items.map((fileObject, index) => (
-                  this.renderDraggable(fileObject, index)
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
-      )
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                >
+                  {this.state.items.map((fileObject, index) =>
+                    this.renderDraggable(fileObject, index)
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      );
       // End https://codesandbox.io/s/k260nyxq9v copy.
     } else {
-      return (
-        <div>Loading</div>
-      )
+      return <div>Loading</div>;
     }
-  }; // render
+  } // render
 }
 
 function mapStateToProps({ config, slideshowItems }) {

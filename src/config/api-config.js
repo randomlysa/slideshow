@@ -15,12 +15,12 @@ if (origin && origin.includes('localhost:3000')) {
   basename = '';
   slideshowRoot = 'http://localhost:3000/';
 
-// localhost - running a local build
+  // localhost - running a local build
 } else if (origin && origin.includes('localhost')) {
   PHPRoot = `http://localhost/${basename}`;
   slideshowRoot = `/${basename}`;
 
-// else - running on some other server {
+  // else - running on some other server {
 } else {
   PHPRoot = `${origin}/${basename}`;
   slideshowRoot = `/${basename}`;

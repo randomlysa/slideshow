@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Import routes.
 import PrivateRoute from './PrivateRoute';
@@ -27,18 +23,14 @@ class MyRoutes extends Component {
 
           {/* make path optional, try to load default if not specified */}
           {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}
-          <Route path="/:name?"
-            component={
-              () =>
-                <Slideshow
-                  slideshowRoot={SLIDESHOW_ROOT}
-                />
-            }
+          <Route
+            path="/:name?"
+            component={() => <Slideshow slideshowRoot={SLIDESHOW_ROOT} />}
           />
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>
-    )
+    );
   } // render
 } // class
 

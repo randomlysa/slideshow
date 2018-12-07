@@ -20,11 +20,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export let store = createStore(
   persistedReducer,
   composeEnhancers(
-  applyMiddleware(
-      thunk,
-      promiseMiddleware(),
-      crossTabMiddleware('slideshow')
-  ))
+    applyMiddleware(thunk, promiseMiddleware(), crossTabMiddleware('slideshow'))
+  )
 );
 
 export let persistor = persistStore(store);

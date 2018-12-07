@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import _ from 'lodash';
 
-const SlideshowItemCSV = (props) => {
+const SlideshowItemCSV = props => {
   // This component doesn't know when it's active. It returns data that matches
   // a filename to loaded csv data that is rendered into a div. Slideshow.js
   // then loop()s over the divs.
@@ -18,7 +18,7 @@ const SlideshowItemCSV = (props) => {
   if (match === -1) return null;
 
   // CSV data for this file.
-  const thisCsv= csv[match].data;
+  const thisCsv = csv[match].data;
   // Todo: If no header, return all data with no sort or filter?
   // Todo: this should be a per-csv prop.
   const hasHeader = true;
@@ -32,7 +32,7 @@ const SlideshowItemCSV = (props) => {
   // For testing, set nowTime to any time using the same format.
   // Otherwise, for the actual current time,  use nowTime = moment();
   // const nowTime = moment();
-  const nowTime = moment("2:34:00 PM", csvDateFormat);
+  const nowTime = moment('2:34:00 PM', csvDateFormat);
 
   // Show events for this time range from nowTime.
   const startTime = nowTime.clone().subtract(15, 'm');
@@ -44,7 +44,7 @@ const SlideshowItemCSV = (props) => {
   let rowTime;
   // Determine which (if any) column has the time. Used to hide events that
   // have already occured.
-  timeColumn = _.findIndex(thisCsv[0], (o) => {
+  timeColumn = _.findIndex(thisCsv[0], o => {
     return o.toLowerCase() === 'time';
   });
 
@@ -57,10 +57,14 @@ const SlideshowItemCSV = (props) => {
     if (joinedRow === '') return;
 
     // If a row doesn't have the time, get it from the last row that had time.
-    if (row[timeColumn] === "") { row[timeColumn] = rowTime; }
+    if (row[timeColumn] === '') {
+      row[timeColumn] = rowTime;
+    }
     // If a row has time, save that so the next row that doesn't have time
     // can use it.
-    else { rowTime = row[timeColumn]; }
+    else {
+      rowTime = row[timeColumn];
+    }
 
     const eventTime = moment(row[timeColumn], csvDateFormat);
 
@@ -68,8 +72,7 @@ const SlideshowItemCSV = (props) => {
     // if (eventTime.isSameOrAfter(startTime)) {
     if (filterByTime && eventTime.isBetween(startTime, endTime, null, [])) {
       return row;
-    }
-    else if (!filterByTime) return row;
+    } else if (!filterByTime) return row;
   }); // filteredCsv = _.filter
 
   // Return null (don't render the div) if no data was found.
@@ -77,9 +80,11 @@ const SlideshowItemCSV = (props) => {
   // If hasHeader and showHeader, at least the header should have been returned,
   // so one row means empty (only the header was returned.)
   // If hasHeader and not showHeader, or if not has header, no rows means empty.
-  if ((hasHeader && showHeader && filteredCsv.length === 1) ||
+  if (
+    (hasHeader && showHeader && filteredCsv.length === 1) ||
     (hasHeader && !showHeader && filteredCsv.length === 0) ||
-    (!hasHeader && filteredCsv.length === 0)) {
+    (!hasHeader && filteredCsv.length === 0)
+  ) {
     return null;
   }
 
@@ -93,7 +98,7 @@ const SlideshowItemCSV = (props) => {
               <div className="rTableCell" key={column}>
                 {column}
               </div>
-            )
+            );
           })}
         </div>
       ); // // return.
@@ -107,25 +112,29 @@ const SlideshowItemCSV = (props) => {
             <div className="rTableCell" key={columnKey}>
               {column}
             </div>
-          )
+          );
         })}
       </div>
-    ) // return for all other rows except header.
-  }) // csvItems map
+    ); // return for all other rows except header.
+  }); // csvItems map
 
   // Set a default classname.
-  let className = "slideshowItem csvHolder rTable";
+  let className = 'slideshowItem csvHolder rTable';
   if (props.showWeatherOn.includes(props.fileObject.filename)) {
     // props.showWeather contains any filesname(s) that were selected to show
     // weather on. If this filename is in that list, add the class 'showWeather'
-    className = "slideshowItem csvHolder rTable showWeather";
+    className = 'slideshowItem csvHolder rTable showWeather';
   }
 
   return (
-    <div key={props.fileObject.filename} className={className} style={props.style}>
+    <div
+      key={props.fileObject.filename}
+      className={className}
+      style={props.style}
+    >
       {csvItems}
     </div>
-  ) // return
-}
+  ); // return
+};
 
 export default SlideshowItemCSV;

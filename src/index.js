@@ -9,21 +9,21 @@ import MyRoutes from './routers/MyRoutes';
 import './index.css';
 
 const renderApp = Component => {
-    render(
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <MyRoutes />
-            </PersistGate>
-        </Provider>,
-        document.getElementById('root')
-    );
-}
+  render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <MyRoutes />
+      </PersistGate>
+    </Provider>,
+    document.getElementById('root')
+  );
+};
 
-renderApp(MyRoutes)
+renderApp(MyRoutes);
 
 if (module.hot) {
-    module.hot.accept('./routers/MyRoutes', () => {
-      const newRoutes = require('./routers/MyRoutes').default;
-      renderApp(newRoutes);
-    });
+  module.hot.accept('./routers/MyRoutes', () => {
+    const newRoutes = require('./routers/MyRoutes').default;
+    renderApp(newRoutes);
+  });
 }
