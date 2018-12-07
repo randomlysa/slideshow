@@ -29,7 +29,7 @@ class AdminWeather extends Component {
     this.setState({ isLoading: true });
 
     $.ajax({
-      url: `${API_ROT}/sqlite/sqliteSearchForName.php?name=${query}`,
+      url: `${API_ROOT}/sqlite/sqliteSearchForName.php?name=${query}`,
       type: 'GET',
       dataType: 'json'
     })
