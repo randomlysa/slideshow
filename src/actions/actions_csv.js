@@ -10,23 +10,6 @@ export function getCSVData(fileObject, slideshowDir) {
   const { filename, md5 } = fileObject;
   const itemUrl = `${SLIDESHOW_ROOT}/slideshows/${slideshowDir}/${filename}`;
 
-  let fileObjectFromDB, fromDBFilename, fromDBmd5;
-  // Get loaded CSV from database.
-  $.ajax({
-    url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${slideshowDir}`,
-    type: 'GET',
-    dataType: 'json'
-  }).done(data => {
-    if (!data) {
-      console.log('no data');
-    } else {
-      fileObjectFromDB = JSON.parse(data.loadedCsv);
-      console.log(fileObjectFromDB);
-      fromDBFilename = fileObjectFromDB.filename;
-      fromDBmd5 = fileObjectFromDB.md5;
-    }
-  });
-
   return {
     type: GET_CSV_DATA,
     async payload() {
