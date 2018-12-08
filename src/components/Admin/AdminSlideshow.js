@@ -159,7 +159,7 @@ class AdminSlideshow extends Component {
   componentWillReceiveProps(nextprops) {
     const { activeFolder } = nextprops;
     // When updating files or slideOrder, make sure dir/name = activeFolder.
-    const { dir: nextFilesFolder, files } = nextprops.slideshowItems;
+    const { dir: files } = nextprops.slideshowItems;
     const { name: nextConfigFolder, slideOrder } = nextprops.config;
 
     // If slideOrder is empty, set slideOrder to slideshowItems.files.

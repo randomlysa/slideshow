@@ -1,7 +1,5 @@
 import Papa from 'papaparse';
-import { API_ROOT, SLIDESHOW_ROOT } from '../../config/api-config';
-import $ from 'jquery';
-import _ from 'lodash';
+import { SLIDESHOW_ROOT } from '../../config/api-config';
 
 export const GET_CSV_DATA = 'GET_CSV_DATA';
 export const UPDATE_CSV_DATA = 'UPDATE_CSV_DATA';
