@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import { API_ROOT, SLIDESHOW_ROOT } from '../config/api-config';
+import { API_ROOT, SLIDESHOW_ROOT } from '../../config/api-config';
 import $ from 'jquery';
 import _ from 'lodash';
 

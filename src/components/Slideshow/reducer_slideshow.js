@@ -1,9 +1,9 @@
-import { GET_SLIDESHOW_SLIDES_FULFILLED } from '../actions/actions_slideshow';
+import { GET_SLIDESHOW_SLIDES_FULFILLED } from './actions_slideshow';
 
 import {
   GET_CSV_DATA_FULFILLED,
   UPDATE_CSV_DATA_FULFILLED
-} from '../actions/actions_csv';
+} from './actions_csv';
 
 export default function(state = { dir: '', files: {} }, action) {
   switch (action.type) {

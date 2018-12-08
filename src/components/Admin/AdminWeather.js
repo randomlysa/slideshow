@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as slideshowConfigActions from '../../actions/actions_slideshowConfig.js';
+import * as slideshowConfigActions from '../../components/Slideshow/actions_slideshowConfig';
 
 import $ from 'jquery';
 import { API_ROOT } from '../../config/api-config';

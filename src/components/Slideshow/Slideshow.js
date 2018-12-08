@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as adminActionCreators from './Admin/actions';
-import * as slideshowActionCreators from '../actions/actions_slideshow';
-import * as slideshowConfigActionCreators from '../actions/actions_slideshowConfig.js';
-import * as csvActionCreators from '../actions/actions_csv';
+import * as adminActionCreators from '../Admin/actions';
+import * as slideshowActionCreators from './actions_slideshow';
+import * as slideshowConfigActionCreators from './actions_slideshowConfig.js';
+import * as csvActionCreators from './actions_csv';
 import { withRouter } from 'react-router';
 import _ from 'lodash';
 import $ from 'jquery';
 
-import Weather from './Weather';
+import Weather from '../Weather';
 import SlideshowItem from './SlideshowItem';
 
-import '../style.css';
+import '../../style.css';
 
-import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
+import combineOrderedAndUnorderedSlides from '../../helpers/slideshowOrder';
 
 // This export is a { named } export for testing.
 export class Slideshow extends Component {

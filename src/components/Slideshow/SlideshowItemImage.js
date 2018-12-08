@@ -1,5 +1,5 @@
 import React from 'react';
-import { SLIDESHOW_ROOT } from '../config/api-config';
+import { SLIDESHOW_ROOT } from '../../config/api-config';
 
 const SlideshowItemImage = props => {
   const { fileObject, style, dir } = props;

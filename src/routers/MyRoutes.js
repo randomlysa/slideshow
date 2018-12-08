@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Import routes.
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import Slideshow from '../components/Slideshow';
+import Slideshow from '../components/Slideshow/Slideshow';
 import Admin from '../components/Admin/';
 import Login from '../components/Login';
 import NotFound from '../components/NotFound';

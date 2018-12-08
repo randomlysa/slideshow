@@ -5,7 +5,7 @@ import {
   UPDATE_CONFIG,
   DELETE_FILE_FULFILLED,
   UPLOAD_FILE_FULFILLED
-} from '../actions/actions_slideshowConfig';
+} from './actions_slideshowConfig';
 
 export default function(state = {}, action) {
   switch (action.type) {

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {
   GET_CSV_DATA_FULFILLED,
   UPDATE_CSV_DATA_FULFILLED
-} from '../actions/actions_csv';
+} from './actions_csv';
 
 export default function(state = [], action) {
   switch (action.type) {

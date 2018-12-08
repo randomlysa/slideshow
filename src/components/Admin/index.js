@@ -4,8 +4,8 @@ import swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adminActions from './actions';
-import * as slideshowActions from '../../actions/actions_slideshow.js';
-import * as slideshowConfigActions from '../../actions/actions_slideshowConfig.js';
+import * as slideshowActions from '../../components/Slideshow/actions_slideshow';
+import * as slideshowConfigActions from '../../components/Slideshow/actions_slideshowConfig';
 
 import $ from 'jquery';
 import { API_ROOT } from '../../config/api-config';

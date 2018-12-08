@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { API_ROOT } from '../config/api-config';
+import { API_ROOT } from '../../config/api-config';
 
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
 export const GET_CONFIG_FROM_DATABASE = 'GET_CONFIG_FROM_DATABASE';

@@ -5,7 +5,7 @@ import toJSON from 'enzyme-to-json';
 // Import named / not connected component.
 // export class Admin extends Component
 import { Admin } from '../../components/Admin/';
-import * as slideshowActions from '../../actions/actions_slideshow';
+import * as slideshowActions from '../../components/Slideshow/actions_slideshow';
 import * as slideshowConfigActions from '../../actions/actions_slideshowConfig';
 
 const actions = { ...slideshowActions, ...slideshowConfigActions };
