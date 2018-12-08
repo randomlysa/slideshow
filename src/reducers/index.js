@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import SlideshowReducer from './reducer_slideshow';
 import SlideshowConfigReducer from './reducer_slideshowconfig';
-import AdminReducer from './reducer_admin';
+import AdminReducer from '../components/Admin/reducer_admin';
 import WeatherReducer from './reducer_weather';
 import CSVReducer from './reducer_csv';
 

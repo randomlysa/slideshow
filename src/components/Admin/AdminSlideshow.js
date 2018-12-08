@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { API_ROOT } from '../config/api-config';
+import { API_ROOT } from '../../config/api-config';
 // Currently unused.
 // import combineOrderedAndUnorderedSlides from '../helpers/slideshowOrder';
 

@@ -3,14 +3,14 @@ import swal from 'sweetalert2';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as adminActions from '../actions/actions_admin';
-import * as slideshowActions from '../actions/actions_slideshow.js';
-import * as slideshowConfigActions from '../actions/actions_slideshowConfig.js';
+import * as adminActions from './actions';
+import * as slideshowActions from '../../actions/actions_slideshow.js';
+import * as slideshowConfigActions from '../../actions/actions_slideshowConfig.js';
 
 import $ from 'jquery';
-import { API_ROOT } from '../config/api-config';
+import { API_ROOT } from '../../config/api-config';
 
-import UploadFiles from './UploadFiles';
+import UploadFiles from '../UploadFiles';
 import AdminSlideshow from './AdminSlideshow';
 import AdminWeather from './AdminWeather';
 

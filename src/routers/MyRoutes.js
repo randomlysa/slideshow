@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Slideshow from '../components/Slideshow';
-import Admin from '../components/Admin';
+import Admin from '../components/Admin/';
 import Login from '../components/Login';
 import NotFound from '../components/NotFound';
 

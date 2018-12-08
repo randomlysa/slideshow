@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as adminActionCreators from '../actions/actions_admin';
+import * as adminActionCreators from './Admin/actions';
 import * as slideshowActionCreators from '../actions/actions_slideshow';
 import * as slideshowConfigActionCreators from '../actions/actions_slideshowConfig.js';
 import * as csvActionCreators from '../actions/actions_csv';

@@ -1,9 +1,4 @@
-import {
-  DO_LOGIN,
-  DO_LOGOUT,
-  login,
-  logout
-} from '../../actions/actions_admin.js';
+import { DO_LOGIN, DO_LOGOUT, login, logout } from '../../actions/actions.js';
 
 // Currently not sure how to implement this.
 // test('should log the user in if the password is correct', () => {

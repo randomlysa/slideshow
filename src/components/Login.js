@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { login } from '../actions/actions_admin';
+import { login } from './Admin/actions';
 import password from 'password-hash-and-salt';
 import jwt from 'jwt-simple';
 
