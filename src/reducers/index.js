@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import SlideshowReducer from '../components/Slideshow/reducer_slideshow';
 import SlideshowConfigReducer from '../components/Slideshow/reducer_slideshowconfig';
 import AdminReducer from '../components/Admin/reducer_admin';
-import WeatherReducer from './reducer_weather';
+import WeatherReducer from '../components/Weather/reducer_weather';
 import CSVReducer from '../components/Slideshow/reducer_csv';
 
 const slideshowApp = combineReducers({

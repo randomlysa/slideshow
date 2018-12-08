@@ -9,7 +9,7 @@ import { withRouter } from 'react-router';
 import _ from 'lodash';
 import $ from 'jquery';
 
-import Weather from '../Weather';
+import Weather from '../Weather/Weather';
 import SlideshowItem from './SlideshowItem';
 
 import '../../style.css';

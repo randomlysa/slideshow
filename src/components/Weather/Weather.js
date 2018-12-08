@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import {
   fetchWeatherFromLocalStorage,
   fetchWeatherFromOpenWeather
-} from '../actions/actions_weather';
+} from './actions_weather';
 
 class Weather extends Component {
   componentDidMount() {

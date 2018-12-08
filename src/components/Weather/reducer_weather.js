@@ -3,7 +3,7 @@ import {
   FETCH_WEATHER_FROM_OPENWEATHER_FULFILLED,
   FETCH_WEATHER_UPDATE,
   DELETE_ONE_CITY
-} from '../actions/actions_weather';
+} from './actions_weather';
 import _ from 'lodash';
 
 export default function(state = {}, action) {
