@@ -39,9 +39,9 @@ export class Slideshow extends Component {
 
   componentDidMount() {
     // Check props for what csv data we have:
-    // slideshowItems.csv has the filename and csv data of csv files.
+    // csv has the filename and csv data of csv files.
     // Update state with an array of files that we have csv data for.
-    const files = this.props.slideshowItems.csv.map(file => {
+    const files = this.props.csv.map(file => {
       return {
         filename: file.filename,
         md5: file.md5
@@ -180,6 +180,10 @@ export class Slideshow extends Component {
         else if (findFileInState && findFileInState.md5 !== md5) {
           // MD5 change detected.
           // Todo: Get new data for file.
+          this.props.actions.updateCSVData(
+            csvFileObject,
+            this.state.slideshowDir
+          );
 
           // Find the object in this.state.csvRequested for to update.
           const updateThis = _.find(this.state.csvRequestedFor, {
@@ -231,7 +235,7 @@ export class Slideshow extends Component {
             <SlideshowItem
               slidesToShowWeatherOn={this.state.slidesToShowWeatherOn}
               slideshowItems={this.state.finalSlideOrder}
-              slideshowCsv={this.props.slideshowItems.csv}
+              slideshowCsv={this.props.csv}
               dir={this.state.slideshowDir}
             />
           </div>
@@ -243,8 +247,8 @@ export class Slideshow extends Component {
   } // render
 } // class App
 
-function mapStateToProps({ config, slideshowItems }) {
-  return { slideshowItems, config };
+function mapStateToProps({ config, slideshowItems, csv }) {
+  return { slideshowItems, config, csv };
 }
 
 function mapDispatchToProps(dispatch) {
