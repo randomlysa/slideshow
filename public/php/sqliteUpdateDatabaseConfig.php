@@ -19,12 +19,12 @@
     // }
 
 
-    $name                	= $_POST['name'];
-    $slideDuration        = $_POST['slideDuration'];
-    $transitionDuration   = $_POST['transitionDuration'];
-    $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
-    $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
-    $slideOrder           = $_POST['slideOrder'];
+    $name                	= isset($_POST['name']) ? $_POST['name'] : '';
+    $slideDuration        = isset($_POST['slideDuration']) ? $_POST['slideDuration'] : '';
+    $transitionDuration   = isset($_POST['transitionDuration']) ? $_POST['transitionDuration'] : '';
+    $slidesToShowWeatherOn = isset($_POST['slidesToShowWeatherOn']) ? $_POST['slidesToShowWeatherOn'] : '';
+    $cityToShowWeatherFor = isset($_POST['cityToShowWeatherFor']) ? $_POST['cityToShowWeatherFor'] : '';
+    $slideOrder           = isset($_POST['slideOrder']) ? $_POST['slideOrder']  : '';
 
     // loadedCsv is updated by itself.
     $loadedCsv            = $_POST['loadedCsv'];
