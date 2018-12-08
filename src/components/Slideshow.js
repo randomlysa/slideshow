@@ -97,10 +97,10 @@ export class Slideshow extends Component {
       };
 
       if (firstLoop === true) {
-        setTimeout(switchToNextSlide, newSlideDuration);
+        this.slideshowTimer = setTimeout(switchToNextSlide, newSlideDuration);
         firstLoop = false;
       } else {
-        setTimeout(switchToNextSlide, newSlideDuration);
+        this.slideshowTimer = setTimeout(switchToNextSlide, newSlideDuration);
       }
 
       // Get classname(s) for current div.
@@ -115,7 +115,7 @@ export class Slideshow extends Component {
       // commented out?
       this.props.actions.getConfigFromDatabase(this.state.slideshowDir);
 
-      window.setTimeout(loop, newSlideDuration);
+      this.slideshowTimer = setTimeout(loop, newSlideDuration);
     };
 
     loop();
@@ -223,6 +223,11 @@ export class Slideshow extends Component {
         $('.slideshowItem:not(:first)').css('display', 'none');
       }
     }
+  }
+
+  componentDidCatch() {
+    // Stop slideshow on crash
+    clearTimeout(this.slideshowTimer);
   }
 
   render() {
