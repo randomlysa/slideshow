@@ -179,9 +179,27 @@ export class Slideshow extends Component {
         // File exists, but file md5 in state is not same as md5 in newly received file list.
         else if (findFileInState && findFileInState.md5 !== md5) {
           // MD5 change detected.
-          // Get new data for file.
-          // Update state with new filename md5.
-        }
+          // Todo: Get new data for file.
+
+          // Find the object in this.state.csvRequested for to update.
+          const updateThis = _.find(this.state.csvRequestedFor, {
+            filename: filename
+          });
+          // Update local state with new filename md5.
+          this.setState(prevState => {
+            const csv = prevState.csvRequestedFor.map(fileobj => {
+              if (fileobj.filename === updateThis.filename) {
+                return { ...updateThis, md5 };
+              } else {
+                return fileobj;
+              }
+            });
+            return {
+              ...prevState,
+              csvRequestedFor: csv
+            };
+          }); // setState
+        } // else if for "file exists but md5 is new"
       }); // csvFileObjects.map
     } // if(csvFileObjects)
   } // componentWillReceiveProps
