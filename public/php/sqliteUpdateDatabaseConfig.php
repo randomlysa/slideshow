@@ -26,8 +26,6 @@
     $cityToShowWeatherFor = isset($_POST['cityToShowWeatherFor']) ? $_POST['cityToShowWeatherFor'] : '';
     $slideOrder           = isset($_POST['slideOrder']) ? $_POST['slideOrder']  : '';
 
-    // loadedCsv is updated by itself.
-    $loadedCsv            = $_POST['loadedCsv'];
 
     try{
 
@@ -45,19 +43,7 @@
         $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
 
       } // End slideOrder.
-      else if ($loadedCsv) {
-        $stmt = $db -> prepare("UPDATE `bulletins`
-          SET
-            `loadedCsv` = :loadedCsv
-          WHERE `name` = :name
-        ");
-
-      /* bind params */
-      $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
-      $stmt -> bindParam(':loadedCsv', $loadedCsv, PDO::PARAM_STR);
-
-      // End loadedCsv.
-      } else {
+      else {
 
         /* Create a prepared statement */
         $stmt = $db -> prepare("UPDATE `bulletins`
