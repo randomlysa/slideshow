@@ -8,11 +8,13 @@ import {
 export default function(state = [], action) {
   switch (action.type) {
     case GET_CSV_DATA_FULFILLED:
+      const { filename, data, md5 } = action.payload;
       const csv = [
         ...state,
         {
-          filename: action.payload.filename,
-          data: action.payload.data
+          filename,
+          data,
+          md5
         }
       ];
       return csv;
