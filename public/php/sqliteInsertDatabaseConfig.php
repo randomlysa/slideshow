@@ -3,6 +3,7 @@
 
   // http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
   if($_POST){
+    $timestamp           	= $_POST['timestamp'];
     $name                	= $_POST['name'];
     $slideDuration        = $_POST['slideDuration'];
     $transitionDuration   = $_POST['transitionDuration'];
@@ -15,12 +16,13 @@
 
       /* Create a prepared statement */
       $stmt = $db -> prepare("INSERT INTO bulletins
-        (name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor)
+        (timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor)
         VALUES
-        (:name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor)
+        (:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor)
       ");
 
       /* bind params */
+      $stmt -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
       $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
       $stmt -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);

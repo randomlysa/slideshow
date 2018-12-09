@@ -4,28 +4,13 @@
   // http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
   if($_POST){
 
-    // Define accepted $_POST variables.
-    // $name = '';
-    // $slideDuration = '';
-    // $transitionDuration = '';
-    // $slidesToShowWeatherOn = '';
-    // $cityToShowWeatherFor = '';
-    // $loadedCsv = '';
-    // $slideOrder = '';
-    // extract ($_POST, EXTR_IF_EXISTS);
-
-    // foreach ($_POST as $varname => $value) {
-    //   ${$varname} = $value;
-    // }
-
-
+    $timestamp           	= isset($_POST['timestamp']) ? $_POST['timestamp'] : '';
     $name                	= isset($_POST['name']) ? $_POST['name'] : '';
     $slideDuration        = isset($_POST['slideDuration']) ? $_POST['slideDuration'] : '';
     $transitionDuration   = isset($_POST['transitionDuration']) ? $_POST['transitionDuration'] : '';
     $slidesToShowWeatherOn = isset($_POST['slidesToShowWeatherOn']) ? $_POST['slidesToShowWeatherOn'] : '';
     $cityToShowWeatherFor = isset($_POST['cityToShowWeatherFor']) ? $_POST['cityToShowWeatherFor'] : '';
     $slideOrder           = isset($_POST['slideOrder']) ? $_POST['slideOrder']  : '';
-
 
     try{
 
@@ -48,6 +33,7 @@
         /* Create a prepared statement */
         $stmt = $db -> prepare("UPDATE `bulletins`
           SET
+            `timestamp` = :timestamp,
             `slideDuration` = :slideDuration,
             `transitionDuration`   = :transitionDuration,
             `slidesToShowWeatherOn` = :slidesToShowWeatherOn,
@@ -57,6 +43,7 @@
         ");
 
         /* bind params */
+        $stmt -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
         $stmt -> bindParam(':name', $name, PDO::PARAM_STR);
         $stmt -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
         $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);

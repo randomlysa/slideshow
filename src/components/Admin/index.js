@@ -72,6 +72,7 @@ export class Admin extends Component {
     else updateOrInsert = 'insert';
 
     const dataObject = {
+      timestamp: Date.now(),
       name: this.state.activeFolder,
       slideDuration: this.state.slideDuration,
       transitionDuration: this.state.transitionDuration,

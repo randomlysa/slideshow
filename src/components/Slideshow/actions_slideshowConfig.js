@@ -45,6 +45,7 @@ export const updateConfigInDatabase = (
       url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php`;
 
     const {
+      timestamp,
       name, // name of slideshow
       slideDuration,
       transitionDuration,
@@ -57,6 +58,7 @@ export const updateConfigInDatabase = (
       url,
       type: 'POST',
       data: {
+        timestamp,
         name, // name of slideshow
         slideDuration,
         transitionDuration,

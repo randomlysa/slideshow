@@ -10,7 +10,9 @@
 
 		/* Create a prepared statement */
 		$stmt = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
-      (name TEXT PRIMARY KEY,
+      (
+			timestamp INT,
+			name TEXT PRIMARY KEY,
       slideDuration INT,
       transitionDuration INT,
       slidesToShowWeatherOn TEXT,

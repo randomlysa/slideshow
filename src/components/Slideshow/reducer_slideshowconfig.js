@@ -22,6 +22,7 @@ export default function(state = {}, action) {
       // slideshow, action.payload will be undefined.
       if (action.payload === undefined) {
         return {
+          timestamp: '',
           name: '',
           slideDuration: '',
           transitionDuration: '',
@@ -33,6 +34,7 @@ export default function(state = {}, action) {
       }
 
       const {
+        timestamp,
         name,
         slideDuration,
         transitionDuration,
@@ -48,6 +50,7 @@ export default function(state = {}, action) {
 
       return {
         ...state,
+        timestamp,
         name,
         slideDuration,
         transitionDuration,
