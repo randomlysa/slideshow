@@ -204,13 +204,15 @@ class AdminSlideshow extends Component {
 
     // Set up which weather checkboxes should be checked.
 
+    let makeArray;
     if (this.props && this.props.config.slidesToShowWeatherOn) {
-      let makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
+      makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
       if (!List(makeArray).equals(List(this.state.checkedItems))) {
         this.setState({ checkedItems: makeArray });
-        this.selectedCheckboxes = new Set(makeArray);
       }
     }
+
+    this.selectedCheckboxes = new Set(makeArray);
 
     // Set state.
     if (
