@@ -51,15 +51,16 @@ class AdminSlideshow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: '',
       checkedItems: []
     };
+
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.items = [];
   }
 
   // Weather items.
   checkAllBoxes = () => {
-    this.state.items.forEach(item => {
+    this.items.forEach(item => {
       this.selectedCheckboxes.add(item.filename);
     });
     this.setState(
@@ -100,16 +101,14 @@ class AdminSlideshow extends Component {
     }
 
     const items = reorder(
-      this.state.items,
+      this.items,
       result.source.index,
       result.destination.index
     );
 
-    console.log(items);
-
     // Save item order to database.
     this.props.updateSlideOrder(items);
-    this.setState({ items });
+    this.items = items;
   }
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
@@ -162,8 +161,6 @@ class AdminSlideshow extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('did update');
-    console.log(this.props);
     const { activeFolder } = this.props;
     // When updating files or slideOrder, make sure dir/name = activeFolder.
     const { files } = this.props.slideshowItems;
@@ -212,17 +209,15 @@ class AdminSlideshow extends Component {
       this.props.config.name === activeFolder
     ) {
       this.props.updateSlideOrder(slideOrder);
-      if (!List(slideOrder).equals(List(this.state.items)))
-        this.setState({ items: slideOrder });
+      this.items = slideOrder;
     } else {
       this.props.updateSlideOrder(files);
-      if (!List(files).equals(List(this.state.items)))
-        this.setState({ items: files });
+      this.items = files;
     }
   }
 
   render() {
-    if (this.props.activeFolder && this.state.items.length > 0) {
+    if (this.props.activeFolder && this.items.length > 0) {
       // https://codesandbox.io/s/k260nyxq9v.
       return (
         <div>
@@ -238,7 +233,7 @@ class AdminSlideshow extends Component {
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.items.map((fileObject, index) =>
+                  {this.items.map((fileObject, index) =>
                     this.renderDraggable(fileObject, index)
                   )}
                   {provided.placeholder}
