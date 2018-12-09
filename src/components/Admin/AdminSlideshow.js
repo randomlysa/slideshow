@@ -160,8 +160,21 @@ class AdminSlideshow extends Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { activeFolder } = this.props;
+    // Ignore changes when the config.name and slideshowItems.dir match EXCEPT
+    // when this.items.length doesn't match. This fixes loading a page and going
+    // back to the same folder.
+    // This also ignores changes when checkboxes are checked (for weather) and
+    // maybe some other good things.
+    if (
+      this.props.config.name === activeFolder &&
+      this.props.slideshowItems.dir === activeFolder &&
+      this.props.slideshowItems.files.length === this.items.length
+    ) {
+      return;
+    }
+
     // When updating files or slideOrder, make sure dir/name = activeFolder.
     const { files } = this.props.slideshowItems;
 
@@ -190,18 +203,15 @@ class AdminSlideshow extends Component {
     }
 
     // Set up which weather checkboxes should be checked.
-    let makeArray = '';
+
     if (this.props && this.props.config.slidesToShowWeatherOn) {
-      makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
-      if (!List(makeArray).equals(List(this.state.checkedItems)))
+      let makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
+      if (!List(makeArray).equals(List(this.state.checkedItems))) {
         this.setState({ checkedItems: makeArray });
+        this.selectedCheckboxes = new Set(makeArray);
+      }
     }
 
-    // Set this.selectedCheckboxes to whatever filesnames were loaded from the
-    // database, or '' (nothing.)
-    this.selectedCheckboxes = new Set(makeArray);
-
-    // debugger;
     // Set state.
     if (
       this.props.config.slideOrder &&
