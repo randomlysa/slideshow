@@ -20,18 +20,33 @@ export class Admin extends Component {
 
     this.state = {
       folders: [],
+      existsInDatabase: '',
       activeFolder: '',
       uploadDisabled: true,
 
       // These aren't used until a folder is selected so no point setting them
       // here, they will be changed before being used.
+
+      // slideDuration, transisitonDuration, and cityToShowWeatherFor are
+      //'needed' because they are inputs on the page.
       slideDuration: '',
       transitionDuration: '',
-      slidesToShowWeatherOn: '',
       cityToShowWeatherFor: '',
-      slideOrder: '',
-      existsInDatabase: ''
+
+      // These can be moved out of state.
+      slidesToShowWeatherOn: '',
+      slideOrder: ''
     };
+  }
+
+  static getDerivedStateFromProps(props) {
+    if (props.config) {
+      return {
+        slideDuration: props.config.slideDuration,
+        transitionDuration: props.config.transitionDuration,
+        cityToShowWeatherFor: props.config.cityToShowWeatherFor
+      };
+    }
   }
 
   confirmLogout = () => {
@@ -80,6 +95,7 @@ export class Admin extends Component {
       cityToShowWeatherFor: cityForWeather,
       slideOrder: newSlideOrder
     };
+
     this.props.actions
       .updateConfigInDatabase(updateOrInsert, dataObject)
       .then(() => {
@@ -209,27 +225,6 @@ export class Admin extends Component {
         console.log(e);
       });
   }
-
-  componentDidUpdate() {
-    if (
-      this.state.slideDuration !== this.props.config.slideDuration &&
-      this.state.slideDuration !== this.props.config.slideDuration &&
-      this.state.transitionDuration !== this.props.config.transitionDuration &&
-      this.state.slidesToShowWeatherOn !==
-        this.props.config.slidesToShowWeatherOn &&
-      this.state.cityToShowWeatherFor !==
-        this.props.config.cityToShowWeatherFor &&
-      this.state.slideOrder !== this.props.config.slideOrder
-    ) {
-      this.setState({
-        slideDuration: this.props.config.slideDuration,
-        transitionDuration: this.props.config.transitionDuration,
-        slidesToShowWeatherOn: this.props.config.slidesToShowWeatherOn,
-        cityToShowWeatherFor: this.props.config.cityToShowWeatherFor,
-        slideOrder: this.props.config.slideOrder
-      });
-    } // if
-  } // componentDidUpdate
 
   render() {
     return (
