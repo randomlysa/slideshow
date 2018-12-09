@@ -16,7 +16,8 @@
       slideDuration INT,
       transitionDuration INT,
       slidesToShowWeatherOn TEXT,
-      cityToShowWeatherFor INT
+      cityToShowWeatherFor INT,
+			slideOrder TEXT
       );
     ");
 

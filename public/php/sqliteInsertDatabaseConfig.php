@@ -9,6 +9,7 @@
     $transitionDuration   = $_POST['transitionDuration'];
     $slidesToShowWeatherOn = $_POST['slidesToShowWeatherOn'];
     $cityToShowWeatherFor = $_POST['cityToShowWeatherFor'];
+    $slideOrder           = isset($_POST['slideOrder']) ? $_POST['slideOrder']  : '';
 
     try{
 
@@ -16,9 +17,9 @@
 
       /* Create a prepared statement */
       $stmt = $db -> prepare("INSERT INTO bulletins
-        (timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor)
+        (timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor, slideOrder)
         VALUES
-        (:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor)
+        (:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor, :slideOrder)
       ");
 
       /* bind params */
@@ -28,6 +29,7 @@
       $stmt -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
       $stmt -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
       $stmt -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
+      $stmt -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
 
       /* execute the query */
       if( $stmt -> execute() ){
