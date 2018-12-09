@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import immutable from 'immutable';
 
 import { API_ROOT } from '../../config/api-config';
 // Currently unused.
@@ -8,6 +9,8 @@ import { API_ROOT } from '../../config/api-config';
 
 // Items noted with https://codesandbox.io/s/k260nyxq9v were copied/modified
 // from that example.
+
+const { List } = immutable;
 
 // https://codesandbox.io/s/k260nyxq9v
 // A little function to help us with reordering the result.
@@ -102,6 +105,8 @@ class AdminSlideshow extends Component {
       result.destination.index
     );
 
+    console.log(items);
+
     // Save item order to database.
     this.props.updateSlideOrder(items);
     this.setState({ items });
@@ -156,18 +161,21 @@ class AdminSlideshow extends Component {
     );
   }
 
-  componentWillReceiveProps(nextprops) {
-    const { activeFolder } = nextprops;
+  componentDidUpdate(prevProps) {
+    console.log('did update');
+    console.log(this.props);
+    const { activeFolder } = this.props;
     // When updating files or slideOrder, make sure dir/name = activeFolder.
-    const { dir: files } = nextprops.slideshowItems;
-    const { name: nextConfigFolder, slideOrder } = nextprops.config;
+    const { files } = this.props.slideshowItems;
+
+    const { name: nextConfigFolder, slideOrder } = this.props.config;
 
     // If slideOrder is empty, set slideOrder to slideshowItems.files.
     if (
       nextConfigFolder === activeFolder &&
       (slideOrder === '' || typeof slideOrder === 'undefined')
     ) {
-      this.props.callUpdateConfigInDatabase(nextprops.slideshowItems.files);
+      this.props.callUpdateConfigInDatabase(this.props.slideshowItems.files);
     }
 
     // Check that slideOrder.length === files.length
@@ -186,25 +194,30 @@ class AdminSlideshow extends Component {
 
     // Set up which weather checkboxes should be checked.
     let makeArray = '';
-    if (nextprops && nextprops.config.slidesToShowWeatherOn) {
-      makeArray = JSON.parse(nextprops.config.slidesToShowWeatherOn);
-      this.setState({ checkedItems: makeArray });
+    if (this.props && this.props.config.slidesToShowWeatherOn) {
+      makeArray = JSON.parse(this.props.config.slidesToShowWeatherOn);
+      if (!List(makeArray).equals(List(this.state.checkedItems)))
+        this.setState({ checkedItems: makeArray });
     }
+
     // Set this.selectedCheckboxes to whatever filesnames were loaded from the
     // database, or '' (nothing.)
     this.selectedCheckboxes = new Set(makeArray);
 
+    // debugger;
     // Set state.
     if (
-      nextprops.config.slideOrder &&
-      nextprops.config.slideOrder.length > 0 &&
-      nextprops.config.name === activeFolder
+      this.props.config.slideOrder &&
+      this.props.config.slideOrder.length > 0 &&
+      this.props.config.name === activeFolder
     ) {
       this.props.updateSlideOrder(slideOrder);
-      this.setState({ items: slideOrder });
+      if (!List(slideOrder).equals(List(this.state.items)))
+        this.setState({ items: slideOrder });
     } else {
       this.props.updateSlideOrder(files);
-      this.setState({ items: files });
+      if (!List(files).equals(List(this.state.items)))
+        this.setState({ items: files });
     }
   }
 
