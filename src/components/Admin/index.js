@@ -11,7 +11,7 @@ import $ from 'jquery';
 import { API_ROOT } from '../../config/api-config';
 
 import UploadFiles from '../UploadFiles';
-import AdminSlideshow from './AdminSlideshow';
+import AdminSlideshow from './AdminSlideshowSlides';
 import AdminWeather from './AdminWeather';
 
 export class Admin extends Component {
