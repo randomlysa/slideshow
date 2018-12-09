@@ -1,3 +1,7 @@
+// This file handles
+// - changing slide order by drag and drop,
+// - selecting which slides have weather displayed on them.
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -47,16 +51,10 @@ const getListStyle = isDraggingOver => ({
 // End https://codesandbox.io/s/k260nyxq9v copy.
 
 class AdminSlideshow extends Component {
-  // https://codesandbox.io/s/k260nyxq9v
-  constructor(props) {
-    super(props);
-    this.state = {
-      checkedItems: []
-    };
-
-    this.onDragEnd = this.onDragEnd.bind(this);
-    this.items = [];
-  }
+  state = {
+    checkedItems: []
+  };
+  items = [];
 
   // Weather items.
   checkAllBoxes = () => {
@@ -94,7 +92,7 @@ class AdminSlideshow extends Component {
   }; // setWeatherSlide
 
   // Drag items.
-  onDragEnd(result) {
+  onDragEnd = result => {
     // Dropped outside the list.
     if (!result.destination) {
       return;
@@ -109,7 +107,7 @@ class AdminSlideshow extends Component {
     // Save item order to database.
     this.props.updateSlideOrder(items);
     this.items = items;
-  }
+  };
   // End https://codesandbox.io/s/k260nyxq9v copy.
 
   renderDraggable(fileObject, index) {
