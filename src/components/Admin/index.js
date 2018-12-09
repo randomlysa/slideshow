@@ -11,6 +11,8 @@ import $ from 'jquery';
 import { API_ROOT } from '../../config/api-config';
 
 import UploadFiles from '../UploadFiles';
+
+import AdminSlideDurationTransition from './AdminSlideDurationTransition';
 import AdminSlideshow from './AdminSlideshowSlides';
 import AdminWeather from './AdminWeather';
 
@@ -23,6 +25,7 @@ export class Admin extends Component {
       existsInDatabase: '',
       activeFolder: '',
       uploadDisabled: true,
+      keyPress: false,
 
       // These aren't used until a folder is selected so no point setting them
       // here, they will be changed before being used.
@@ -39,7 +42,9 @@ export class Admin extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
+    // See comment after 'setActiveFolder(e)'
+    if (state.keyPress === true) return null;
     if (props.config) {
       return {
         slideDuration: props.config.slideDuration,
@@ -47,6 +52,8 @@ export class Admin extends Component {
         cityToShowWeatherFor: props.config.cityToShowWeatherFor
       };
     }
+    // Just in case.
+    return null;
   }
 
   confirmLogout = () => {
@@ -67,6 +74,7 @@ export class Admin extends Component {
 
   onInputChange = event => {
     this.setState({
+      keyPress: true,
       [event.target.id]: event.target.value
     });
   };
@@ -170,10 +178,16 @@ export class Admin extends Component {
 
   setActiveFolder(e) {
     if (e.target.value) {
+      // keyPress allows slide and transition durations to override
+      // their props values. since the folder changed, set them to false
+      // to allow getDerivedState to load the data from props, then
+      // set keyPress to true whenever a user tries to change the value
+      // for slide or transition duration.
       this.setState(
         {
           uploadDisabled: false,
-          activeFolder: e.target.value
+          activeFolder: e.target.value,
+          keyPress: false
         },
         () => {
           // Run after state has updated.
