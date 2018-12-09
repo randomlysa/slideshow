@@ -12,7 +12,7 @@ import { API_ROOT } from '../../config/api-config';
 
 import UploadFiles from '../UploadFiles';
 
-import AdminSlideDurationTransition from './AdminSlideDurationTransition';
+import AdminSlideTransitionDuration from './AdminSlideTransitionDuration';
 import AdminSlideshow from './AdminSlideshowSlides';
 import AdminWeather from './AdminWeather';
 
@@ -270,25 +270,11 @@ export class Admin extends Component {
           <div className="adminSection">
             <form onSubmit={this.onFormSubmit}>
               <AdminWeather />
-              Slide duration (seconds):
-              <input
-                type="number"
-                id="slideDuration"
-                placeholder="Number (seconds)"
-                onChange={this.onInputChange}
-                value={this.state.slideDuration}
+              <AdminSlideTransitionDuration
+                onInputChange={this.onInputChange}
+                slideDuration={this.state.slideDuration}
+                transitionDuration={this.state.transitionDuration}
               />
-              <br />
-              Transition duration (ms):
-              <input
-                type="number"
-                id="transitionDuration"
-                placeholder="Number (milliseconds)"
-                onChange={this.onInputChange}
-                value={this.state.transitionDuration}
-              />{' '}
-              (1000ms = 1s)
-              <br />
               <input type="submit" value="Save" />
             </form>
 
