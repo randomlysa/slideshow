@@ -18,7 +18,16 @@ class MyRoutes extends Component {
     return (
       <Router basename={BASENAME}>
         <Switch>
-          <PrivateRoute exact path="/admin" component={Admin} />
+          <PrivateRoute
+            exact
+            path="/admin"
+            component={() => <Admin env="production" />}
+          />
+          <PrivateRoute
+            exact
+            path="/admin/test"
+            component={() => <Admin env="test" />}
+          />
           <PublicRoute exact path="/login" component={Login} />
 
           {/* make path optional, try to load default if not specified */}
