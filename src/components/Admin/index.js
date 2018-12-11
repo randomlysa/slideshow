@@ -44,11 +44,16 @@ export class Admin extends Component {
 
   static getDerivedStateFromProps(props, state) {
     // See comment after 'setActiveFolder(e)'
-    if (state.keyPress === true) return null;
-    if (props.config) {
+    // Don't update durations from db if they have been changed.
+    if (props.config && state.keyPress === false) {
       return {
         slideDuration: props.config.slideDuration,
-        transitionDuration: props.config.transitionDuration,
+        transitionDuration: props.config.transitionDuration
+      };
+    }
+    // Allow updating of cityToShowWeatherFor regardless of state.keyPress
+    else if (props.config) {
+      return {
         cityToShowWeatherFor: props.config.cityToShowWeatherFor
       };
     }
