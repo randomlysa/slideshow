@@ -23,6 +23,16 @@ export function getConfigFromDatabase(name) {
       type: 'GET',
       dataType: 'json'
     })
+      .done(data => {
+        return data;
+      })
+      .fail(e => {
+        // Can't reproduce it now, but something was causing db lookup to fail
+        // and it would loop the reject case until crashing. Currently if no
+        // data exists, the endpoint returns 'null'
+        console.log(e);
+        throw new Error('Database config not found');
+      })
   }; // return
 } // getConfigFromDatabase
 
