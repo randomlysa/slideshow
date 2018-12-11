@@ -46,7 +46,7 @@ describe('The admin section', function() {
     });
   });
 
-  it('should change update and transition duration in the database', function() {
+  it('should change update and transition duration in the form and database', function() {
     // Database is setup with slideDuration of 5000 and transition duration of
     // 300 for folder test1.
     const newSlideDuration = '5050';
@@ -70,23 +70,23 @@ describe('The admin section', function() {
         expect(body.slideDuration).to.equal(newSlideDuration);
         expect(body.transitionDuration).to.equal(newTranistionDuration);
       });
-    //   });
-    // });
-
-    //
   });
 
   it('should set the weather input to Boston using typeahead', function() {
     // Not sure how to set data or id on AsyncTypeahead
     cy.get('.rbt-input-main')
       .focus()
-      .type('Boston{downarrow}{enter}{enter}', { delay: 200 })
-      .should('have.value', 'Boston, GB');
+      .type('Boston{downarrow}{enter}', { delay: 200 })
+      .get('form')
+      .submit();
+
+    cy.get('.rbt-input-main').should('have.value', 'Boston, GB');
   });
 
-  it('should set the weather city in the db to Boston', async function() {
-    await getBulletinConfig('test1').then(r => {
-      expect(JSON.parse(r.data.cityToShowWeatherFor)).to.have.property(
+  it('should set the weather city in the db to Boston', function() {
+    cy.request('GET', `${getBulletinConfig}&name=test1`).then(r => {
+      const body = JSON.parse(r.body);
+      expect(JSON.parse(body.cityToShowWeatherFor)).to.have.property(
         'NAME',
         'Boston'
       );
