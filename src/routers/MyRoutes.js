@@ -33,11 +33,13 @@ class MyRoutes extends Component {
             exact
             path="/login/"
             component={() => <Login env="production" />}
+            env="production"
           />
           <PublicRoute
             exact
             path="/login/test"
             component={() => <Login env="test" />}
+            env="test"
           />
 
           {/* make path optional, try to load default if not specified */}
