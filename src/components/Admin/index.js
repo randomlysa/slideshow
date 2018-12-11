@@ -105,7 +105,7 @@ export class Admin extends Component {
     };
 
     this.props.actions
-      .updateConfigInDatabase(updateOrInsert, dataObject)
+      .updateConfigInDatabase(updateOrInsert, dataObject, this.props.env)
       .then(() => {
         swal({
           timer: 1500,
