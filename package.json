@@ -9,16 +9,17 @@
     "cross-tab-channel": "^1.1.0",
     "cross-tab-middleware": "^1.1.0",
     "cypress": "^3.1.2",
+    "immutable": "^4.0.0-rc.12",
     "jquery": "^3.2.1",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "papaparse": "^4.3.7",
     "password-hash-and-salt": "^0.1.4",
-    "react": "^16.1.0",
+    "react": "^16.6.3",
     "react-beautiful-dnd": "^5.0.0",
     "react-bootstrap-typeahead": "^2.5.0",
-    "react-dom": "^16.1.0",
+    "react-dom": "^16.6.3",
     "react-dropzone": "^4.2.7",
     "react-hot-loader": "^4.0.1",
     "react-redux": "^5.0.6",
@@ -28,7 +29,7 @@
     "redux-persist": "^5.9.1",
     "redux-persist-crosstab": "^3.7.0",
     "redux-promise-middleware": "^5.0.0",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "^2.3.0",
     "sweetalert2": "^7.16.0"
   },
   "scripts": {
@@ -37,7 +38,6 @@
     "test": "react-scripts test --env=jsdom --watch",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open"
-
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
