@@ -2,6 +2,10 @@
 	header("Access-Control-Allow-Origin: *");
 
 	$env = isset($_GET["env"]) ? $_GET["env"] : 'production';
+	// Run with ?env=test&create=true to set up db for testing.
+
+	// Set to true to delete test db and init with some data.
+	$create = isset($_GET["create"]) ? $_GET["create"] : 'false';
 
 	if ($env == "production") {
 		// http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
@@ -14,91 +18,94 @@
 		$dbActions = '/slideshow/public/php/';
 		$dbPathFile = $docRoot . '/bulletin_TEST.sqlite3';
 		define('DB_PATH', $dbPathFile);
-		// Delete test db if it exists.
-		if (file_exists($dbPathFile)) {
+		if ($create === 'true' && file_exists($dbPathFile)) {
 			unlink($dbPathFile);
 		}
 
 		// Create test db and connect.
 		$db = new PDO('sqlite:' . DB_PATH);
 
-		/* Create a prepared statement */
-		$createTable = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
-			(
-			timestamp INT,
-			name TEXT PRIMARY KEY,
-			slideDuration INT,
-			transitionDuration INT,
-			slidesToShowWeatherOn TEXT,
-			cityToShowWeatherFor INT,
-			slideOrder TEXT
-			);
-		");
+		// Make folder test1 and test2 so I can switch to them
+		// make dummy files in folders?
 
-		/* execute the query */
-		if ($createTable -> execute()) {
-			echo "Table is created";
-		}
+		if ($env == 'test' && $create == 'true') {
+			/* Create a prepared statement */
+			$createTable = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
+				(
+				timestamp INT,
+				name TEXT PRIMARY KEY,
+				slideDuration INT,
+				transitionDuration INT,
+				slidesToShowWeatherOn TEXT,
+				cityToShowWeatherFor INT,
+				slideOrder TEXT
+				);
+			");
 
-		/* Create Bulletin 1 */
-		$timestamp           	= '123456';
-    $name                	= 'test1';
-    $slideDuration        = '5000';
-    $transitionDuration   = '300';
-    $slidesToShowWeatherOn = '';
-    $cityToShowWeatherFor = '';
-    $slideOrder           = '';
+			/* execute the query */
+			if ($createTable -> execute()) {
+				echo "Table is created<br />";
+			}
 
-		/* Create a prepared statement */
-		$createTest1 = $db -> prepare("INSERT INTO bulletins
+			/* Create Bulletin 1 */
+			$timestamp           	= '123456';
+			$name                	= 'test1';
+			$slideDuration        = '5000';
+			$transitionDuration   = '300';
+			$slidesToShowWeatherOn = '';
+			$cityToShowWeatherFor = '';
+			$slideOrder           = '';
+
+			/* Create a prepared statement */
+			$createTest1 = $db -> prepare("INSERT INTO bulletins
+				(timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor, slideOrder)
+				VALUES
+				(:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor, :slideOrder)
+			");
+
+			/* bind params */
+			$createTest1 -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
+			$createTest1 -> bindParam(':name', $name, PDO::PARAM_STR);
+			$createTest1 -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
+			$createTest1 -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
+			$createTest1 -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
+			$createTest1 -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
+			$createTest1 -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
+
+			/* execute the query */
+			if( $createTest1 -> execute() ){
+				echo "Bulletin test1 created<br />";
+			}
+
+			/* Create Bulletin 2 */
+			$timestamp           	= '12345678';
+			$name                	= 'test2';
+			$slideDuration        = '9000';
+			$transitionDuration   = '500';
+			$slidesToShowWeatherOn = '';
+			$cityToShowWeatherFor = '';
+			$slideOrder           = '';
+
+			/* Create a prepared statement */
+			$createTest2 = $db -> prepare("INSERT INTO bulletins
 			(timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor, slideOrder)
 			VALUES
 			(:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor, :slideOrder)
-		");
+			");
 
-		/* bind params */
-		$createTest1 -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
-		$createTest1 -> bindParam(':name', $name, PDO::PARAM_STR);
-		$createTest1 -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
-		$createTest1 -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
-		$createTest1 -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
-		$createTest1 -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
-		$createTest1 -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
+			/* bind params */
+			$createTest2 -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
+			$createTest2 -> bindParam(':name', $name, PDO::PARAM_STR);
+			$createTest2 -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
+			$createTest2 -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
+			$createTest2 -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
+			$createTest2 -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
+			$createTest2 -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
 
-		/* execute the query */
-		if( $createTest1 -> execute() ){
-			echo "Bulletin test1 created";
-		}
-
-		/* Create Bulletin 2 */
-		$timestamp           	= '12345678';
-    $name                	= 'test2';
-    $slideDuration        = '9000';
-    $transitionDuration   = '500';
-    $slidesToShowWeatherOn = '';
-    $cityToShowWeatherFor = '';
-    $slideOrder           = '';
-
-		/* Create a prepared statement */
-		$createTest2 = $db -> prepare("INSERT INTO bulletins
-		(timestamp, name, slideDuration, transitionDuration, slidesToShowWeatherOn, cityToShowWeatherFor, slideOrder)
-		VALUES
-		(:timestamp, :name, :slideDuration, :transitionDuration, :slidesToShowWeatherOn, :cityToShowWeatherFor, :slideOrder)
-		");
-
-		/* bind params */
-		$createTest2 -> bindParam(':timestamp', $timestamp, PDO::PARAM_INT);
-		$createTest2 -> bindParam(':name', $name, PDO::PARAM_STR);
-		$createTest2 -> bindParam(':slideDuration', $slideDuration, PDO::PARAM_INT);
-		$createTest2 -> bindParam(':transitionDuration', $transitionDuration, PDO::PARAM_INT);
-		$createTest2 -> bindParam(':slidesToShowWeatherOn', $slidesToShowWeatherOn, PDO::PARAM_STR);
-		$createTest2 -> bindParam(':cityToShowWeatherFor', $cityToShowWeatherFor, PDO::PARAM_STR);
-		$createTest2 -> bindParam(':slideOrder', $slideOrder, PDO::PARAM_STR);
-
-		/* execute the query */
-		if( $createTest2 -> execute() ){
-			echo "Bulletin test2 created";
-		}
-
+			/* execute the query */
+			if( $createTest2 -> execute() ){
+				echo "Bulletin test2 created<br />";
+			}
+		} // if ($create == true)
 	}
 ?>
