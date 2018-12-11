@@ -3,7 +3,12 @@ import axios from 'axios';
 // URL to reset DB.
 // http://localhost/slideshow/public/php/sqliteConfig.php?env=test&create=true
 
-// URL to get info about a bulletin
+// Reset the database.
+axios.get(
+  'http://localhost/slideshow/public/php/sqliteConfig.php?env=test&create=true'
+);
+
+// Function to get info about 'bulletin;
 const getBulletinConfig = bulletin => {
   return axios.get(
     `http://localhost/slideshow/public/php/sqliteGetBulletinConfigByName.php?name=${bulletin}&env=test`
@@ -21,6 +26,7 @@ describe('The admin section', function() {
       .type('test')
       .get('[data-cy=loginForm]')
       .submit();
+    cy.location('pathname').should('eq', '/admin/test');
   });
 
   // Todo - create folders test1, test2, and add 3 files to each.
@@ -32,20 +38,25 @@ describe('The admin section', function() {
     // Database is setup with slideDuration of 5000 and transition duration of
     // 300 for folder test1.
     await getBulletinConfig('test1').then(r => {
-      console.log(r);
       expect(r.data.slideDuration).to.equal('5000');
       expect(r.data.transitionDuration).to.equal('300');
     });
   });
 
-  it('should set the weather to Boston', async function() {
+  it('should set the weather input to Boston using typeahead', function() {
     // Not sure how to set data or id on AsyncTypeahead
     cy.get('.rbt-input-main')
       .focus()
-      .type('Boston{downarrow}{enter}{enter}', { delay: 200 });
-    // cy.reload()
+      .type('Boston{downarrow}{enter}{enter}', { delay: 200 })
+      .should('have.value', 'Boston, GB');
+  });
+
+  it('should set the weather city in the db to Boston', async function() {
     await getBulletinConfig('test1').then(r => {
-      expect(r.data.cityToShowWeatherFor).to.include('Boston');
+      expect(JSON.parse(r.data.cityToShowWeatherFor)).to.have.property(
+        'NAME',
+        'Boston'
+      );
     });
   });
 });
