@@ -30,7 +30,7 @@
 
 		if ($env == 'test' && $create == 'true') {
 			/* Create a prepared statement */
-			$createTable = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
+			$createBulletinsTable = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
 				(
 				timestamp INT,
 				name TEXT PRIMARY KEY,
@@ -43,8 +43,22 @@
 			");
 
 			/* execute the query */
-			if ($createTable -> execute()) {
-				echo "Table is created<br />";
+			if ($createBulletinsTable -> execute()) {
+				echo "Bulletins table is created<br />";
+			}
+
+			$createUsersTable = $db -> prepare("CREATE TABLE IF NOT EXISTS  users (
+				`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+				`username`	TEXT NOT NULL UNIQUE,
+				`password`	TEXT NOT NULL,
+				`email`	TEXT,
+				`loggedin`	TEXT
+				);
+			");
+
+			/* execute the query */
+			if ($createUsersTable -> execute()) {
+				echo "Users table is created<br />";
 			}
 
 			/* Create Bulletin 1 */
@@ -105,6 +119,21 @@
 			/* execute the query */
 			if( $createTest2 -> execute() ){
 				echo "Bulletin test2 created<br />";
+			}
+
+			$username = "test";
+			$password = 'pbkdf2$10000$2e37e30ddbe4707f239a216e3668b4054f315fe515db9ea0d1aaa9cd817b1442534bf4ca74eef8f0f92d8a6bc13ee6b6c0c2edaa71637ee7a756cbef900e372a$d31978f0d0ce2bcc28dd70e036404b4d5034bd87be78e6cdc8ebb1818aa9e7bf2d3ac299e1d37be90b6b164847dc6ce9f91e3893fe66f1641d2aeaa49a4aa57d';
+			$createUser = $db -> prepare("INSERT INTO users
+			(username, password)
+			VALUES
+			(:username, :password)
+			");
+
+			$createUser -> bindParam(':username', $username, PDO::PARAM_STR);
+			$createUser -> bindParam(':password', $password, PDO::PARAM_STR);
+
+			if( $createUser -> execute() ){
+				echo "Test user created<br />";
 			}
 		} // if ($create == true)
 	}
