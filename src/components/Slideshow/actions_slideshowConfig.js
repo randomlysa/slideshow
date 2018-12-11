@@ -46,14 +46,15 @@ export function updateConfig(dataObject) {
 
 export const updateConfigInDatabase = (
   updateOrInsert,
-  dataObject
+  dataObject,
+  env
 ) => dispatch => {
   return new Promise(function(resolve, reject) {
     let url;
     if (updateOrInsert === 'update')
-      url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php`;
+      url = `${API_ROOT}/php/sqliteUpdateDatabaseConfig.php?env=${env}`;
     if (updateOrInsert === 'insert')
-      url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php`;
+      url = `${API_ROOT}/php/sqliteInsertDatabaseConfig.php?env=${env}`;
 
     const {
       timestamp,
