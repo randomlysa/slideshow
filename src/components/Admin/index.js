@@ -194,13 +194,16 @@ export class Admin extends Component {
           // TODO: Getting 404 in console, trying to load images for the
           // wrong slideshow.
           this.props.actions.getFilesInSlideshowDir(this.state.activeFolder);
-          this.props.actions.getConfigFromDatabase(this.state.activeFolder);
+          this.props.actions.getConfigFromDatabase(
+            this.state.activeFolder,
+            this.props.env
+          );
 
           // Check if the folder config already exists in the database.
           $.ajax({
             url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${
               this.state.activeFolder
-            }`,
+            }&env=${this.props.env}`,
             type: 'GET'
           })
             .done(data => {

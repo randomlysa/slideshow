@@ -15,11 +15,12 @@ export const SET_WEATHER_CITY = 'SET_WEATHER_CITY';
 export const DELETE_FILE_FULFILLED = 'DELETE_FILE_FULFILLED';
 export const UPLOAD_FILE_FULFILLED = 'UPLOAD_FILE_FULFILLED';
 
-export function getConfigFromDatabase(name) {
+export function getConfigFromDatabase(name, env = 'production') {
+  console.log(env);
   return {
     type: GET_CONFIG_FROM_DATABASE,
     payload: $.ajax({
-      url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${name}`,
+      url: `${API_ROOT}/php/sqliteGetBulletinConfigByName.php?name=${name}&env=${env}`,
       type: 'GET',
       dataType: 'json'
     })

@@ -1,6 +1,8 @@
 <?php
   header("Access-Control-Allow-Origin: *");
 
+  $env = isset($_GET["env"]) ? $_GET["env"] : 'production';
+
   // http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
   if( $_GET ){
     $name = $_GET['name'];
