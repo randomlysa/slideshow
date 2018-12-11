@@ -28,7 +28,17 @@ class MyRoutes extends Component {
             path="/admin/test"
             component={() => <Admin env="test" />}
           />
-          <PublicRoute exact path="/login" component={Login} />
+
+          <PublicRoute
+            exact
+            path="/login/"
+            component={() => <Login env="production" />}
+          />
+          <PublicRoute
+            exact
+            path="/login/test"
+            component={() => <Login env="test" />}
+          />
 
           {/* make path optional, try to load default if not specified */}
           {/* https://github.com/ReactTraining/react-router/issues/4105#issuecomment-296352338 */}

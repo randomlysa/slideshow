@@ -48,7 +48,7 @@ class Login extends React.Component {
       url: `${API_ROOT}/php/sqliteGetUserByIdOrName.php`,
       type: 'GET',
       dataType: 'json',
-      data: { username: this.state.usernameLogin }
+      data: { username: this.state.usernameLogin, env: this.props.env }
     }).done(data => {
       // User not found.
       if (data === null) {
