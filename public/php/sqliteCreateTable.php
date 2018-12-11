@@ -1,12 +1,10 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
 
-	$env = $_GET["env"];
-	if ($env == "") { $env = "production"; }
-
   // http://theonlytutorials.com/php-pdo-sqlite-example-insert-read-search/
 	try{
-		include("sqliteConfig.php?env=$env");
+
+		include("sqliteConfig.php");
 
 		/* Create a prepared statement */
 		$stmt = $db -> prepare("CREATE TABLE IF NOT EXISTS bulletins
